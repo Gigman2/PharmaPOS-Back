@@ -1,0 +1,59 @@
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-07-27 12:44:14"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-07-27 12:44:14"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-07-27 12:44:14"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-07-27 12:44:14"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-07-27 12:46:53"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-07-27 12:46:53"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-07-27 12:46:53"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-07-27 12:46:53"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-07-27 23:52:44"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-07-27 23:52:44"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-07-27 23:52:44"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-07-27 23:52:44"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-07-28 09:35:53"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-07-28 09:35:53"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-07-28 09:35:53"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-07-28 09:35:53"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-07-28 21:38:12"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-07-28 21:38:12"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-07-28 21:38:12"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-07-28 21:38:12"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-07-29 16:40:55"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-07-29 16:40:55"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-07-29 16:40:55"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-07-29 16:40:55"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:31:30"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:31:35"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:35:35"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:36:26"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:36:29"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:36:30"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:36:32"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:36:33"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:36:52"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:37:07"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:37:09"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:37:26"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:38:42"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:42:57"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-07-31 00:00:11"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-07-31 00:00:11"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-07-31 00:00:11"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-07-31 00:00:11"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-07-31 06:38:22"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-07-31 06:38:22"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-07-31 06:38:22"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-07-31 06:38:22"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-07-31 06:47:08"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-07-31 06:47:08"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-07-31 06:47:08"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-07-31 06:47:08"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-07-31 07:04:21"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-07-31 07:04:21"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-07-31 07:04:21"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-07-31 07:04:21"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-07-31 07:07:39"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-07-31 07:07:39"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-07-31 07:07:39"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-07-31 07:07:39"}
+{"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-07-31 07:18:23"}
