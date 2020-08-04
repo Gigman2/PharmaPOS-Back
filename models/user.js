@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 	});
 
 	Model.associate = function(models) {
-        
+        Model.hasMany(models.Category, {foreignKey: 'userId', as: 'categories'})
 	};
 
 	Model.beforeSave(async (user, options) => {

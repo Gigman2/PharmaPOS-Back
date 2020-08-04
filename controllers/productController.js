@@ -26,14 +26,23 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
     res.json({message: 'New Product added successfully', result: data});
 }));
 
-
+ 
 router.post("/add-category", [Authenticator.auth], asyncWrapper(async (req, res) => {
     var body = req.body
     const validated = await productService.authenticateCategory();
     if(validated != null){
         throw CustomError({statusCode: validated.code, message: validated.message}, res)
     }
+
+    body.userId = req.account.id
+    let data = await crudService.create('Category', body)
+    res.json({message: 'New Category added successfully', result: data});
 }))
+
+router.get("/category/list", [Authenticator.auth], asyncWrapper(async(req, res)=> {
+    let data = await productService.fetchCategories()
+    res.json({message: 'Result', result: data});
+}));
 
 router.get("/list", [Authenticator.auth], asyncWrapper(async(req, res)=> {
     let data = await crudService.findAll('Product')
