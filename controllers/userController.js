@@ -45,12 +45,13 @@ router.post('/auth',asyncWrapper(async(req, res) => {
  */
 router.post("/new",[Upload.single('avatar')], asyncWrapper(async (req, res) => {
     var body = req.body
-    body.password = pwdGenerator.generate({length: 10, numbers: true, uppercase: false});
-    console.log(body.password)
-    // const validated = await accountService.authenticateData(body, 'create')
-    // if(validated != null){
-    //     throw CustomError({statusCode: validated.code, message: validated.message}, res)
-    // }
+    if(body.password == ''){
+        body.password = pwdGenerator.generate({length: 10, numbers: true, uppercase: false});
+    }
+    const validated = await accountService.authenticateData(body, 'create')
+    if(validated != null){
+        throw CustomError({statusCode: validated.code, message: validated.message}, res)
+    }
     body.active = true
     if(req.file){
         body.avatar = req.file.filename;

@@ -13,3 +13,12 @@
 {"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:38:42"}
 {"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:42:57"}
 {"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-07-31 07:18:23"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-02 13:01:38"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-02 13:02:52"}
+{"message":"❌ code: 422, message: name is required","level":"error","timestamp":"2020-08-02 13:03:30"}
+{"message":"❌ code: 422, message: supplier must be a string","level":"error","timestamp":"2020-08-02 13:11:10"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-02 13:11:26"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-02 13:53:58"}
+{"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-08-03 11:05:34"}
+{"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-08-03 21:36:19"}
+{"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-08-03 21:37:00"}
