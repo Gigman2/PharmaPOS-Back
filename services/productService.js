@@ -1,3 +1,6 @@
+const Sequelize   =  require('sequelize');
+const Op  = Sequelize.Op
+
 const DatabaseFunctions = require('../helpers/crud')
 const Validation = require('../helpers/validation')
 const models = require('../models')
@@ -17,22 +20,32 @@ module.exports = class UserService{
       }
     }
 
-    // if(type == 'create'){
-    //   var userExist = await crudService.exists('Product', {email: data.email})
-    //   if(userExist){
-    //     result = {
-    //       code: 422,
-    //       message: 'User with email already exist'
-    //     }
-    //   }
-    // }
+    if(data.category){
+      data.categoryId = data.category
+      delete data.category
+    }
+
+    if(data.supplier){
+      data.supplierId = data.supplier
+      delete data.supplier
+    }
+
+    if(type == 'create'){
+      var exist = await crudService.exists('Product', {name: data.name})
+      if(exist){
+        result = {
+          code: 422,
+          message: 'Products alreaday exist'
+        }
+      }
+    }
     return result
   }
 
   async authenticateCategory(data, type){
     let result = null;
     let errormessage;
-    const validationResponse = Validation.product.validate(data)
+    const validationResponse = Validation.category.validate(data)
     if(validationResponse.error !== undefined){
       errormessage = validationResponse.error.details[0].message.replace(/"/g, "")
       result = {
@@ -54,6 +67,20 @@ module.exports = class UserService{
     return result;
   }
 
+  async authenticateSupplier(data, type){
+    let result = null;
+    let errormessage;
+    const validationResponse = Validation.supplier.validate(data)
+    if(validationResponse.error !== undefined){
+      errormessage = validationResponse.error.details[0].message.replace(/"/g, "")
+      result = {
+        code: 422,
+        message: `${errormessage}`
+      }
+    }
+    return result;
+  }
+
 
   async fetchCategories(){
     try {
@@ -69,6 +96,43 @@ module.exports = class UserService{
             as: 'products',
             required: false
           }
+        ]
+      }) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async fetchProjects(){
+    try {
+      return models.Product.findAll({
+        include: [
+          {
+            model: models.Category,
+            as: 'category',
+            required: false
+          },
+        ]
+      }) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async fetchStock(){
+    try {
+      return models.Product.findAll({
+        where: {
+          quantity: {
+            [Op.gt]: 0
+          }
+        },
+        include: [
+          {
+            model: models.Category,
+            as: 'category',
+            required: false
+          },
         ]
       }) 
     } catch (error) {
