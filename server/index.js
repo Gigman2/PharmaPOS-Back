@@ -24,7 +24,7 @@ module.exports = function() {
 		
  
 		// Setup Database
-		// models.sequelize.sync()
+		models.sequelize.sync({force:true})
 		logger.info('✌ ================ Database Loaded ==================')
  
 		Middleware(server)

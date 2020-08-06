@@ -22,3 +22,4 @@
 {"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-08-03 11:05:34"}
 {"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-08-03 21:36:19"}
 {"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-08-03 21:37:00"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-06 12:17:53"}

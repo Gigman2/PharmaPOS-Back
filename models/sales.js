@@ -1,15 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
-	const Model = sequelize.define('Sale', {
-        grossTotal:  {type: DataTypes.STRING},
-        netTotal: {type: DataTypes.STRING},
-        itemTotal: {type: DataTypes.STRING},
-        tax: {type: DataTypes.STRING},
-        discount: {type: DataTypes.STRING},
-	});
+        const Model = sequelize.define('Sale', {
+                transactionID: { type: DataTypes.STRING },
+                product: { type: DataTypes.STRING },
+                netPrice: { type: DataTypes.FLOAT },
+                itemNoTotal: { type: DataTypes.INTEGER },
+                customer: { type: DataTypes.STRING },
+                action:  {type: DataTypes.STRING},
+                tax: { type: DataTypes.FLOAT },
+                discount: { type: DataTypes.FLOAT },
+        });
 
-	Model.associate = function(models) {
-                Model.belongsTo(models.User, {foreignKey: 'userId', as: 'soldby'})
+        Model.associate = function (models) {
+                Model.belongsTo(models.User, { foreignKey: 'userId', as: 'soldby' })
         };
-        
-	return Model;
+
+        return Model;
 };

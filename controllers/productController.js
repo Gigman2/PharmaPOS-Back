@@ -36,7 +36,7 @@ router.post("/add-category", [Authenticator.auth], asyncWrapper(async (req, res)
 }))
 
 router.get("/list", [Authenticator.auth], asyncWrapper(async(req, res)=> {
-    let data = await crudService.findAll('Product')
+    let data = await crudService.listAll('Product')
     res.json({message: 'Result', result: data});
 }));
 

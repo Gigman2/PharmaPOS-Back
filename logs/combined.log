@@ -370,3 +370,284 @@
 {"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-03 22:00:38"}
 {"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-03 22:00:38"}
 {"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-03 22:00:38"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-04 11:41:01"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-04 11:41:02"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-04 11:41:02"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-04 11:41:02"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-04 11:44:20"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-04 11:44:20"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-04 11:44:20"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-04 11:44:20"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-04 14:54:27"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-04 14:54:27"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-04 14:54:27"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-04 14:54:27"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-04 16:29:15"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-04 16:29:16"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-04 16:29:18"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-04 16:29:18"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 12:19:34"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 12:19:34"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 12:19:34"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 12:19:34"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 12:20:02"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 12:20:02"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 12:20:02"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 12:20:02"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 12:20:06"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 12:20:06"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 12:20:06"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 12:20:06"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 12:49:26"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 12:49:26"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 12:49:26"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 12:49:26"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 12:50:07"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 12:50:07"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 12:50:07"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 12:50:07"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 12:50:43"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 12:50:43"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 12:50:43"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 12:50:43"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 12:54:45"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 12:54:45"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 12:54:45"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 12:54:45"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 12:56:39"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 12:56:39"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 12:56:39"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 12:56:39"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:00:23"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:00:23"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:00:23"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:00:23"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:00:42"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:00:42"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:00:42"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:00:42"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:02:31"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:02:31"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:02:31"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:02:31"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:02:42"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:02:42"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:02:42"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:02:42"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:45:50"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:45:50"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:45:50"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:45:50"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:46:37"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:46:37"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:46:37"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:46:37"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:47:18"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:47:18"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:47:18"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:47:18"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:47:38"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:47:38"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:47:38"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:47:38"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:47:50"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:47:50"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:47:50"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:47:50"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:47:53"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:47:53"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:47:53"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:47:53"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:48:26"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:48:26"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:48:26"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:48:26"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:49:00"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:49:00"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:49:00"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:49:00"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:49:10"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:49:10"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:49:10"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:49:10"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:49:31"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:49:31"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:49:31"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:49:31"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:49:37"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:49:37"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:49:37"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:49:37"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:49:51"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:49:51"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:49:51"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:49:51"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:53:31"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:53:31"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:53:31"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:53:31"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:53:46"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:53:46"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:53:46"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:53:46"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:53:52"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:53:52"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:53:52"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:53:52"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:55:34"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:55:34"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:55:34"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:55:34"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:55:52"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:55:52"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:55:52"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:55:52"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:56:54"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:56:54"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:56:54"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:56:54"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:57:29"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:57:29"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:57:29"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:57:29"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:57:32"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:57:32"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:57:32"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:57:32"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:57:56"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:57:56"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:57:56"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:57:56"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:58:06"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:58:06"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:58:06"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:58:06"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:58:10"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:58:10"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:58:10"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:58:10"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:58:19"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:58:19"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:58:19"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:58:19"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:58:27"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:58:27"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:58:27"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:58:27"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:58:33"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:58:33"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:58:33"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:58:33"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 13:58:35"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 13:58:35"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 13:58:35"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 13:58:35"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 15:06:42"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 15:06:42"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 15:06:42"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 15:06:42"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 15:06:57"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 15:06:57"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 15:06:57"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 15:06:57"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 15:11:27"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 15:11:27"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 15:11:27"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 15:11:27"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-05 15:39:10"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-05 15:39:10"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-05 15:39:10"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-05 15:39:10"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:09:43"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:09:43"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:09:43"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:09:43"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:12:43"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:12:43"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:12:43"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:12:43"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:12:52"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:12:52"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:12:52"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:12:52"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:13:20"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:13:20"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:13:20"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:13:20"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:15:37"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:15:37"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:15:37"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:15:37"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:15:56"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:15:56"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:15:56"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:15:56"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:16:01"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:16:01"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:16:01"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:16:01"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:16:04"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:16:04"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:16:04"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:16:04"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:16:17"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:16:17"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:16:17"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:16:17"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:16:29"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:16:29"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:16:29"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:16:29"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:16:38"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:16:38"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:16:38"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:16:38"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:16:46"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:16:46"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:16:46"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:16:46"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:17:25"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:17:25"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:17:25"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:17:25"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:17:37"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:17:37"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:17:37"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:17:37"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:17:48"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:17:48"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:17:48"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:17:48"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:17:58"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:17:58"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:17:58"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:17:58"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:18:12"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:18:12"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:18:12"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:18:12"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:18:34"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:18:34"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:18:34"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:18:34"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:19:33"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:19:33"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:19:33"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:19:33"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 10:19:37"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 10:19:37"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 10:19:37"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 10:19:37"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 12:17:30"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 12:17:30"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 12:17:30"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 12:17:30"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-06 12:17:53"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 12:19:17"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 12:19:17"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 12:19:17"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 12:19:17"}
+{"message":"✌ ================ Database Loaded ==================","level":"info","timestamp":"2020-08-06 12:19:43"}
+{"message":"✌ ================ Route Loaded =====================","level":"info","timestamp":"2020-08-06 12:19:43"}
+{"message":"✌ ================ Server Created ==================","level":"info","timestamp":"2020-08-06 12:19:43"}
+{"message":"✌ Server Started on - http://localhost:4000","level":"info","timestamp":"2020-08-06 12:19:43"}
