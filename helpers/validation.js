@@ -25,5 +25,8 @@ module.exports = {
         quantity: Joi.number().required(),
         shelf: Joi.string().alphanum().optional(),
         restock: Joi.number().optional()
+    }),
+    category: Joi.object({
+        name: Joi.string().min(2).required(),
     })
 }

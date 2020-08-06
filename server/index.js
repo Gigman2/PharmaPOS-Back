@@ -21,7 +21,6 @@ module.exports = function() {
 		server.set('viewDir', config.viewDir);
 
 		server.use('/static',express.static(__basedir+'/uploads'))
-		
  
 		// Setup Database
 		models.sequelize.sync({force:true})
