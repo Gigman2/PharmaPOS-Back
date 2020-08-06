@@ -1,5 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const Model = sequelize.define('Sale', {
+                transactionID:  {type: DataTypes.STRING},
                 grossTotal:  {type: DataTypes.STRING},
                 netTotal: {type: DataTypes.STRING},
                 itemTotal: {type: DataTypes.STRING},
@@ -11,6 +12,6 @@ module.exports = (sequelize, DataTypes) => {
                 Model.belongsTo(models.User, {foreignKey: 'userId', as: 'soldby'})
                 Model.belongsTo(models.Customer, {foreignKey: 'customerId', as: 'boughtBy'})
         };
-        
-	return Model;
+
+        return Model;
 };

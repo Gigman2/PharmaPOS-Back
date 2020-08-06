@@ -1,6 +1,7 @@
 'use strict'
 const UserController = require('../controllers/userController')
 const ProductController = require('../controllers/productController')
+const SalesController = require('../controllers/salesController')
 
 function init(server) {
 	server.get('*', function (req, res, next) {
@@ -15,6 +16,7 @@ function init(server) {
 
 	server.use('/api/users', UserController)
 	server.use('/api/product', ProductController)
+	server.use('/api/sales', SalesController)
 }
 
 module.exports = {
