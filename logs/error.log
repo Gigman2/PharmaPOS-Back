@@ -1,0 +1,8 @@
+{"message":"❌ code: 422, message: manufacturer is not allowed to be empty","level":"error","timestamp":"2020-08-10 11:36:11"}
+{"message":"❌ code: 422, message: shelf is not allowed to be empty","level":"error","timestamp":"2020-08-10 11:36:19"}
+{"message":"❌ code: 422, message: shelf must only contain alpha-numeric characters","level":"error","timestamp":"2020-08-10 13:09:09"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-10 17:23:36"}
+{"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-08-10 17:24:11"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:37:13"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:37:17"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:38:16"}

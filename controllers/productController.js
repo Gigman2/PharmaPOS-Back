@@ -17,7 +17,8 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
         throw CustomError({statusCode: validated.code, message: validated.message}, res)
     }
     body.userId = req.account.id
-    body.active = true
+    body.active = true;
+
     if(req.file){
         body.image = req.file.filename;
     }
@@ -26,8 +27,18 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
     res.json({message: 'New Product added successfully', result: data});
 }));
 
+router.post("/single", [Authenticator.auth], asyncWrapper(async(req, res) => {
+    let data;
+    if(req.query.type == 'simple'){
+        data = await crudService.findOne('Product', {id: req.body.id})
+    }else{
+        data =  await productService.fetchProduct()
+    }
+    res.json({message: 'Result', result: data});
+}))
+
 router.get("/list", [Authenticator.auth], asyncWrapper(async(req, res)=> {
-    let data = await productService.fetchProjects()
+    let data = await productService.fetchProducts()
     res.json({message: 'Result', result: data});
 }));
 

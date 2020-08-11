@@ -98,7 +98,6 @@ router.post('/remove', [Authenticator.auth], asyncWrapper(async(req, res) => {
  * VIEW SINGLE USER  ACCOUNT
  */
 router.post('/single', [Authenticator.auth], asyncWrapper(async(req, res) => {
-    console.log(req.body.id)
     let data = await crudService.findOne('User', {id: req.body.id})
     data.password = "*****"
     res.json({message: 'All users', result: data});

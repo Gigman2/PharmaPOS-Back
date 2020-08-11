@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
                 saleThreshold: {type: DataTypes.INTEGER},
                 active:{type: DataTypes.BOOLEAN},
                 image: {type: DataTypes.STRING},
+                manufacturer: {type: DataTypes.STRING}
         });
 
 	Model.associate = function(models) {

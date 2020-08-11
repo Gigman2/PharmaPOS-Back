@@ -103,7 +103,7 @@ module.exports = class UserService{
     }
   }
 
-  async fetchProjects(){
+  async fetchProducts(){
     try {
       return models.Product.findAll({
         include: [
@@ -112,6 +112,35 @@ module.exports = class UserService{
             as: 'category',
             required: false
           },
+        ]
+      }) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async fetchProduct(condition){
+    try {
+      return models.Product.findOne({
+        where: condition,
+        include: [
+          {
+            model: models.Category,
+            as: 'category',
+            required: false
+          },
+          {
+            model: models.Supplier,
+            as: 'supplier',
+            required: false
+          },
+          {
+            model: models.User,
+            as: 'added',
+            required: false
+          },
+          
+          
         ]
       }) 
     } catch (error) {
