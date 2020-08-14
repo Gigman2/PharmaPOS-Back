@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Model = sequelize.define('Discount', {
         discountID: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             primaryKey: true,
         },
         code: { type: DataTypes.STRING },
