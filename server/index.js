@@ -23,11 +23,11 @@ module.exports = function() {
 		server.use('/static',express.static(__basedir+'/uploads'))
  
 		// Setup Database
-		// models.sequelize.sync({force:true})
+		// models.sequelize.sync()
 		logger.info('✌ ================ Database Loaded ==================')
  
 		Middleware(server)
-
+ 
 		// Set up routes
 		routes.init(server); 
 		logger.info('✌ ================ Route Loaded =====================')

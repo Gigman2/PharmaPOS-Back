@@ -81,6 +81,14 @@ module.exports = class UserService{
     return result;
   }
 
+  async updateStock(data){
+    try {
+      return models.Stock.create(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   async fetchCategories(){
     try {
@@ -161,6 +169,31 @@ module.exports = class UserService{
             model: models.Category,
             as: 'category',
             required: false
+          },
+        ]
+      }) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  async fetchTransactions(){
+    try {
+      return models.Sale.findAll({
+        where: {
+        },
+        include: [
+          {
+            model: models.ProductSale,
+            as: 'products',
+            required: false,
+            include: [
+              {
+                model: models.Product,
+                as: 'product',
+                required: false,
+              }
+            ]
           },
         ]
       }) 

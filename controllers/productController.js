@@ -17,6 +17,8 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
         throw CustomError({statusCode: validated.code, message: validated.message}, res)
     }
     body.userId = req.account.id
+    body.timesSold = 0
+    body.left = body.quantity
     body.active = true;
 
     if(req.file){
@@ -24,7 +26,32 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
     }
     let data = await crudService.create('Product', body)
 
+    productService.updateStock({
+        productId: data.id, 
+        userId: req.account.id, 
+        productName: data.name,
+        supplierId: body.supplierId,
+        initialStock: 0, 
+        currentStock: body.quantity
+    });
+
     res.json({message: 'New Product added successfully', result: data});
+}));
+
+router.post("/update",[Upload.single('image'), Authenticator.auth], asyncWrapper(async (req, res) => {
+    var body = JSON.parse(JSON.stringify(req.body));
+    delete body.id;
+
+    const validated = await productService.authenticateData(body, 'update')
+    if(validated != null){
+        throw CustomError({statusCode: validated.code, message: validated.message}, res)
+    }
+
+    if(req.file){
+        body.image = req.file.filename;
+    }
+    let data = await crudService.update('Product', body, {id: req.body.id})
+    res.json({message: 'New Product update successfully', result: data});
 }));
 
 router.post("/single", [Authenticator.auth], asyncWrapper(async(req, res) => {
@@ -112,6 +139,30 @@ router.post('/supplier/remove', [Authenticator.auth], asyncWrapper(async(req, re
     res.json({message: 'Deleted', result: data});
 }))
 
+
+// *********************************************************************************//
+// ------------------------------ SALES ENDPOINT -----------------------------------//
+// *********************************************************************************//
+
+
+router.post("/transaction/new", [Authenticator.auth], asyncWrapper(async(req, res) => {
+    let body = req.body;
+    body.userId = req.account.id
+    let transaction = await crudService.create('Sale', body)
+    body.products.forEach(item => {
+        item.saleId = transaction.id
+        crudService.create('ProductSale', item )
+    })
+    
+    res.json({message: 'Result', result: transaction});
+}))
+
+
+router.get("/transaction/list", [Authenticator.auth], asyncWrapper(async(req, res) => {
+    let data = await productService.fetchTransactions();
+    
+    res.json({message: 'Result', result: data});
+}))
 
 
 module.exports = router;

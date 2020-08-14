@@ -29,27 +29,31 @@ let requestOption = {
 }
 
 const authenticate = async (req, res, next) => {
+    try {
+        var payload = {}
+        var token = getTokenFromHeaders(req)
+        var paths = req.originalUrl.split('/')
     
-    var payload = {}
-    var token = getTokenFromHeaders(req)
-    var paths = req.originalUrl.split('/')
-
-    if(token === null) {
-        throw new CustomError(401, 'access denied')
-    }
-
-    payload = await JwtService.verify(token, requestOption)
-    if(payload === false) {
-        throw new CustomError(401, 'access denied')
-    }
-   
-    var account = await getAccount(payload._id)
-
-    if(account == null) {
-        return res.status(403).send('invalid account details denied').end();
-    }
+        if(token === null) {
+            throw new CustomError({statusCode: 401, message: 'access denied'}, res)
+        }
     
-    req.account = account
-    next()
+        payload = JwtService.verify(token, requestOption)
+        if(payload === false) {
+            throw new CustomError({statusCode: 401, message: 'access denied'}, res)
+        }
+       
+        var account = await getAccount(payload._id)
+    
+        if(account == null) {
+            return res.status(403).send('invalid account details denied').end();
+        }
+        
+        req.account = account
+        next()   
+    } catch (error) {
+        res.status(401).json({status: "error", message: 'session expired or access denied'
+        });
+    }
 }
 module.exports.auth = authenticate  

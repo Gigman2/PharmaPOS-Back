@@ -79,7 +79,6 @@ router.put("/update",[Upload.single('avatar')], asyncWrapper(async (req, res) =>
     if(req.file){
         body.avatar =req.file.filename;
     }
-    console.log(body)
     let success = await crudService.update('User', body, {id: req.body.id})
     res.json({message: 'User created successfully', result: success});
 }));

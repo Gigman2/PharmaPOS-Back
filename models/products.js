@@ -8,8 +8,9 @@ module.exports = (sequelize, DataTypes) => {
                 shelf: {type: DataTypes.STRING},
                 price: {type: DataTypes.STRING},
                 quantity: {type: DataTypes.INTEGER},
-                numTimesSold:{type: DataTypes.BOOLEAN},
-                saleThreshold: {type: DataTypes.INTEGER},
+                timesSold:{type: DataTypes.INTEGER},
+                restock: {type: DataTypes.INTEGER},
+                left: {type: DataTypes.INTEGER},
                 active:{type: DataTypes.BOOLEAN},
                 image: {type: DataTypes.STRING},
                 manufacturer: {type: DataTypes.STRING}
