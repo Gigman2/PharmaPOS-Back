@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:31:30"}
 {"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:31:35"}
 {"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-07-30 09:35:35"}
@@ -29,3 +30,35 @@
 >>>>>>> b907c9cc3889c1c476fb7adae90da6aba82e067c
 {"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-08-12 13:54:04"}
 {"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-08-12 13:54:06"}
+=======
+{"message":"❌ code: 422, message: manufacturer is not allowed to be empty","level":"error","timestamp":"2020-08-10 11:36:11"}
+{"message":"❌ code: 422, message: shelf is not allowed to be empty","level":"error","timestamp":"2020-08-10 11:36:19"}
+{"message":"❌ code: 422, message: shelf must only contain alpha-numeric characters","level":"error","timestamp":"2020-08-10 13:09:09"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-10 17:23:36"}
+{"message":"❌ code: 422, message: Account does not exist","level":"error","timestamp":"2020-08-10 17:24:11"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:37:13"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:37:17"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:38:16"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:55:57"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:56:12"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:56:16"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:58:38"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:59:03"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-11 10:59:17"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 15:33:51"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 15:46:06"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 15:46:28"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 15:47:19"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 15:47:58"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 15:48:07"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 15:49:27"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 22:26:25"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 22:26:31"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 22:26:40"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 23:27:01"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 23:27:06"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 23:27:59"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 23:28:38"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 23:29:42"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-13 06:11:50"}
+>>>>>>> 76b12aa99f643aec3c744b884b4f72c5af8f940f

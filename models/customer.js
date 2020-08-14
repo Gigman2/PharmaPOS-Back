@@ -1,14 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
-    const Model = sequelize.define('Customer', {
-        name: { type: DataTypes.STRING },
-        email: { type: DataTypes.STRING },
-        phone: { type: DataTypes.STRING },
-        lastPurchase: { type: DataTypes.STRING },
-        customerID: {
-            type: DataTypes.UUID,
-            primaryKey: true
-        },
-    });
+	const Model = sequelize.define('Customer', {
+        firstname:  {type: DataTypes.STRING},
+        lastname: {type: DataTypes.STRING},
+        email: {type: DataTypes.STRING},
+        phone: {type: DataTypes.STRING},
+        lastPurchase: {type: DataTypes.DATE},
+	});
 
-    return Model;
-}
+	Model.associate = function(models) {
+                Model.hasMany(models.Sale, {foreignKey: 'customerId', as: 'purchases'})
+        };
+        
+	return Model;
+};

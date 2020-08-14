@@ -34,7 +34,8 @@ module.exports = class CrudService {
     }
 
     async createOrUpdate(Model, data, condition){
-        let exists = this.exists(Model, condition)
+        let exists = await this.exists(Model, condition)
+        console.log('Exits: ',exists)
         if(!exists){
             return this.create(Model, data)
         }else{

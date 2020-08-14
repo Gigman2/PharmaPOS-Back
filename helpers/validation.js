@@ -17,8 +17,8 @@ module.exports = {
     product: Joi.object({
         name: Joi.string().min(2).required(),
         category: Joi.required(),
-        barcode: Joi.string().alphanum().optional(),
-        sku: Joi.string().alphanum().optional(),
+        barcode: Joi.string().pattern(/^[a-zA-Z0-9_-]*$/).optional(),
+        sku: Joi.string().pattern(/^[a-zA-Z0-9_-]*$/).optional(),
         supplier: Joi.optional(),
         manufacturer: Joi.string().optional(),
         price: Joi.number().required(),
@@ -28,5 +28,10 @@ module.exports = {
     }),
     category: Joi.object({
         name: Joi.string().min(2).required(),
+    }),
+    supplier: Joi.object({
+        name: Joi.string().min(2).required(),
+        email: Joi.string().email({ minDomainSegments: 2 }).required(),
+        phone: Joi.number().min(6).integer().optional(),
     })
 }

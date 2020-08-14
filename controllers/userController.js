@@ -79,7 +79,6 @@ router.put("/update",[Upload.single('avatar')], asyncWrapper(async (req, res) =>
     if(req.file){
         body.avatar =req.file.filename;
     }
-    console.log(body)
     let success = await crudService.update('User', body, {id: req.body.id})
     res.json({message: 'User created successfully', result: success});
 }));
@@ -98,7 +97,6 @@ router.post('/remove', [Authenticator.auth], asyncWrapper(async(req, res) => {
  * VIEW SINGLE USER  ACCOUNT
  */
 router.post('/single', [Authenticator.auth], asyncWrapper(async(req, res) => {
-    console.log(req.body.id)
     let data = await crudService.findOne('User', {id: req.body.id})
     data.password = "*****"
     res.json({message: 'All users', result: data});
