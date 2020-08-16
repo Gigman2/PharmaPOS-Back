@@ -17,6 +17,8 @@ function init(server) {
 	server.use('/api/users', UserController)
 	server.use('/api/product', ProductController)
 	server.use('/api/sales', SalesController)
+	//dashboard
+	//customer
 }
 
 module.exports = {
