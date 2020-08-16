@@ -15,6 +15,13 @@ router.get("/customer-list",[Authenticator.auth], asyncWrapper(async(req, res)=>
     res.json({message: 'Result', result: data});
 }));
 
+router.post("/customer-save",[Authenticator.auth], asyncWrapper(async(req, res)=> {
+    var body = req.body
+    body.userId = req.account.id
+    let data = await crudService.createOrUpdate('Customer', body, {id: body.id})
+    res.json({message: 'Customer added successfully', result: data});
+}));
+
 
 router.get("/discount-promo-list",[Authenticator.auth], asyncWrapper(async(req, res)=> {
     let data = await crudService.listAll('Discount')

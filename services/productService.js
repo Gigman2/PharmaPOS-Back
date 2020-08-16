@@ -3,7 +3,8 @@ const Op  = Sequelize.Op
 
 const DatabaseFunctions = require('../helpers/crud')
 const Validation = require('../helpers/validation')
-const models = require('../models')
+const models = require('../models');
+const { query } = require('express');
 
 const crudService = new DatabaseFunctions()
 
@@ -111,9 +112,10 @@ module.exports = class UserService{
     }
   }
 
-  async fetchProducts(){
+  async fetchProducts(condition){
     try {
       return models.Product.findAll({
+        where: condition,
         include: [
           {
             model: models.Category,

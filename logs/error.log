@@ -62,3 +62,11 @@
 {"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-12 23:29:42"}
 {"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-13 06:11:50"}
 >>>>>>> 76b12aa99f643aec3c744b884b4f72c5af8f940f
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-14 13:00:47"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-14 15:22:17"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-15 09:06:32"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-15 09:09:12"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-15 09:34:53"}
+{"message":"❌ code: 422, message: shelf is not allowed to be empty","level":"error","timestamp":"2020-08-16 11:37:01"}
+{"message":"❌ code: 422, message: restock must be a number","level":"error","timestamp":"2020-08-16 11:38:32"}
+{"message":"❌ code: 500, message: Internal server error","level":"error","timestamp":"2020-08-16 17:02:00"}

@@ -1,3 +1,5 @@
+const Sequelize =  require('sequelize');
+const Op = Sequelize.Op
 const router = require("express").Router();
 const asyncWrapper = require("../helpers/async").AsyncWrapper;
 const DatabaseFunc = require('../helpers/crud')
@@ -6,6 +8,9 @@ const crudService = new DatabaseFunc;
 
 const ProductService = require('../services/productService')
 const productService = new ProductService;
+const DeviceService = require('../services/deviceService')
+const deviceService = new DeviceService;
+
 const Authenticator = require('../middlewares/auth-middleware')
 const CustomError = require('../middlewares/error-handling')
 
@@ -54,6 +59,7 @@ router.post("/update",[Upload.single('image'), Authenticator.auth], asyncWrapper
     res.json({message: 'New Product update successfully', result: data});
 }));
 
+
 router.post("/single", [Authenticator.auth], asyncWrapper(async(req, res) => {
     let data;
     if(req.query.type == 'simple'){
@@ -79,6 +85,30 @@ router.post('/remove', [Authenticator.auth], asyncWrapper(async(req, res) => {
     res.json({message: 'Deleted', result: data});
 }))
 
+
+router.get('/search', [Authenticator.auth], asyncWrapper(async(req, res) => {
+    try {
+        let query = req.query;
+        // delete query.name
+        if(req.query.name){
+            query = {
+                [Op.and]: [
+                    Sequelize.literal("product.name LIKE '%"+ req.query.name+"%'"),
+                ]
+            }
+        }
+
+        console.log(query)
+
+        
+
+        let data = await productService.fetchProducts(query)
+        res.json({message: 'Result', result: data});
+
+    } catch (error) {
+        console.log(error)
+    }
+}))
 
 
 // *********************************************************************************//
@@ -148,11 +178,16 @@ router.post('/supplier/remove', [Authenticator.auth], asyncWrapper(async(req, re
 router.post("/transaction/new", [Authenticator.auth], asyncWrapper(async(req, res) => {
     let body = req.body;
     body.userId = req.account.id
+    body.state = 'complete';
+
     let transaction = await crudService.create('Sale', body)
     body.products.forEach(item => {
         item.saleId = transaction.id
         crudService.create('ProductSale', item )
     })
+    if(body.state == 'complete'){
+        deviceService.printReceipt(body)
+    }
     
     res.json({message: 'Result', result: transaction});
 }))

@@ -31,6 +31,16 @@ let config = {
         port: process.env.REDIS_PORT,
         host: process.env.REDIS_HOST,
         pass: ''
+    },
+
+    printer: {
+        name: process.env.PRINTER_NAME,
+        paperWidth: process.env.PRINTER_PAPER_WIDTH
+    },
+
+    scanner: {
+        productId: process.env.SCANNER_PRODUCTID,
+        vendorId: process.env.SCANNER_VENDORID
     }
     
     // cloudinary_cloud_name:"blossomanalytics",
