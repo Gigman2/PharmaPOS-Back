@@ -1,4 +1,4 @@
-const models = require("../models")
+const models = require("../models") 
 module.exports = class CrudService {
     async findOne(Model, condition) {
         return await models[Model].findOne({where: condition});
@@ -35,8 +35,8 @@ module.exports = class CrudService {
 
     async createOrUpdate(Model, data, condition){
         let exists = await this.exists(Model, condition)
-        console.log('Exits: ',exists)
         if(!exists){
+            delete data.id
             return this.create(Model, data)
         }else{
             return this.update(Model,data, condition)

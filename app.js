@@ -1,7 +1,7 @@
 'use strict';
 global.__basedir = __dirname;
 
-const logger     = require('./helpers/logger')
+const logger = require('./helpers/logger')
 global.logger = logger
 
 // IMPORT GLODAL VARIABLES
