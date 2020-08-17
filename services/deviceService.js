@@ -45,8 +45,8 @@ module.exports = class DeviceService{
         printer.drawLine();
 
         printer.leftRight("Date: "+ Moment().format('D MMMM YYYY'), Moment().format('h:mm a'));  
-        printer.leftRight("Issuer: ", data.business.manager);
-        printer.leftRight("Invoice No: ", '#'+data.business.id);  
+        printer.leftRight("Issuer: ", data.issuer);
+        printer.leftRight("Invoice No: ", '#'+data.transaction.id);  
         printer.drawLine();  
 
         printer.bold(true);
@@ -57,7 +57,7 @@ module.exports = class DeviceService{
             let table = [];
             data.transaction.products.forEach(item => {
                 let row = [
-                    {text: item.quantity+'x'+item.product.name, align: "LEFT", width:0.8},
+                    {text: item.quantity+' x '+item.product.name, align: "LEFT", width:0.8},
                     {text: item.total, align: "RIGHT", width:0.2}
                 ]; 
 

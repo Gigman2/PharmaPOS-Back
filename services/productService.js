@@ -202,6 +202,40 @@ module.exports = class UserService{
     } catch (error) {
       console.log(error)
     }
+  } 
+
+  async fetchTransaction(id){
+    try {
+      return models.Sale.findOne({
+        where: {
+          id
+        },
+        include: [
+          {
+            model: models.ProductSale,
+            as: 'products',
+            required: false,
+            include: [
+              {
+                model: models.Product,
+                as: 'product',
+                required: false,
+              }
+            ]
+          },
+        ]
+      }) 
+    } catch (error) {
+      console.log(error)
+    }
   }
 
+  async updateStockAfterPurchase(transactionId){
+    let sales = await crudService.findAll('ProductSale', {id: transactionId})
+    sales.forEach(async item => {
+      let product = await crudService.findOne('Product', {id: item.productId});
+
+      crudService.update('Product', {left: product.left - (item.quantity)}, {id: product.id})
+    })
+  }
 }

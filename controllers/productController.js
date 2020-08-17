@@ -182,19 +182,29 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
         body.state = 'complete'; 
     }
     let transaction = await crudService.createOrUpdate('Sale', body, {id: body.id})
-    body.products.forEach(item => {
+    let productsSaved = await Promise.all(body.products.map(async item => {
         item.saleId = transaction.id
-        crudService.createOrUpdate('ProductSale', item , {id: item.id})
-    })
-    if(body.state == 'complete'){
-        let printData = {
-            issuer: req.account.firstname+' '+req.account.lastname
+        await crudService.createOrUpdate('ProductSale', item , {id: item.id})
+    }))
+
+    if(transaction.customerId){
+        crudService.update('Customer', {lastPurchase: Date.now()}, {id: transaction.customerId});
+    }
+
+    if(productsSaved){
+        productService.updateStockAfterPurchase(transaction.id)
+
+        if(body.state == 'complete'){
+            let printData = {
+                issuer: req.account.firstname+' '+req.account.lastname
+            }
+            printData.business = await crudService.findOne('Business', {id: 1});
+            printData.transaction = await productService.fetchTransaction(transaction.id)
+            deviceService.printReceipt(printData) 
         }
-        printData.business = await crudService.findOne('Business', {id: 1});
-        printData.transaction
-        deviceService.printReceipt(printData) 
     }
     
+
     res.json({message: 'Result', result: transaction});
 }))
 

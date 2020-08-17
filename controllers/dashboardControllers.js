@@ -124,10 +124,6 @@ router.get("/account-admins", [Authenticator.auth], asyncWrapper(async (req, res
         res.json({ message: 'Error', result: err });
 
     }
-
-
-
-
 }));
 
 
@@ -153,8 +149,6 @@ router.get("/total-sales", [Authenticator.auth], asyncWrapper(async (req, res) =
         res.json({ message: 'Error', result: err });
 
     }
-
-
 }));
 
 
