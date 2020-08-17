@@ -175,18 +175,24 @@ router.post('/supplier/remove', [Authenticator.auth], asyncWrapper(async(req, re
 // *********************************************************************************//
 
 
-router.post("/transaction/new", [Authenticator.auth], asyncWrapper(async(req, res) => {
+router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, res) => {
     let body = req.body;
     body.userId = req.account.id
-    body.state = 'complete';
-
-    let transaction = await crudService.create('Sale', body)
+    if(body.state != 'holding'){
+        body.state = 'complete'; 
+    }
+    let transaction = await crudService.createOrUpdate('Sale', body, {id: body.id})
     body.products.forEach(item => {
         item.saleId = transaction.id
-        crudService.create('ProductSale', item )
+        crudService.createOrUpdate('ProductSale', item , {id: item.id})
     })
     if(body.state == 'complete'){
-        deviceService.printReceipt(body)
+        let printData = {
+            issuer: req.account.firstname+' '+req.account.lastname
+        }
+        printData.business = await crudService.findOne('Business', {id: 1});
+        printData.transaction
+        deviceService.printReceipt(printData) 
     }
     
     res.json({message: 'Result', result: transaction});

@@ -6,7 +6,7 @@ printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
     interface: 'printer:'+config.printer.name,
     driver: require('printer'),
-    lineCharacter: "*",  
+    lineCharacter: "-",  
     width: config.printer.paperWidth
 });
 
