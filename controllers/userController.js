@@ -88,6 +88,10 @@ router.put("/update",[Upload.single('avatar')], asyncWrapper(async (req, res) =>
  * REMOVE USER ACCOUNT
  */
 router.post('/remove', [Authenticator.auth], asyncWrapper(async(req, res) => {
+    const account = await crudService.findOne(body, {id: req.body.id})
+    if(account.role == 'tech'){
+        throw CustomError({statusCode: 401, message: 'cant delete tech account'}, res)
+    }
     let data = await crudService.delete('User', {id: req.body.id})
     res.json({message: 'All users', result: data});
 }))

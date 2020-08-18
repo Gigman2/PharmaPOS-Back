@@ -100,7 +100,7 @@ module.exports = class DeviceService{
         printer.setTextNormal()
         printer.print('Software by Sluxify.com')
         printer.newLine();
-        printer.print('+233265274457')
+        printer.print('+233552375010')
 
         printer.alignCenter()
         printer.newLine();

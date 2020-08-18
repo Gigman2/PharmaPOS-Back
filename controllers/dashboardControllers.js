@@ -3,11 +3,15 @@ const router = require("express").Router();
 const Sequelize =  require('sequelize');
 const Op = Sequelize.Op
 const asyncWrapper = require("../helpers/async").AsyncWrapper;
-const DatabaseFunc = require('../helpers/crud')
+
 const Authenticator = require('../middlewares/auth-middleware')
 const CustomError = require('../middlewares/error-handling')
-const moment = require('moment');
+
+const DatabaseFunc = require('../helpers/crud')
 const crudService = new DatabaseFunc; 
+const AnalyticsService = require('../services/analyticsService')
+const analyticsService = new AnalyticsService;
+
 
 //sales
 router.get("/sales-monthly", [Authenticator.auth], asyncWrapper(async (req, res) => {
@@ -18,29 +22,7 @@ router.get("/sales-monthly", [Authenticator.auth], asyncWrapper(async (req, res)
     //add to an array then sum up
 
     try {
-
-        let salesArray = await crudService.findAll('Sale', 
-            { 
-                createdAt: {
-                    [Op.gte]: moment().add(-1, 'M').endOf('month').format('YYYY-MM-DD'),
-                    [Op.lt]:  moment().add(1, 'M').startOf('month').format('YYYY-MM-DD')
-                }
-            }
-        );
-        
-        console.log(salesArray)
-        
-
-        let salesData = []
-
-        salesArray.map(item => {
-            salesData.push(parseFloat(item.grossTotal));
-        });
-        
-        salesData = salesData.reduce(function (sum, value) {
-            return sum + value;
-        });
-
+        let salesData = await analyticsService.salesMonthly()
         res.json({ message: 'Result', result: salesData });
 
     } catch (err) {
@@ -59,51 +41,7 @@ router.get("/sales", [Authenticator.auth], asyncWrapper(async (req, res) => {
     //add to an array then sum up
 
     try {
-
-        // let salesArray = await crudService.findAll('Sale', 
-        //     { 
-        //         createdAt: {
-        //             [Op.gte]: moment().add(-1, 'M').endOf('month').format('YYYY-MM-DD'),
-        //             [Op.lt]:  moment().add(1, 'M').startOf('month').format('YYYY-MM-DD')
-        //         }
-        //     }
-        // );
-        const TODAY_START = new Date().setHours(0, 0, 0, 0);
-        const NOW = new Date();
-        
-        let salesArray = await crudService.findAll('Sale', 
-            { 
-                createdAt: {
-                    [Op.gt]: TODAY_START,
-                    [Op.lt]: NOW
-                }
-            }
-        );
-        
-        console.log(salesArray)
-        
-
-        let salesData = {
-            grossTotal: [],
-            netTotal: []
-        }
-
-        salesArray.map(item => {
-            salesData.grossTotal.push(parseFloat(item.grossTotal));
-            salesData.netTotal.push(parseFloat(item.netTotal));
-        });
-        
-        for (const [key, value] of Object.entries(salesData)) {
-            console.log(salesData[key])
-            if(salesData[key].length != 0){
-                salesData[key] = salesData[key].reduce(function (sum, value) {
-                    return sum + value;
-                });
-            }else{
-                salesData[key] = salesData[key].length
-            }
-        }
-
+        let salesData = await analyticsService.sales()
         res.json({ message: 'Result', result: salesData });
 
     } catch (err) {
@@ -124,20 +62,7 @@ router.get("/stock-worth", [Authenticator.auth], asyncWrapper(async (req, res) =
 
     try {
         //obtains the left propert
-        let products = await crudService.findAll('Product');
-
-        let stockWorthArray = products.map(product => product.left * product.price)
-
-        //converting object to array
-        let shortageList = products.filter(product => product.left <= product.restock)
-        let shortage = shortageList.length
-        
-        let stockWorth = stockWorthArray.reduce(function (sum, value) {
-            return sum + value;
-        });
-
-        let data = { shortage: shortage, stockWorth: stockWorth, products: shortageList }
-
+        let data =  await analyticsService.stockWorth()
 
         res.json({ message: 'Result', result: data });
 
@@ -147,10 +72,28 @@ router.get("/stock-worth", [Authenticator.auth], asyncWrapper(async (req, res) =
         res.json({ message: 'Error', result: err });
 
     }
+}));
 
 
+//sales data 
+router.get("/sales-graph", [Authenticator.auth], asyncWrapper(async (req, res) => {
 
+    //obtain the number of products left
+    //left is property in the products model(double)
+    // by looping through all the left property and suming up the prices
+    // we should obtain the stock worth
 
+    try {
+        
+        let data =  await analyticsService.salesGraph()
+        res.json({ message: 'Result', result: data });
+
+    } catch (err) {
+
+        console.log(err)
+        res.json({ message: 'Error', result: err });
+
+    }
 }));
 
 
@@ -164,16 +107,7 @@ router.get("/account-admins", [Authenticator.auth], asyncWrapper(async (req, res
     //but that is not in the crud service
 
     try {
-
-        let employeeData = await crudService.listAll('User', { role: "employee" })
-        let adminData = await crudService.listAll('User', { role: "admin" })
-
-        employeeData = employeeData.map(user => user.role);
-        adminData = adminData.map(user => user.role);
-
-        let employees = employeeData.length
-        let admins = adminData.length
-        let data = { admins: admins, employees: employees }
+        let data = await analyticsService.totalAccounts()
 
         res.json({ message: 'Result', result: data });
 
