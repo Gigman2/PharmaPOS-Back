@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
 	Model.associate = function(models) {
-        Model.belongsTo(models.Product, {foreignKey: 'productId', as: 'stock'})
+        Model.belongsTo(models.Product, {foreignKey: 'productId', as: 'product'})
         Model.belongsTo(models.Supplier, {foreignKey: 'supplierId', as: 'supplier'})
         Model.belongsTo(models.User, {foreignKey: 'userId', as: 'signed'})
     };

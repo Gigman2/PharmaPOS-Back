@@ -1,6 +1,7 @@
 'use strict'
 const UserController = require('../controllers/userController')
 const ProductController = require('../controllers/productController')
+const DashboardController = require('../controllers/dashboardControllers')
 const SalesController = require('../controllers/salesController')
 const HardwareController = require('../controllers/setupController')
 
@@ -11,11 +12,12 @@ function init(server) {
 	});
 
 	server.get('/', function (req, res) {
-		res.send('Pharma POS');
+		res.send('Sluxi POS');
 	});
 
 
 	server.use('/api/users', UserController)
+	server.use('/api/dashboard', DashboardController)
 	server.use('/api/product', ProductController)
 	server.use('/api/sales', SalesController)
 	server.use('/api/hardware', HardwareController)

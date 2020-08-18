@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
                 transactionID:  {type: DataTypes.STRING},
                 grossTotal:  {type: DataTypes.STRING},
                 netTotal: {type: DataTypes.STRING},
-                itemTotal: {type: DataTypes.STRING},
+                itemTotal: {type: DataTypes.STRING}, 
                 tax: {type: DataTypes.STRING},
                 discount: {type: DataTypes.STRING},
                 cashAmount: {type: DataTypes.STRING},

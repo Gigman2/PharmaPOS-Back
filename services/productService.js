@@ -197,6 +197,16 @@ module.exports = class UserService{
               }
             ]
           },
+          {
+            model: models.User,
+            as: 'soldby',
+            required: false,
+          },
+          {
+            model: models.Customer,
+            as: 'boughtBy',
+            required: false,
+          },
         ]
       }) 
     } catch (error) {
@@ -223,6 +233,29 @@ module.exports = class UserService{
               }
             ]
           },
+        ]
+      }) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async fetchStockUpdated(){
+    try {
+      return models.Stock.findAll({
+        where: {
+        },
+        include: [
+          {
+            model: models.Product,
+            as: 'product',
+            required: false,
+          },
+          {
+            model: models.Supplier,
+            as: 'supplier',
+            required: false,
+          }
         ]
       }) 
     } catch (error) {

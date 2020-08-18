@@ -98,7 +98,7 @@ module.exports = class DeviceService{
 
         printer.newLine();
         printer.setTextNormal()
-        printer.print('Software by Sluxufy.com')
+        printer.print('Software by Sluxify.com')
         printer.newLine();
         printer.print('+233265274457')
 
