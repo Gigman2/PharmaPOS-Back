@@ -90,10 +90,24 @@ module.exports = class UserService{
     }
   }
 
-
-  async fetchCategories(){
+  async fetchSupplier(condition){
     try {
-      return models.Category.findAll({
+      let option = {
+      }
+      
+      if(condition){
+        option.where = condition
+      }
+
+      return models.Supplier.findAll(option) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async fetchCategories(condition){
+    try {
+      let option = {
         include: [
           {
             model: models.User,
@@ -106,7 +120,12 @@ module.exports = class UserService{
             required: false
           }
         ]
-      }) 
+      }
+      if(condition){
+        option.where = condition
+      }
+
+      return models.Category.findAll(option) 
     } catch (error) {
       console.log(error)
     }
@@ -116,6 +135,7 @@ module.exports = class UserService{
     try {
       return models.Product.findAll({
         where: condition,
+        order: [['name', 'ASC']],
         include: [
           {
             model: models.Category,
@@ -179,11 +199,11 @@ module.exports = class UserService{
     }
   }
   
-  async fetchTransactions(){
+  async fetchTransactions(condition){
     try {
       return models.Sale.findAll({
-        where: {
-        },
+        where: condition,
+        order: [['updatedAt', 'DESC']],
         include: [
           {
             model: models.ProductSale,

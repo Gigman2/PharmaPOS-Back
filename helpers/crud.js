@@ -1,15 +1,27 @@
 const models = require("../models") 
 module.exports = class CrudService {
     async findOne(Model, condition) {
-        return await models[Model].findOne({where: condition});
+        return await models[Model].findOne({
+            where: condition
+        });
     }
 
-    async findAll(Model, condition) {
-        return await models[Model].findAll({where: condition});
+    async findAll(Model, condition, order) {
+        let option = {
+            where: condition,
+        }
+        if(order != null){
+            option.order = order
+        }
+        return await models[Model].findAll(option);
     }
 
-    async listAll(Model, condition) {
-        return await models[Model].findAll();
+    async listAll(Model, order) {
+        let option = {}
+        if(order != null){
+            option.order = order
+        }
+        return await models[Model].findAll(option);
     }
  
     async create(Model, data) {

@@ -1,6 +1,7 @@
 const fs     = require('fs');
 const path   = require('path');
 const jwt    = require('jsonwebtoken');
+const bcrypt   = require('bcryptjs')
 
 const config = require(__basedir + '/config/index.js');
 
@@ -81,5 +82,13 @@ module.exports = {
       }
       
       return true;
+  },
+  hash: async(data) => {
+    let salt, hash;
+    salt = await bcrypt.genSalt(10);
+
+    hash = await bcrypt.hash(data.password, salt);
+    data.password = hash;
+    return data
   }
 }

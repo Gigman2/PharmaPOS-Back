@@ -17,23 +17,11 @@ router.post("/new", asyncWrapper(async (req, res) => {
     body.phone = req.body.phone
     body.lastPurchase = req.body.lastPurchase
 
-
-    console.log(req)
-    console.log('customer body',body)
     
     const customerExist = await crudService.findOne('Customer', {email:body.email})
 
     if(customerExist)throw CustomError({statusCode: '422', message: 'Customer already exists'}, res)
 
-    // const validated = await productService.authenticateData(body, 'create')
-    // if(validated != null){
-    //     throw CustomError({statusCode: validated.code, message: validated.message}, res)
-    // }
-    
-    // body.purchases = req.body.purchases
-    
-    // let body={firstname,lastname,email,phone,lastPurchase}
-    console.log('customer body',body)
     let data = await crudService.create('Customer', body)
 
     
@@ -46,6 +34,11 @@ router.get("/sales-list",[Authenticator.auth], asyncWrapper(async(req, res)=> {
 }));
 
 router.get("/customer-list",[Authenticator.auth], asyncWrapper(async(req, res)=> {
+    let data = await crudService.listAll('Customer')
+    res.json({message: 'Result', result: data});
+}));
+
+router.get("/customer-search",[Authenticator.auth], asyncWrapper(async(req, res)=> {
     let data = await crudService.listAll('Customer')
     res.json({message: 'Result', result: data});
 }));

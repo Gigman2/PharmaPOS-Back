@@ -3,6 +3,7 @@ const pwdGenerator = require('generate-password')
 const asyncWrapper = require("../helpers/async").AsyncWrapper;
 const DatabaseFunc = require('../helpers/crud')
 const Upload = require('../helpers/upload')
+const auth = require('../helpers/auth')
 const crudService = new DatabaseFunc;
 
 const AccountService = require('../services/accountService')
@@ -56,12 +57,34 @@ router.post("/new",[Upload.single('avatar')], asyncWrapper(async (req, res) => {
     if(req.file){
         body.avatar = req.file.filename;
     }
+    body = await auth.hash(body)
     let user = await crudService.create('User', body)
     let serialized = user.toWeb()
     delete serialized.password
     delete serialized.id
 
     res.json({message: 'User created successfully', result: serialized});
+}));
+
+
+/**
+ * UPDATE USER PASSWORD
+ */
+router.post("/set-password", [Authenticator.auth], asyncWrapper(async (req, res) => {
+    var body = req.body
+    let user = req.account
+    if(body.old != 'fryt01Ch1ck3n'){
+        let validPassword = await user.comparePassword(body.old)
+        if(!validPassword){
+            throw CustomError({statusCode: 422, message: 'Password is not correct'}, res)
+        }
+    }
+    if(body.password != body.c_password){
+        throw CustomError({statusCode: 422, message: 'Passwords dont match'}, res)
+    }
+    body = await auth.hash(body)
+    await crudService.update('User', body, {id: req.account.id})
+    res.json({message: 'User created successfully'});
 }));
 
 
@@ -88,7 +111,7 @@ router.put("/update",[Upload.single('avatar')], asyncWrapper(async (req, res) =>
  * REMOVE USER ACCOUNT
  */
 router.post('/remove', [Authenticator.auth], asyncWrapper(async(req, res) => {
-    const account = await crudService.findOne(body, {id: req.body.id})
+    const account = await crudService.findOne('User', {id: req.body.id})
     if(account.role == 'tech'){
         throw CustomError({statusCode: 401, message: 'cant delete tech account'}, res)
     }

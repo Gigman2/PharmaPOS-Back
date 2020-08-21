@@ -62,6 +62,7 @@ router.post("/update",[Upload.single('image'), Authenticator.auth], asyncWrapper
 
 router.post("/single", [Authenticator.auth], asyncWrapper(async(req, res) => {
     let data;
+    console.log(req.body)
     if(req.query.type == 'simple'){
         data = await crudService.findOne('Product', {id: req.body.id})
     }else{
@@ -89,14 +90,18 @@ router.get('/search', [Authenticator.auth], asyncWrapper(async(req, res) => {
     try {
         let query = req.query;
         // delete query.name
-        if(req.query.name){
-            query = {
-                [Op.and]: [
-                    Sequelize.literal("product.name LIKE '%"+ req.query.name+"%'"),
-                ]
+        if(query.type == 'category'){
+
+        }else{
+            if(req.query.name){
+                query = {
+                    [Op.and]: [
+                        Sequelize.literal("product.name LIKE '%"+ req.query.name+"%'"),
+                    ]
+                }
             }
+            let data = await productService.fetchProducts(query)
         }
-        let data = await productService.fetchProducts(query)
         res.json({message: 'Result', result: data});
 
     } catch (error) {
@@ -141,7 +146,7 @@ router.post("/save-category", [Authenticator.auth], asyncWrapper(async (req, res
 
 router.get("/category/list", [Authenticator.auth], asyncWrapper(async(req, res)=> {
     let data;
-    if(req.query.type != ""){
+    if(req.query.type != undefined){
         data = await crudService.listAll('Category')
     }else{
         data = await productService.fetchCategories()
@@ -149,10 +154,24 @@ router.get("/category/list", [Authenticator.auth], asyncWrapper(async(req, res)=
     res.json({message: 'Result', result: data});
 }));
 
+router.get("/category/search", [Authenticator.auth], asyncWrapper(async(req, res)=> {
+    let data;
+    query = {
+        [Op.and]: [
+            Sequelize.literal("category.name LIKE '%"+ req.query.q+"%'"),
+        ]
+    }
+
+    data = await productService.fetchCategories(query)
+    res.json({message: 'Result', result: data});
+}));
+
+
 router.post('/category/remove', [Authenticator.auth], asyncWrapper(async(req, res) => {
     let data = await crudService.delete('Category', {id: req.body.id})
     res.json({message: 'Deleted', result: data});
 }))
+
 
 
 // *********************************************************************************//
@@ -173,6 +192,18 @@ router.post("/save-supplier", [Authenticator.auth], asyncWrapper(async (req, res
 
 router.get("/supplier/list", [Authenticator.auth], asyncWrapper(async(req, res)=> {
     let data = await crudService.listAll('Supplier')
+    res.json({message: 'Result', result: data});
+}));
+
+router.get("/supplier/search", [Authenticator.auth], asyncWrapper(async(req, res)=> {
+    let data;
+    let query = {
+        [Op.and]: [
+            Sequelize.literal("supplier.name LIKE '%"+ req.query.q+"%'"),
+        ]
+    }
+
+    data = await productService.fetchSupplier(query)
     res.json({message: 'Result', result: data});
 }));
 
@@ -223,6 +254,18 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
 
 router.get("/transaction/list", [Authenticator.auth], asyncWrapper(async(req, res) => {
     let data = await productService.fetchTransactions();
+    
+    res.json({message: 'Result', result: data});
+}))
+
+router.get("/transaction/search", [Authenticator.auth], asyncWrapper(async(req, res) => {
+    let query = {
+        [Op.or]: [
+            Sequelize.literal("sale.id LIKE '%"+ req.query.q+"%'"),
+            Sequelize.literal("sale.state LIKE '%"+ req.query.q+"%'")
+        ]
+    }
+    let data = await productService.fetchTransactions(query);
     
     res.json({message: 'Result', result: data});
 }))

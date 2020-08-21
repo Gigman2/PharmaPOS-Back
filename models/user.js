@@ -5,6 +5,7 @@ const JWTService   = require('../helpers/auth')
 module.exports = (sequelize, DataTypes) => {
 	const Model = sequelize.define('User', {
         id: {allowNull: false, primaryKey: true, type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4},
+        username:  {type: DataTypes.STRING},
         firstname:  {type: DataTypes.STRING},
         lastname: {type: DataTypes.STRING},
         email: {type: DataTypes.STRING},
@@ -18,19 +19,33 @@ module.exports = (sequelize, DataTypes) => {
 
 	Model.associate = function(models) {
         Model.hasMany(models.Category, {foreignKey: 'userId', as: 'categories'})
-	};
+    };
+    
+    Model.hooks = {
+        beforeSave: (async (user, options) => {
+            let err;
+            if (user.changed('password')){
+                let salt, hash;
+                salt = await bcrypt.genSalt(10);
+    
+                hash = await bcrypt.hash(user.password, salt);
+                user.password = hash;
+            }
+        }),
+        beforeUpdate: (async(user, options) => {
+            let err;
+            console.log(user.changed)
+            if (user.changed('password')){
+                let salt, hash;
+                salt = await bcrypt.genSalt(10);
+    
+                hash = await bcrypt.hash(user.password, salt);
+    
+                user.password = hash;
+            }
+        })
 
-	Model.beforeSave(async (user, options) => {
-        let err;
-        if (user.changed('password')){
-            let salt, hash;
-            salt = await bcrypt.genSalt(10);
-
-            hash = await bcrypt.hash(user.password, salt);
-
-            user.password = hash;
-        }
-    });
+    }
 
     Model.prototype.fullname = async function (){
        if(this.middlename){
