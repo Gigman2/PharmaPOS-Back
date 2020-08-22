@@ -1,10 +1,14 @@
 const router = require("express").Router();
 const asyncWrapper = require("../helpers/async").AsyncWrapper;
-const DatabaseFunc = require('../helpers/crud')
 const Authenticator = require('../middlewares/auth-middleware')
 const Sequelize   =  require('sequelize');
 const Op  = Sequelize.Op
+
+const DatabaseFunc = require('../helpers/crud')
 const crudService = new DatabaseFunc;
+
+const AnalyticsService = require('../services/analyticsService');
+const analyticsService  = new AnalyticsService;
 
 //Cusomer
 router.post("/new", asyncWrapper(async (req, res) => {
@@ -53,6 +57,12 @@ router.post("/customer-save",[Authenticator.auth], asyncWrapper(async(req, res)=
 
 router.get("/discount-promo-list",[Authenticator.auth], asyncWrapper(async(req, res)=> {
     let data = await crudService.listAll('Discount')
+    res.json({message: 'Result', result: data});
+}));
+
+router.post("/report",[Authenticator.auth], asyncWrapper(async(req, res)=> {
+    let body = req.body;
+    let data = await analyticsService.salesReport(body)
     res.json({message: 'Result', result: data});
 }));
 

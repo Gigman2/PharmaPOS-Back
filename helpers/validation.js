@@ -11,7 +11,7 @@ module.exports = {
         avatar: Joi.string().optional()
     }),
     loginUser: Joi.object({
-        email: Joi.string().email({ minDomainSegments: 2 }).required(),
+        email: Joi.string().required(),
         password: Joi.string().required(),
     }),
     product: Joi.object({

@@ -66,11 +66,12 @@ module.exports = class DeviceService{
             })
         }
 
-        printer.drawLine();
-        printer.tableCustom([
-            {text: 'Tax (1.5%)', align: "LEFT", width:0.5},
-            {text: data.transaction.tax, align: "RIGHT", width:0.5}
-        ])
+        // printer.drawLine();
+        // printer.tableCustom([
+        //     {text: 'Tax (1.5%)', align: "LEFT", width:0.5},
+        //     {text: data.transaction.tax, align: "RIGHT", width:0.5}
+        // ])
+        
         printer.drawLine();
         printer.tableCustom([
             {text: 'Total', align: "LEFT", width:0.5, bold: true},

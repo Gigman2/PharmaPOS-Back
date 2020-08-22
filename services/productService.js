@@ -284,11 +284,10 @@ module.exports = class UserService{
   }
 
   async updateStockAfterPurchase(transactionId){
-    let sales = await crudService.findAll('ProductSale', {id: transactionId})
+    let sales = await crudService.findAll('ProductSale', {saleId: transactionId})
     sales.forEach(async item => {
       let product = await crudService.findOne('Product', {id: item.productId});
-
-      crudService.update('Product', {left: product.left - (item.quantity)}, {id: product.id})
+      crudService.update('Product', {left: Number(product.left) - Number(item.quantity)}, {id: product.id})
     })
   }
 }

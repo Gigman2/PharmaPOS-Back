@@ -10,10 +10,12 @@ const ProductService = require('../services/productService')
 const productService = new ProductService;
 const DeviceService = require('../services/deviceService')
 const deviceService = new DeviceService;
+const AnalyticsService = require('../services/analyticsService');
+const analyticsService = new AnalyticsService;
+
 
 const Authenticator = require('../middlewares/auth-middleware')
-const CustomError = require('../middlewares/error-handling')
-
+const CustomError = require('../middlewares/error-handling');
 
 router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(async (req, res) => {
     var body = req.body
@@ -107,6 +109,12 @@ router.get('/search', [Authenticator.auth], asyncWrapper(async(req, res) => {
     } catch (error) {
         console.log(error)
     }
+}))
+
+router.post("/report", [Authenticator.auth], asyncWrapper(async(req, res) => {
+    let body = req.body;
+    let data = await analyticsService.inventoryReport(body)
+    res.json({message: 'Result', result: data});
 }))
 
 // *********************************************************************************//
@@ -236,6 +244,8 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
 
     if(productsSaved){
         productService.updateStockAfterPurchase(transaction.id)
+        let stock = await analyticsService.stockWorth()
+        crudService.update('Sale', {stockWorth: stock.stockWorth}, {id: transaction.id})
 
         if(body.state == 'complete'){
             let printData = {
@@ -268,41 +278,6 @@ router.get("/transaction/search", [Authenticator.auth], asyncWrapper(async(req, 
     let data = await productService.fetchTransactions(query);
     
     res.json({message: 'Result', result: data});
-}))
-
-
-
-router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, res) => {
-    let body = req.body;
-    body.userId = req.account.id
-    if(body.state != 'holding'){
-        body.state = 'complete'; 
-    }
-    let transaction = await crudService.createOrUpdate('Sale', body, {id: body.id})
-    let productsSaved = await Promise.all(body.products.map(async item => {
-        item.saleId = transaction.id
-        await crudService.createOrUpdate('ProductSale', item , {id: item.id})
-    }))
-
-    if(transaction.customerId){
-        crudService.update('Customer', {lastPurchase: Date.now()}, {id: transaction.customerId});
-    }
-
-    if(productsSaved){
-        productService.updateStockAfterPurchase(transaction.id)
-
-        if(body.state == 'complete'){
-            let printData = {
-                issuer: req.account.firstname+' '+req.account.lastname
-            }
-            printData.business = await crudService.findOne('Business', {id: 1});
-            printData.transaction = await productService.fetchTransaction(transaction.id)
-            deviceService.printReceipt(printData) 
-        }
-    }
-    
-
-    res.json({message: 'Result', result: transaction});
 }))
 
 

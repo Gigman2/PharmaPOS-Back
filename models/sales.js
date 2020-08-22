@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
                 discount: {type: DataTypes.STRING},
                 cashAmount: {type: DataTypes.STRING},
                 momoAmount: {type: DataTypes.STRING},
-                state: {type: DataTypes.ENUM('holding', 'processing', 'complete')}
+                state: {type: DataTypes.ENUM('holding', 'processing', 'complete')},
+                stockWorth: {type: DataTypes.STRING},
 	});
 
 	Model.associate = function(models) {

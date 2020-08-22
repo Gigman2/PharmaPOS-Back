@@ -10,95 +10,95 @@ const DatabaseFunctions = require('../helpers/crud')
 const crudService = new DatabaseFunctions()
 
 module.exports = class AnalyticsService{ 
-  async salesMonthly(data, type){
-    let salesArray = await crudService.findAll('Sale', 
-        {   
-            state: 'complete',
-            createdAt: {
-                [Op.gte]: moment().add(-1, 'M').endOf('month').format('YYYY-MM-DD'),
-                [Op.lt]:  moment().add(1, 'M').startOf('month').format('YYYY-MM-DD')
+    async salesMonthly(data, type){
+        let salesArray = await crudService.findAll('Sale', 
+            {   
+                state: 'complete',
+                createdAt: {
+                    [Op.gte]: moment().add(-1, 'M').endOf('month').format('YYYY-MM-DD'),
+                    [Op.lt]:  moment().add(1, 'M').startOf('month').format('YYYY-MM-DD')
+                }
             }
-        }
-    );
+        );
 
-    let salesData = []
+        let salesData = []
 
-    await Promise.all(salesArray.map(item => {
-        salesData.push(parseFloat(item.grossTotal));
-    }));
-    
-    salesData = salesData.reduce(function (sum, value) {
-        return sum + value;
-    });
-    return salesData
-  }
-
-  async sales(){
-    const TODAY_START = new Date().setHours(0, 0, 0, 0);
-    const NOW = new Date();
-    
-    let salesArray = await crudService.findAll('Sale', 
-        { 
-            state: 'complete',
-            createdAt: {
-                [Op.gt]: TODAY_START,
-                [Op.lt]: NOW
-            }
-        }
-    );
-
-    let salesData = {
-        grossTotal: [],
-        netTotal: []
+        await Promise.all(salesArray.map(item => {
+            salesData.push(parseFloat(item.grossTotal));
+        }));
+        
+        salesData = salesData.reduce(function (sum, value) {
+            return sum + value;
+        });
+        return salesData
     }
 
-    await Promise.all(salesArray.map(item => {
-        salesData.grossTotal.push(parseFloat(item.grossTotal));
-        salesData.netTotal.push(parseFloat(item.netTotal));
-    }));
-    
-    for (const [key, value] of Object.entries(salesData)) {
-        if(salesData[key].length != 0){
-            salesData[key] = salesData[key].reduce(function (sum, value) {
-                return sum + value;
-            });
-        }else{
-            salesData[key] = salesData[key].length
+    async sales(){
+        const TODAY_START = new Date().setHours(0, 0, 0, 0);
+        const NOW = new Date();
+        
+        let salesArray = await crudService.findAll('Sale', 
+            { 
+                state: 'complete',
+                createdAt: {
+                    [Op.gt]: TODAY_START,
+                    [Op.lt]: NOW
+                }
+            }
+        );
+
+        let salesData = {
+            grossTotal: [],
+            netTotal: []
         }
+
+        await Promise.all(salesArray.map(item => {
+            salesData.grossTotal.push(parseFloat(item.grossTotal));
+            salesData.netTotal.push(parseFloat(item.netTotal));
+        }));
+        
+        for (const [key, value] of Object.entries(salesData)) {
+            if(salesData[key].length != 0){
+                salesData[key] = salesData[key].reduce(function (sum, value) {
+                    return sum + value;
+                });
+            }else{
+                salesData[key] = salesData[key].length
+            }
+        }
+
+        return salesData
     }
 
-    return salesData
-  }
+    async stockWorth(){
+        let products = await crudService.findAll('Product');
 
-  async stockWorth(){
-    let products = await crudService.findAll('Product');
+        let stockWorthArray = await Promise.all(products.map(product => product.left * product.price))
 
-    let stockWorthArray = await Promise.all(products.map(product => product.left * product.price))
+        //converting object to array
+        let shortageList = products.filter(product => product.left <= product.restock)
+        let shortage = shortageList.length
+        
+        let stockWorth = stockWorthArray.reduce(function (sum, value) {
+            return sum + value;
+        });
 
-    //converting object to array
-    let shortageList = products.filter(product => product.left <= product.restock)
-    let shortage = shortageList.length
-    
-    let stockWorth = stockWorthArray.reduce(function (sum, value) {
-        return sum + value;
-    });
+        return { shortage: shortage, stockWorth: stockWorth, products: shortageList }
+    }
 
-    return { shortage: shortage, stockWorth: stockWorth, products: shortageList }
-  }
+    async totalAccounts(){
+        let employeeData = await crudService.listAll('User', { role: "employee" })
+        let adminData = await crudService.listAll('User', { role: "admin" })
 
-  async totalAccounts(){
-    let employeeData = await crudService.listAll('User', { role: "employee" })
-    let adminData = await crudService.listAll('User', { role: "admin" })
+        employeeData = employeeData.map(user => user.role);
+        adminData = adminData.map(user => user.role);
 
-    employeeData = employeeData.map(user => user.role);
-    adminData = adminData.map(user => user.role);
+        let employees = employeeData.length
+        let admins = adminData.length
+        return { admins: admins, employees: employees }
+    }
 
-    let employees = employeeData.length
-    let admins = adminData.length
-    return { admins: admins, employees: employees }
-  }
-
-  async salesGraph(){
+    async salesGraph(){
 
         var sales_QUERY = `SELECT DAY(createdAt) as day, MONTH(createdAt) AS month, YEAR(createdAt) AS year, SUM(grossTotal) as total FROM sales WHERE state = 'complete'  GROUP BY DAY(createdAt)`
        
@@ -108,5 +108,80 @@ module.exports = class AnalyticsService{
         })
         
         return sales
+    }
+
+    async salesReport(body){
+        var query = `SELECT SUM(grossTotal) as closing_cash, SUM(cashAmount) as cash, SUM(momoAmount) as momo,MIN(id) as firstID, MAX(id) as lastID  FROM sales WHERE '${body.from}' >= createdAT  <='${body.to}' GROUP BY DAY(createdAt)`
+        let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+
+        await Promise.all(data.map(async item => {
+            let sales = await models.Sale.findAll({
+                where: {
+                    id: {
+                        [Op.and]:{
+                            [Op.gte]: item.firstID,
+                            [Op.lte]: item.lastID,
+                        }
+                    }
+                },
+                include: [
+                    {
+                        model: models.ProductSale,
+                        as: 'products',
+                        required: false,
+                        include: [
+                            {
+                                model: models.Product,
+                                as: 'product',
+                                required: false
+                            }
+                        ]
+                    },
+                    {
+                        model: models.User,
+                        as: 'soldby',
+                        required: false
+                    }
+                ]
+            })
+            let customers = []
+            sales.forEach(sale => {
+                if(!customers.includes(sale.customerId) && sale.customerId != null){
+                    customers.push(sale.customerId)
+                }
+
+                if(sale.id == item.lastID){
+                    item.stockWorth = sale.stockWorth;
+                    item.lastTransaction = sale.updatedAt;
+                    if(sale.soldby){
+                        item.employee = sale.soldby.firstname+' '+sale.soldby.lastname
+                    }
+                }
+            })
+            item.customers = customers.length;
+        }))
+
+        return data
+    }
+
+    async inventoryReport(body){
+        var query = "SELECT * FROM products WHERE ";
+        if(body.to && body.from){
+            query = query+`'${body.from}' >= createdAT  <= '${body.to}'`;
+        }
+
+        if(body.name){
+            query = query+"'+body.from+'" >= createdAT  <= "'+body.to+'"
+        }
+        let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+
+        await Promise.all(data.map(async item => {
+            var query = `SELECT * FROM stocks WHERE productId = "${item.id}" ORDER BY createdAt asc`;
+            let stock = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+            item.timesrestocked = stock.length
+            item.firstStock = stock[0]
+            item.lastStock = stock[stock.length-1]
+        }))
+        return data
     }
 }
