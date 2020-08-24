@@ -91,6 +91,7 @@ router.get('/stock', [Authenticator.auth], asyncWrapper(async(req, res) => {
 router.get('/search', [Authenticator.auth], asyncWrapper(async(req, res) => {
     try {
         let query = req.query;
+        let data;
         // delete query.name
         if(query.type == 'category'){
 
@@ -102,7 +103,7 @@ router.get('/search', [Authenticator.auth], asyncWrapper(async(req, res) => {
                     ]
                 }
             }
-            let data = await productService.fetchProducts(query)
+            data = await productService.fetchProducts(query)
         }
         res.json({message: 'Result', result: data});
 

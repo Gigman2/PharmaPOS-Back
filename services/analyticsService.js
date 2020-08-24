@@ -111,9 +111,10 @@ module.exports = class AnalyticsService{
     }
 
     async salesReport(body){
-        var query = `SELECT SUM(grossTotal) as closing_cash, SUM(cashAmount) as cash, SUM(momoAmount) as momo,MIN(id) as firstID, MAX(id) as lastID  FROM sales WHERE '${body.from}' >= createdAT  <='${body.to}' GROUP BY DAY(createdAt)`
+        var query = `SELECT SUM(grossTotal) as closing_cash, SUM(cashAmount) as cash, SUM(momoAmount) as momo,MIN(id) as firstID, MAX(id) as lastID  FROM sales WHERE createdAT BETWEEN '${body.from}' AND '${body.to}' GROUP BY DAY(createdAt)`
         let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
 
+        console.log(data)
         await Promise.all(data.map(async item => {
             let sales = await models.Sale.findAll({
                 where: {
@@ -167,11 +168,14 @@ module.exports = class AnalyticsService{
     async inventoryReport(body){
         var query = "SELECT * FROM products WHERE ";
         if(body.to && body.from){
-            query = query+`'${body.from}' >= createdAT  <= '${body.to}'`;
+            query = query+`createdAT BETWEEN '${body.from}' AND '${body.to}'`;
         }
 
         if(body.name){
-            query = query+"'+body.from+'" >= createdAT  <= "'+body.to+'"
+            if(query != ''){
+                query = query + ' AND '
+            }
+            query = query+" name LIKE '%"+body.name+"%'";
         }
         let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
 
@@ -181,7 +185,58 @@ module.exports = class AnalyticsService{
             item.timesrestocked = stock.length
             item.firstStock = stock[0]
             item.lastStock = stock[stock.length-1]
+
+            var query = `SELECT * FROM productSales WHERE productId = "${item.id}"`;
+            let salesproducts = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+            let count = 0;
+            salesproducts.forEach(product => {
+                count = count + parseInt(product.quantity)
+            })
+            item.quantitysold = count
+
+            var query = `SELECT * FROM suppliers WHERE id = "${item.supplierId}"`;
+            let suppliers = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+            item.supplier = suppliers
         }))
         return data
     }
+
+    async userReport(body){
+        var query = "SELECT * FROM users WHERE (role = 'admin' OR role = 'employee') ";
+        if(body.name != ''){
+            query = query+"AND (firstname LIKE '%"+body.name+"%' OR lastname LIKE '%"+body.name+"%')";
+        } 
+        let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+        
+        await Promise.all(data.map(async item => {
+            let totalSales = 0;
+            var query = `SELECT * FROM sales WHERE userId = "${item.id}"`;
+            let sales = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+            sales.forEach(sale => {
+                totalSales = totalSales + parseFloat(sale.grossTotal);
+            })
+            item.totalSales = totalSales;
+        }))
+        return data
+    }
+
+    async customerReport(body){
+        var query = "SELECT * FROM customers";
+        if(body.name){
+            query = query+" WHERE (firstname LIKE '%"+body.name+"%' OR lastname LIKE '%"+body.name+"%')";
+        }
+        let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+        
+        await Promise.all(data.map(async item => {
+            let totalSales = 0;
+            var query = `SELECT * FROM sales WHERE customerId = ${item.id}`;
+            let sales = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+            sales.forEach(sale => {
+                totalSales = totalSales + parseFloat(sale.grossTotal);
+            })
+            item.totalSales = totalSales;
+        }))
+        return data
+    }
+
 }

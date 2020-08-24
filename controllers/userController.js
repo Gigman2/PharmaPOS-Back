@@ -8,6 +8,9 @@ const crudService = new DatabaseFunc;
 
 const AccountService = require('../services/accountService')
 const accountService = new AccountService;
+const AnalyticsService = require('../services/analyticsService');
+const analyticsService = new AnalyticsService;
+
 const Authenticator = require('../middlewares/auth-middleware')
 const CustomError = require('../middlewares/error-handling')
 
@@ -59,6 +62,7 @@ router.post("/new",[Upload.single('avatar')], asyncWrapper(async (req, res) => {
     }
     body = await auth.hash(body)
     let user = await crudService.create('User', body)
+    crudService.create('checkin', {userId: user.id, checkin: Date.now()})
     let serialized = user.toWeb()
     delete serialized.password
     delete serialized.id
@@ -138,6 +142,16 @@ router.get('/list', [Authenticator.auth], asyncWrapper(async(req, res) => {
     data.map(item => item.password = "*****")
     res.json({message: 'All users', result: data});
 }))
+
+/**
+ * LIST USER ACCOUNT
+ */
+router.post('/report', [Authenticator.auth], asyncWrapper(async(req, res) => {
+    let body = req.body;
+    let data = await analyticsService.userReport(body)
+    res.json({message: 'All users', result: data});
+}))
+
 module.exports = router;
 
 

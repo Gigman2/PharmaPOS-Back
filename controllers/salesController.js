@@ -54,6 +54,12 @@ router.post("/customer-save",[Authenticator.auth], asyncWrapper(async(req, res)=
     res.json({message: 'Customer added successfully', result: data});
 }));
 
+router.post("/customer-report",[Authenticator.auth], asyncWrapper(async(req, res)=> {
+    var body = req.body
+    let data = await analyticsService.customerReport(body)
+    res.json({message: 'Customer added successfully', result: data});
+}));
+
 
 router.get("/discount-promo-list",[Authenticator.auth], asyncWrapper(async(req, res)=> {
     let data = await crudService.listAll('Discount')
