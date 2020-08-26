@@ -114,7 +114,6 @@ module.exports = class AnalyticsService{
         var query = `SELECT SUM(grossTotal) as closing_cash, SUM(cashAmount) as cash, SUM(momoAmount) as momo,MIN(id) as firstID, MAX(id) as lastID  FROM sales WHERE createdAT BETWEEN '${body.from}' AND '${body.to}' GROUP BY DAY(createdAt)`
         let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
 
-        console.log(data)
         await Promise.all(data.map(async item => {
             let sales = await models.Sale.findAll({
                 where: {
@@ -180,7 +179,12 @@ module.exports = class AnalyticsService{
         let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
 
         await Promise.all(data.map(async item => {
-            var query = `SELECT * FROM stocks WHERE productId = "${item.id}" ORDER BY createdAt asc`;
+            var query = `SELECT * FROM stocks WHERE productId = "${item.id}"`;
+            if(body.to && body.from){
+                query = query+` AND (createdAT BETWEEN '${body.from}' AND '${body.to}')`;
+            }
+            query = query + ` ORDER BY createdAt asc`;
+    
             let stock = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
             item.timesrestocked = stock.length
             item.firstStock = stock[0]
@@ -202,8 +206,9 @@ module.exports = class AnalyticsService{
     }
 
     async userReport(body){
+        console.log(body)
         var query = "SELECT * FROM users WHERE (role = 'admin' OR role = 'employee') ";
-        if(body.name != ''){
+        if(body.name){
             query = query+"AND (firstname LIKE '%"+body.name+"%' OR lastname LIKE '%"+body.name+"%')";
         } 
         let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
@@ -211,11 +216,76 @@ module.exports = class AnalyticsService{
         await Promise.all(data.map(async item => {
             let totalSales = 0;
             var query = `SELECT * FROM sales WHERE userId = "${item.id}"`;
+            if(body.to && body.from){
+                query = query+`createdAT BETWEEN '${body.from}' AND '${body.to}'`;
+            }
             let sales = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
             sales.forEach(sale => {
                 totalSales = totalSales + parseFloat(sale.grossTotal);
             })
             item.totalSales = totalSales;
+
+
+            var query = `SELECT *, time(checkin) as c_in, time(checkout) as c_out FROM usersessions WHERE userId = "${item.id}"`;
+            if(body.to && body.from){
+                query = query+`createdAT BETWEEN '${body.from}' AND '${body.to}'`;
+            }
+            let allTime = [0, 0];
+            let averageTime = [0, 0]
+            let accountSessions = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+            accountSessions.forEach(session => {
+                let sessions = [session.c_in, session.c_out];
+                sessions.forEach((i, e) => {
+                    if(sessions[e]){
+                        let time = sessions[e].split(':')
+                        let timeSum = (parseInt(time[0]) * 3600)+(parseInt(time[1]) * 60)+parseInt(time[2])
+                        allTime[e] = allTime[e] + timeSum
+                    }
+                })
+            })
+
+            allTime.forEach((i, index) => {
+                if(!isNaN((allTime[index] * 1000) / accountSessions.length)){
+                    averageTime[index] = parseInt((allTime[index] * 1000) / accountSessions.length)   
+                }
+
+                let actualTime = '', s, m, h;
+
+                h = parseInt(averageTime[index]/ 3600000);
+                if(isNaN(h)){
+                    h = 0
+                }
+                actualTime = actualTime + h
+
+                averageTime[index] = averageTime[index] - (h * 3600000)
+                if(averageTime[index] >= 60000){
+                    m = parseInt(averageTime[index] / 60000)
+                    if(String(m).length == 1){
+                        m = '0'+m
+                    }
+                    averageTime[index] = averageTime[index] - (m * 60000)
+                    actualTime = actualTime +':'+m
+                }
+
+                if(averageTime[index] >= 1000){
+                    s = parseInt(averageTime[index]/ 1000)
+                    if(String(s).length == 1){
+                        s = '0'+s
+                    }
+                    averageTime[index] = averageTime[index] - (s * 1000)
+                    actualTime = actualTime +':'+s
+                }
+                if(index == 0){
+                    item.averageCheckin = actualTime
+                }else if(index == 1){
+                    item.averageCheckout = actualTime
+                }
+
+
+            })
+
+
+
         }))
         return data
     }
@@ -229,12 +299,39 @@ module.exports = class AnalyticsService{
         
         await Promise.all(data.map(async item => {
             let totalSales = 0;
+            let discount = 0;
             var query = `SELECT * FROM sales WHERE customerId = ${item.id}`;
             let sales = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
             sales.forEach(sale => {
                 totalSales = totalSales + parseFloat(sale.grossTotal);
+                if(sale.discount == null || sale.discount === undefined || sale.discount == ''){
+                    sale.discount = 0
+                }
+                discount = discount + parseFloat(sale.discount)
             })
             item.totalSales = totalSales;
+            item.discount = discount
+        }))
+        return data
+    }
+
+    async supplierReport(body){
+        var query = "SELECT * FROM suppliers";
+        let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+        await Promise.all(data.map(async item => {
+            var query = `SELECT * FROM products WHERE supplierId = ${item.id}`;
+            let products = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+            item.products = products.length
+
+            var query = `SELECT * FROM stocks WHERE supplierId = ${item.id}`;
+            if(body.to && body.from){
+                query = query+` AND (createdAT BETWEEN '${body.from}' AND '${body.to}')`;
+            }
+            query = query + ` ORDER BY id DESC`
+            let stocks = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+            if(stocks.length > 0){
+                item.entry = stocks[0].createdAt
+            }
         }))
         return data
     }

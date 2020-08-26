@@ -1,8 +1,8 @@
 
 module.exports = (sequelize, DataTypes) => {
-	const Model = sequelize.define('Checkin', {
-        checkin: {type: DataTypes.STRING},
-        checkout: {type: DataTypes.STRING},
+	const Model = sequelize.define('UserSession', {
+        checkin: {type: DataTypes.DATE},
+        checkout: {type: DataTypes.DATE},
     });
 
 	Model.associate = function(models) {

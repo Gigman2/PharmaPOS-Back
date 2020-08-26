@@ -28,7 +28,6 @@ router.post('/auth',asyncWrapper(async(req, res) => {
     if(result.error != null){
         throw CustomError({statusCode: result.error.code, message: result.error.message}, res)
     }
-    
     let data = {
         type: 'user',
         result: result.data
@@ -62,7 +61,6 @@ router.post("/new",[Upload.single('avatar')], asyncWrapper(async (req, res) => {
     }
     body = await auth.hash(body)
     let user = await crudService.create('User', body)
-    crudService.create('checkin', {userId: user.id, checkin: Date.now()})
     let serialized = user.toWeb()
     delete serialized.password
     delete serialized.id
@@ -133,7 +131,6 @@ router.post('/single', [Authenticator.auth], asyncWrapper(async(req, res) => {
     res.json({message: 'All users', result: data});
 }))
 
-
 /**
  * LIST USER ACCOUNT
  */
@@ -141,6 +138,14 @@ router.get('/list', [Authenticator.auth], asyncWrapper(async(req, res) => {
     let data = await crudService.findAll('User')
     data.map(item => item.password = "*****")
     res.json({message: 'All users', result: data});
+}))
+
+/**
+ * LOGOUT USER ACCOUNT
+ */
+router.get('/logout', [Authenticator.auth], asyncWrapper(async(req, res) => {
+    accountService.userLogout({id: req.account.id})
+    res.json({message: 'Loggout'});
 }))
 
 /**

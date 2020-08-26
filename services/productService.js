@@ -4,7 +4,6 @@ const Op  = Sequelize.Op
 const DatabaseFunctions = require('../helpers/crud')
 const Validation = require('../helpers/validation')
 const models = require('../models');
-const { query } = require('express');
 
 const crudService = new DatabaseFunctions()
 

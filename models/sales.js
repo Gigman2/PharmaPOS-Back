@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
                 Model.hasMany(models.ProductSale, {foreignKey: 'saleId', as: 'products'})
                 Model.belongsTo(models.User, {foreignKey: 'userId', as: 'soldby'})
                 Model.belongsTo(models.Customer, {foreignKey: 'customerId', as: 'boughtBy'})
+                Model.belongsTo(models.Discount, {foreignKey: 'discountId', as: 'enjoyed'})
         };
 
         return Model;

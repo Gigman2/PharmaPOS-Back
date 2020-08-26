@@ -216,6 +216,12 @@ router.get("/supplier/search", [Authenticator.auth], asyncWrapper(async(req, res
     res.json({message: 'Result', result: data});
 }));
 
+router.post("/supplier/report", [Authenticator.auth], asyncWrapper(async(req, res) => {
+    let body = req.body;
+    let data = await analyticsService.supplierReport(body)
+    res.json({message: 'Result', result: data});
+}))
+
 router.post('/supplier/remove', [Authenticator.auth], asyncWrapper(async(req, res) => {
     let data = await crudService.delete('Supplier', {id: req.body.id})
     res.json({message: 'Deleted', result: data});

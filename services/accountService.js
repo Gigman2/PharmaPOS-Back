@@ -80,6 +80,40 @@ module.exports = class UserService{
     }
 
     crudService.update('User', {lastLogin: new Date}, {id: user.id})
+
+    
+
+    let session = await crudService.findOne('UserSession',
+        {
+          [Op.and]: [
+            { userId: result.id, },
+            Sequelize.where(
+               Sequelize.fn('DATE', Sequelize.col('createdAt')),
+               Sequelize.literal('CURRENT_DATE')
+            )
+        ]
+      }
+    )
+
+    if(!session){
+        crudService.create('UserSession',  {userId: condition.id, checkout: Date.now()},)
+    }else{
+      if(session.checkin == null){
+        crudService.update('UserSession',
+            {userId: condition.id, checkin: Date.now()},
+            {
+              [Op.and]: [
+                { userId: condition.id, },
+                Sequelize.where(
+                  Sequelize.fn('DATE', Sequelize.col('createdAt')),
+                  Sequelize.literal('CURRENT_DATE')
+                )
+            ]
+          }
+        )
+      }
+    }
+    
     let serialized = user.toWeb()
     
     delete serialized.password
@@ -90,5 +124,20 @@ module.exports = class UserService{
       data: serialized,
       user: user
     }
+  }
+
+  async userLogout(condition){
+    crudService.createOrUpdate('UserSession',
+        {userId: condition.id, checkout: Date.now()},
+        {
+          [Op.and]: [
+            { userId: condition.id, },
+            Sequelize.where(
+               Sequelize.fn('DATE', Sequelize.col('createdAt')),
+               Sequelize.literal('CURRENT_DATE')
+            )
+        ]
+      }
+    )
   }
 }
