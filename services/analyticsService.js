@@ -87,24 +87,25 @@ module.exports = class AnalyticsService{
     }
 
     async totalAccounts(){
-        let employeeData = await crudService.listAll('User', { role: "employee" })
-        let adminData = await crudService.listAll('User', { role: "admin" })
+        let employeeData = await crudService.findAll('User', { role: "employee" })
+        let adminData = await crudService.findAll('User', { role: "admin" })
 
         employeeData = employeeData.map(user => user.role);
         adminData = adminData.map(user => user.role);
 
         let employees = employeeData.length
         let admins = adminData.length
+
         return { admins: admins, employees: employees }
     }
 
     async salesGraph(){
 
-        var sales_QUERY = `SELECT DAY(createdAt) as day, MONTH(createdAt) AS month, YEAR(createdAt) AS year, SUM(grossTotal) as total FROM sales WHERE state = 'complete'  GROUP BY DAY(createdAt)`
+        var sales_query = `SELECT DAY(createdAt) as day, MONTH(createdAt) AS month, YEAR(createdAt) AS year, SUM(grossTotal) as total FROM sales WHERE state = 'complete'  GROUP BY DAY(createdAt)`
        
         let sales = await sequelize.query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))")
         .then(async () => {
-            return await sequelize.query(sales_QUERY, { type: Sequelize.QueryTypes.SELECT })
+            return await sequelize.query(sales_query, { type: Sequelize.QueryTypes.SELECT })
         })
         
         return sales

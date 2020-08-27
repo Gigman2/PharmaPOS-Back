@@ -1,5 +1,6 @@
 const models = require("../models")
 const xl = require('excel4node');
+const path = require("path")
 
 module.exports = class DataExport {
     async setExcelTitle(data){
@@ -35,7 +36,8 @@ module.exports = class DataExport {
               bold: true
             },
             alignment: {
-                horizontal: 'center'
+                horizontal: 'center',
+                vertical: 'center'
             }
         });
 
@@ -46,23 +48,25 @@ module.exports = class DataExport {
               bold: true
             },
         });
+        
+        let keys =  Object.keys(data.title);
 
-        ws.cell (1, 1, 2, data.title.length, true)
+
+        ws.cell (1, 1, 2, keys.length, true)
         .string(data.business.name)
         .style(businessStyle);
 
-        ws.cell (3, 1, 4, data.title.length, true)
-        .string(data.name+' from '+ data.from +' to ' +data.to)
+        ws.cell (3, 1, 4, keys.length, true)
+        .string(data.name+' between '+data.from+' and '+data.to)
         .style(titleStyle);
 
-        let keys =  Object.keys(data.title);
 
-        console.log(keys)
         keys.forEach(async (key, i) => {
+            console.log((key.length+7)*1.5)
             await ws.cell(5, i+1)
             .string(data.title[key])
             .style(headerStyle);
-            // ws.column(i+1).setWidth(data.title[key].length)
+            ws.column(i+1).setWidth((key.length+5)*1.5)
         })
 
 
@@ -85,8 +89,11 @@ module.exports = class DataExport {
                 j++;
             })
         })
+        
+        let name = data.name.trim().toLowerCase()+'-'+Date.now()+'.xlxs'
 
-        wb.write(data.name.trim()+'.xlsx')
+        wb.write(path.resolve(__dirname, '..', 'uploads', name))
+        return {file: name}
     }
 
     async pdfExport(){

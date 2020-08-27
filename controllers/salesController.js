@@ -2,6 +2,7 @@ const router = require("express").Router();
 const asyncWrapper = require("../helpers/async").AsyncWrapper;
 const Authenticator = require('../middlewares/auth-middleware')
 const Sequelize   =  require('sequelize');
+const path   =  require('path');
 const Op  = Sequelize.Op
 
 const DatabaseFunc = require('../helpers/crud')
@@ -81,7 +82,7 @@ router.post("/report/download",[Authenticator.auth], asyncWrapper(async(req, res
     body.business = business
     if(req.query.file == 'excel'){
         data = await dataExport.excelExport(body)
-        const file = body.name.trim()+`.xlsx`;
+        const file = path.resolve('..', 'uploads', data.file)
         res.download(file);
 
     }else if(req.query.file == 'pdf'){
