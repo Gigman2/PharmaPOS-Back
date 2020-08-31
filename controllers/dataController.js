@@ -87,13 +87,13 @@ router.post("/download",[Authenticator.auth], asyncWrapper(async(req, res)=> {
     let business = await crudService.findOne('Business', {id: 1});
     body.business = business
     data = await dataExport.excelExport(body)
-    res.send( {file: data+'.xlsx'});
+    res.send({file: data+'.xlsx'});
     res.end;
 }));
 
 router.get("/download", function (req, res) {
     let filePath = path.resolve(__dirname, '..', 'download',req.query.file)
-    res.download(filePath);
+    res.send('Hello World').download(filePath);
 });
 
 

@@ -39,6 +39,11 @@ router.get("/sales-list",[Authenticator.auth], asyncWrapper(async(req, res)=> {
     res.json({message: 'Result', result: data});
 }));
 
+router.post("/customer-attach",[Authenticator.auth], asyncWrapper(async(req, res)=> {
+    let data = await crudService.update('Sale', req.body, {id: req.body.id})
+    res.json({message: 'Result', result: data});
+}));
+
 router.get("/customer-list",[Authenticator.auth], asyncWrapper(async(req, res)=> {
     let data = await crudService.listAll('Customer')
     res.json({message: 'Result', result: data});
