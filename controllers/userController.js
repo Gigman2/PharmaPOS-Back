@@ -91,16 +91,16 @@ router.post("/set-password", [Authenticator.auth], asyncWrapper(async (req, res)
 
 
 /**
- * UPDATE USER  ACCOUNT
+ * UPDATE USER  ACCOUNT 
  */
 router.put("/update",[Upload.single('avatar')], asyncWrapper(async (req, res) => {
     var body = JSON.parse(JSON.stringify(req.body));
     delete body.id;
 
-    const validated = await accountService.authenticateData(body, 'update')
-    if(validated != null){
-        throw CustomError({statusCode: validated.code, message: validated.message}, res)
-    }
+    // const validated = await accountService.authenticateData(body, 'update')
+    // if(validated != null){
+    //     throw CustomError({statusCode: validated.code, message: validated.message}, res)
+    // }
     if(req.file){
         body.avatar =req.file.filename;
     }
