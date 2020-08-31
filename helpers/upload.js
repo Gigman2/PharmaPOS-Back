@@ -6,7 +6,7 @@ var localStorage = multer.diskStorage({
         callback(null, './uploads');
     },
     filename: function(req, file, callback){
-        var filename = 'image-upload' + '-' + Date.now() + path.extname(file.originalname);
+        var filename = 'file-upload' + '-' + Date.now() + path.extname(file.originalname);
         callback(null, filename);
     }
 });

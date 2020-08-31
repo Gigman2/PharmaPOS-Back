@@ -275,6 +275,23 @@ router.get("/transaction/list", [Authenticator.auth], asyncWrapper(async(req, re
     res.json({message: 'Result', result: data});
 }))
 
+router.post("/transaction/return", [Authenticator.auth], asyncWrapper(async(req, res) => {
+    let data = await crudService.update('Sale', {state: 'returned'}, {id: req.body.id})
+    let products = await crudService.findAll('ProductSale', {saleId: req.body.id})
+    products.map(item => {
+        let product = await = crudService.findOne('Product', {id : item.productId})
+        crudService.update('Product', {quantity: parseFloat(item.quantity) + parseFloat(product.quantity)}, {id : item.productId})
+    })
+    
+    res.json({message: 'Result', result: data}); 
+}))
+
+router.post("/transaction/refund", [Authenticator.auth], asyncWrapper(async(req, res) => {
+    let data = await crudService.update('Sale', {state: 'refunded'}, {id: req.body.id})
+    
+    res.json({message: 'Result', result: data});
+}))
+
 router.get("/transaction/search", [Authenticator.auth], asyncWrapper(async(req, res) => {
     let query = {
         [Op.or]: [

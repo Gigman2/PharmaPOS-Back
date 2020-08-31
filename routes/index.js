@@ -4,6 +4,9 @@ const ProductController = require('../controllers/productController')
 const DashboardController = require('../controllers/dashboardControllers')
 const SalesController = require('../controllers/salesController')
 const HardwareController = require('../controllers/setupController')
+const DataController = require('../controllers/dataController')
+
+const path = require('path')
 
 function init(server) {
 	server.get('*', function (req, res, next) {
@@ -22,6 +25,8 @@ function init(server) {
 	server.use('/api/sales', SalesController)
 	server.use('/api/hardware', HardwareController)
 	server.use('/api/setup', HardwareController)
+	server.use('/api/data', DataController)
+	
 }
 
 module.exports = {

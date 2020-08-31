@@ -7,8 +7,7 @@ const Op  = Sequelize.Op
 
 const DatabaseFunc = require('../helpers/crud')
 const crudService = new DatabaseFunc;
-const DataExport = require('../helpers/export')
-const dataExport = new DataExport;
+
 
 const AnalyticsService = require('../services/analyticsService');
 const analyticsService  = new AnalyticsService;
@@ -75,21 +74,6 @@ router.post("/report",[Authenticator.auth], asyncWrapper(async(req, res)=> {
     res.json({message: 'Result', result: data});
 }));
 
-router.post("/report/download",[Authenticator.auth], asyncWrapper(async(req, res)=> {
-    let body = req.body;
-    let data;
-    let business = await crudService.findOne('Business', {id: 1});
-    body.business = business
-    if(req.query.file == 'excel'){
-        data = await dataExport.excelExport(body)
-        const file = path.resolve('..', 'uploads', data.file)
-        res.download(file);
 
-    }else if(req.query.file == 'pdf'){
-        data = await dataExport.pdfExport(body)
-    }
-
-    res.end;
-}));
 
 module.exports = router;

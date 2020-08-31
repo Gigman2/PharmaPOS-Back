@@ -1,6 +1,7 @@
 const models = require("../models")
 const xl = require('excel4node');
 const path = require("path")
+const util = require('util');
 
 module.exports = class DataExport {
     async setExcelTitle(data){
@@ -56,8 +57,12 @@ module.exports = class DataExport {
         .string(data.business.name)
         .style(businessStyle);
 
+        let title = data.name;
+        if(data.from && data.to){
+            title = title +' between '+data.from+' and '+data.to
+        }
         ws.cell (3, 1, 4, keys.length, true)
-        .string(data.name+' between '+data.from+' and '+data.to)
+        .string(title)
         .style(titleStyle);
 
 
@@ -89,11 +94,12 @@ module.exports = class DataExport {
                 j++;
             })
         })
-        
-        let name = data.name.trim().toLowerCase()+'-'+Date.now()+'.xlxs'
 
-        wb.write(path.resolve(__dirname, '..', 'uploads', name))
-        return {file: name}
+        wb.writeP = util.promisify(wb.write);
+        
+        let name = data.name.trim().replace(' ','_').toLowerCase()+'-'+Date.now()
+        await wb.writeP(path.resolve(__dirname, '..', 'download', name+'.xlsx'))
+        return name
     }
 
     async pdfExport(){
