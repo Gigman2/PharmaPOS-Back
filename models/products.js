@@ -4,16 +4,21 @@ module.exports = (sequelize, DataTypes) => {
                 id: {allowNull: false, primaryKey: true, type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4},
                 name:  {type: DataTypes.STRING},
                 barcode: {type: DataTypes.STRING},
-                sku: {type: DataTypes.STRING},
+                sku: {type: DataTypes.STRING, allowNull: true},
                 shelf: {type: DataTypes.STRING},
                 price: {type: DataTypes.STRING},
-                quantity: {type: DataTypes.INTEGER},
+                quantity: {type: DataTypes.INTEGER}, 
+                generics: {type: DataTypes.STRING},
                 timesSold:{type: DataTypes.INTEGER},
                 restock: {type: DataTypes.INTEGER},
                 left: {type: DataTypes.INTEGER},
                 active:{type: DataTypes.BOOLEAN},
                 image: {type: DataTypes.STRING},
-                manufacturer: {type: DataTypes.STRING}
+                manufacturer: {type: DataTypes.STRING},
+                expiry: {type: DataTypes.DATE},
+                batch: {type: DataTypes.DATE},
+                lprice: {type: DataTypes.STRING},
+                lquantity: {type: DataTypes.INTEGER},
         });
 
 	Model.associate = function(models) {

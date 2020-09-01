@@ -25,7 +25,7 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
     }
     body.userId = req.account.id
     body.timesSold = 0
-    body.left = body.quantity
+    body.left = body.lquantity
     body.active = true;
 
     if(req.file){
