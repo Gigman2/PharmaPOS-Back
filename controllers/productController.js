@@ -25,6 +25,10 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
     }
     body.userId = req.account.id
     body.timesSold = 0
+    if(!body.hasloose){
+        body.lquantity = 1
+        body.lprice = body.price 
+    }
     body.left = body.lquantity
     body.active = true;
 
@@ -65,7 +69,7 @@ router.post("/update",[Upload.single('image'), Authenticator.auth], asyncWrapper
 router.post("/single", [Authenticator.auth], asyncWrapper(async(req, res) => {
     let data;
     console.log(req.body)
-    if(req.query.type == 'simple'){
+    if(req.query.type == 'simple'){ 
         data = await crudService.findOne('Product', {id: req.body.id})
     }else{
         data =  await productService.fetchProduct()

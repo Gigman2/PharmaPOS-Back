@@ -57,7 +57,7 @@ module.exports = class DeviceService{
             let table = [];
             data.transaction.products.forEach(item => {
                 let row = [
-                    {text: item.quantity+' x '+item.product.name, align: "LEFT", width:0.8},
+                    {text: item.packBought+'.'+item.packBought+' x '+item.product.name, align: "LEFT", width:0.8},
                     {text: item.total, align: "RIGHT", width:0.2}
                 ]; 
 

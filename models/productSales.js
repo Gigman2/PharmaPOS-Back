@@ -1,8 +1,10 @@
 
 module.exports = (sequelize, DataTypes) => {
 	const Model = sequelize.define('ProductSale', {
-                quantity:  {type: DataTypes.STRING},
-                unit: {type: DataTypes.STRING},
+                packBought:  {type: DataTypes.STRING},
+                looseBought:  {type: DataTypes.STRING},
+                packPrice: {type: DataTypes.STRING},
+                loosePrice: {type: DataTypes.STRING},
                 total: {type: DataTypes.STRING},
 	});
 

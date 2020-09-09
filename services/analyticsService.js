@@ -73,10 +73,18 @@ module.exports = class AnalyticsService{
     async stockWorth(){
         let products = await crudService.findAll('Product');
 
-        let stockWorthArray = await Promise.all(products.map(product => product.left * product.price))
+        let stockWorthArray = await Promise.all(products.map(product => 
+        {
+            let looseWorth = product.left * product.lprice;
+            let packWorth = product.quantity * product.price;
+            if(looseWorth != '' && packWorth != ''){
+                return parseFloat(looseWorth) + parseFloat(packWorth)
+            }
+            return 0;
+        }))
 
         //converting object to array
-        let shortageList = products.filter(product => product.left <= product.restock)
+        let shortageList = products.filter(product => product.quantity <= product.restock)
         let shortage = shortageList.length
         
         let stockWorth = stockWorthArray.reduce(function (sum, value) {
@@ -87,16 +95,27 @@ module.exports = class AnalyticsService{
     }
 
     async totalAccounts(){
-        let employeeData = await crudService.findAll('User', { role: "employee" })
-        let adminData = await crudService.findAll('User', { role: "admin" })
+        let accounts = await crudService.findAll('User')
 
-        employeeData = employeeData.map(user => user.role);
-        adminData = adminData.map(user => user.role);
+        let employee = 0;
+        let admin = 0;
+        let active = 0;
 
-        let employees = employeeData.length
-        let admins = adminData.length
+        accounts.forEach(item => {
+            if(item.role == 'employee'){
+                employee = employee + 1
+            }
 
-        return { admins: admins, employees: employees }
+            if(item.role == 'admin'){
+                admin = admin + 1
+            }
+
+            if(item.active == true){
+                active = active + 1
+            }
+        })
+
+        return { admins: admin, employees: employee, all:  accounts.length, active}
     }
 
     async salesGraph(){
@@ -112,8 +131,12 @@ module.exports = class AnalyticsService{
     }
 
     async salesReport(body){
-        var query = `SELECT SUM(grossTotal) as closing_cash, SUM(cashAmount) as cash, SUM(momoAmount) as momo,MIN(id) as firstID, MAX(id) as lastID  FROM sales WHERE createdAT BETWEEN '${body.from}' AND '${body.to}' GROUP BY DAY(createdAt)`
-        let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+        var query = `SELECT SUM(grossTotal) as closing_cash, SUM(cashAmount) as cash, SUM(momoAmount) as momo,MIN(id) as firstID, MAX(id) as lastID  FROM sales WHERE (createdAT BETWEEN '${body.from}' AND '${body.to}') GROUP BY DAY(createdAt)`
+        let data = await sequelize.query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))")
+        .then(async () => {
+            return await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+        })
+        // let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
 
         await Promise.all(data.map(async item => {
             let sales = await models.Sale.findAll({
@@ -193,11 +216,23 @@ module.exports = class AnalyticsService{
 
             var query = `SELECT * FROM productSales WHERE productId = "${item.id}"`;
             let salesproducts = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
-            let count = 0;
+            let looseCount = 0;
+            let packCount = 0;
             salesproducts.forEach(product => {
-                count = count + parseInt(product.quantity)
+                looseCount = looseCount + parseInt(product.looseBought);
+                packCount = packCount + parseInt(product.packBought)
             })
-            item.quantitysold = count
+            let quantitysold = ''
+            if(packCount != 0){
+                quantitysold = packCount+' Pcks '
+            }
+            if(looseCount != 0){
+                quantitysold = quantitysold + looseCount+' pcs'
+            }
+            if(quantitysold == ''){
+                quantitysold = '--'
+            }
+            item.quantitysold = quantitysold
 
             var query = `SELECT * FROM suppliers WHERE id = "${item.supplierId}"`;
             let suppliers = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })

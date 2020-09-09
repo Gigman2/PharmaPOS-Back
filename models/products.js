@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
                 manufacturer: {type: DataTypes.STRING},
                 expiry: {type: DataTypes.DATE},
                 batch: {type: DataTypes.DATE},
+                hasloose: {type: DataTypes.BOOLEAN, defaultValue: false},
                 lprice: {type: DataTypes.STRING},
                 lquantity: {type: DataTypes.INTEGER},
         });

@@ -287,12 +287,14 @@ module.exports = class UserService{
     sales.forEach(async item => {
       let product = await crudService.findOne('Product', {id: item.productId});
       let update = {}
-      update.left = Number(product.left) - Number(item.quantity)
+      update.left = Number(product.left) - Number(item.looseBought)
+      //@TODO: Change to loop so that while its still negative it will do iterate the process
       if(update.left < 0){
         update.left = Number(item.lquantity) - update.left
         update.quantity = Number(item.quantity) - 1
       }
 
+      update.quantity = Number(product.quantity) - Number(item.packBought)
       crudService.update('Product', update, {id: product.id})
     })
   }

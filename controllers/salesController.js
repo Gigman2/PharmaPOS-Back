@@ -65,12 +65,38 @@ router.post("/customer-report",[Authenticator.auth], asyncWrapper(async(req, res
     var body = req.body
     let data = await analyticsService.customerReport(body)
     res.json({message: 'Customer added successfully', result: data});
-}));
+})); 
 
 
 router.get("/discount-promo-list",[Authenticator.auth], asyncWrapper(async(req, res)=> {
     let data = await crudService.listAll('Discount')
     res.json({message: 'Result', result: data});
+}));
+
+router.post("/discount-add",[Authenticator.auth], asyncWrapper(async(req, res)=> {
+    let body = req.body
+    body.userId = req.account.id
+    let data = await crudService.createOrUpdate('Discount', body, {id: body.id})
+    res.json({message: 'Customer added successfully', result: data});
+}));
+
+router.get("/discount-search",[Authenticator.auth], asyncWrapper(async(req, res)=> {
+    try {
+        let query = req.query;
+        let data;
+        if(req.query.q){
+            query = {
+                [Op.and]: [
+                    Sequelize.literal("discount.code LIKE '%"+ req.query.q+"%'"),
+                ]
+            }
+        }
+        data = await crudService.findAll('Discount' ,query)
+        res.json({message: 'Result', result: data});
+
+    } catch (error) {
+        console.log(error)
+    }
 }));
 
 router.post("/report",[Authenticator.auth], asyncWrapper(async(req, res)=> {
