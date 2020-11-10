@@ -25,6 +25,7 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
     }
     body.userId = req.account.id
     body.timesSold = 0
+    body.hasloose = (body.hasloose == 'false') ? false : true; 
     if(!body.hasloose){
         body.lquantity = 1
         body.lprice = body.price 

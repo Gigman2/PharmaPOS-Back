@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
                 hasloose: {type: DataTypes.BOOLEAN, defaultValue: false},
                 lprice: {type: DataTypes.STRING},
                 lquantity: {type: DataTypes.INTEGER},
+                hastabs: {type: DataTypes.BOOLEAN, defaultValue: false},
+                tprice: {type: DataTypes.STRING},
+                tquantity: {type: DataTypes.INTEGER},
         });
 
 	Model.associate = function(models) {

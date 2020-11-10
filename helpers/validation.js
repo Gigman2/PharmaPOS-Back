@@ -29,6 +29,9 @@ module.exports = {
         lprice: Joi.optional(),
         lquantity: Joi.optional(),
         hasloose: Joi.optional(),
+        tprice: Joi.optional(),
+        tquantity: Joi.optional(),
+        hastabs: Joi.optional(),
     }),
     category: Joi.object({
         name: Joi.string().min(2).required(),
