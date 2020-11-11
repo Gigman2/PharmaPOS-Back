@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
                 restock: {type: DataTypes.INTEGER},
                 left: {type: DataTypes.INTEGER},
                 active:{type: DataTypes.BOOLEAN},
+                variant: {type: DataTypes.STRING},
                 image: {type: DataTypes.STRING},
                 manufacturer: {type: DataTypes.STRING},
                 expiry: {type: DataTypes.DATE},

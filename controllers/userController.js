@@ -157,6 +157,41 @@ router.post('/report', [Authenticator.auth], asyncWrapper(async(req, res) => {
     res.json({message: 'All users', result: data});
 }))
 
+
+router.get("/resources", [Authenticator.auth], asyncWrapper(async (req, res) => {
+    let data = await accountService.getResourceInGroupings()
+
+    res.json({message: 'All', result: data});
+}));
+
+
+router.post("/role-resources", [Authenticator.auth], asyncWrapper(async (req, res) => {
+    let roleId = req.body.roleId;
+    let data = await accountService.resourceAndPermissions(roleId)
+ 
+    res.json({message: 'All', result: data});
+}));
+
+router.get("/roles", [Authenticator.auth], asyncWrapper(async (req, res) => {
+    let data = await accountService.getRoles()
+    res.json({message: 'All', result: data});
+}));
+
+router.post("/save-role", [Authenticator.auth], asyncWrapper(async (req, res) => {
+    let body = req.body;
+
+    await accountService.saveRolePermissions(body, req.account)
+    res.json({message: 'All', result: 'saved'});
+}));
+
+
+router.get("/user-permission", [Authenticator.auth], asyncWrapper(async (req, res) => {
+    let role = req.account.roleId
+
+    let permissions = await crudService.findAll('Permission', {roleId: role})
+    res.json({message: 'All', result: permissions});
+}))
+
 module.exports = router;
 
 

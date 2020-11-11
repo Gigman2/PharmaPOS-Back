@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 
 	Model.associate = function(models) {
         Model.hasMany(models.Category, {foreignKey: 'userId', as: 'categories'})
+        Model.belongsTo(models.Role, {foreignKey: 'roleId', as: 'userrole'})
     };
     
     Model.hooks = {

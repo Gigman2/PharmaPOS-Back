@@ -1,5 +1,6 @@
 const Sequelize   =  require('sequelize');
 const Op  = Sequelize.Op
+const models = require('../models');
 
 const DatabaseFunctions = require('../helpers/crud')
 const Validation = require('../helpers/validation')
@@ -139,5 +140,121 @@ module.exports = class UserService{
         ]
       }
     )
+  }
+
+  
+  async getRoles(){
+    let data = await models.Role.findAll({
+      include: [
+        {
+          model: models.User,
+          as: 'accounts',
+          required: false,
+          attributes: {
+            exclude: ['id', 'createdAt', 'updatedAt','email', 'username', 'phone' ,'password', 'avatar','lastLogin','active']
+          }
+        },
+      ]
+    }) 
+    return data
+  }
+
+  async getResourceInGroupings(){
+    let resource = await models.Resource.findAll() 
+    var newResource = [];
+
+    await resource.map(async item => {
+      let _id = item.id;
+      let permissions = {
+        name: item.name,
+        resourceId: _id,
+        state: false,
+        group: item.group
+      };
+      return newResource.push(permissions)
+    })
+    return newResource
+  }
+
+  async resourceAndPermissions(id){
+    try {
+      let resource = await models.Resource.findAll() 
+      let newResource= [];
+
+      await Promise.all(resource.map(async item => {
+        let _id = item.id;
+        let permissions = {
+          name: item.name,
+          resourceId: _id,
+          group: item.group,
+          state: false
+        };
+
+
+        let permissionsObj = await models.Permission.findOne({where: {
+          roleId: id,
+          resourceId: _id
+        }})
+
+        if(permissionsObj != null){
+          if(permissionsObj !== null && permissionsObj.state == true){
+            permissions.state = true
+          }
+          
+          permissions.id = permissionsObj.id
+          newResource.push(permissions)
+        }
+        
+      }))
+
+      return newResource
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async setPermissionsAndRoles(data){
+    let resource = await models.Resource.findAll() 
+    resource.forEach(async item => {
+      let permission = await crudService.findOne('Permission', 
+        {userId: data.user, roleId: data.role, resourceId: item.id}
+      )
+
+      if(permission == null){
+        crudService.create('Permission',  {
+          userId: data.user, 
+          roleId: data.role, 
+          resourceId: item.id, 
+          state: item.state
+        })
+      }
+    })
+  }
+
+  async saveRolePermissions(data, user){
+    let createdRole
+    if(data.roleId){
+        createdRole = await crudService.createOrUpdate('Role', data, {id: data.roleId})
+    }else {
+        createdRole = await crudService.create('Role', data)
+    }
+    let permissions = data.resource
+    let permissionsArr = Object.values(permissions) 
+
+    permissionsArr = [].concat.apply([], permissionsArr)
+    permissionsArr.forEach(item => {
+        let resource = item
+        resource.userId = user.id
+
+        if(typeof createdRole == 'object'){
+          if(createdRole[0] == 1){
+              resource.roleId = data.roleId
+              crudService.update('Permission', resource, {id: resource.id})
+          }else{
+              resource.roleId = createdRole.id
+              crudService.create('Permission', resource)
+          }
+        }
+    })
   }
 }

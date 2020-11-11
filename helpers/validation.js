@@ -8,7 +8,7 @@ module.exports = {
         username: Joi.string().optional(), 
         phone: Joi.number().min(6).integer().optional(),
         password: Joi.string().min(6).optional(),
-        role: Joi.string().optional(),
+        roleId: Joi.string().optional(),
         avatar: Joi.string().optional()
     }),
     loginUser: Joi.object({
@@ -25,6 +25,7 @@ module.exports = {
         quantity: Joi.number().required(),
         shelf: Joi.optional(),
         restock: Joi.number().optional(),
+        variant: Joi.optional(),
         expiry: Joi.optional(),
         lprice: Joi.optional(),
         lquantity: Joi.optional(),
