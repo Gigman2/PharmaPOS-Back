@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
                 sku: {type: DataTypes.STRING, allowNull: true},
                 shelf: {type: DataTypes.STRING},
                 price: {type: DataTypes.STRING},
+                cprice: {type: DataTypes.STRING},
                 quantity: {type: DataTypes.INTEGER}, 
                 generics: {type: DataTypes.STRING},
                 timesSold:{type: DataTypes.INTEGER},

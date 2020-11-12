@@ -41,30 +41,58 @@ router.post("/import", [Upload.single('file'), Authenticator.auth], asyncWrapper
     let keys = Object.keys(result[0]);
     let values = result;
     let count = 0;
+    let categories = []
+
+    let dbcategories = await crudService.listAll('Category');
+
+    categories = dbcategories
 
     await Promise.all(values.map(async (column, index) => {
 
         if(index != 0){
             let payload = {}
             keys.forEach((row, i) => {
-                // console.log(result[0][row])
-                payload[result[0][row]] = column[row]
+                payload[result[0][row].toLowerCase()] = column[row]
             })
 
             payload.left = payload.quantity
             payload.timesSold = 0
-    
-            let saved = await crudService.create('Product', payload)
 
-            productService.updateStock({
-                productId: saved.id, 
-                userId: req.account.id, 
-                productName: saved.name,
-                supplierId: payload.supplierId,
-                initialStock: 0, 
-                currentStock: payload.quantity
-            });
-            count = count + 1;
+            let payloadCategory = payload.category;
+
+            let exist = categories.filter(item => item.name == payloadCategory)
+            if(exist.length > 0){
+                payload.category = exist[0].id
+            }else{
+                let createdCategory = await crudService.create('Category', {name: payloadCategory});
+                 
+                let newCategory = {
+                    id: createdCategory.id,
+                    name: createdCategory.name
+                }
+
+                categories.push(newCategory)
+                payload.category = newCategory.id
+
+                values.length = index + 1
+                console.log(categories)
+            }
+
+            // console.log('-------------------------------------------------------------')
+            // console.log(exist)
+            // console.log(payload)
+    
+            // let saved = await crudService.create('Product', payload)
+
+            // productService.updateStock({
+            //     productId: saved.id, 
+            //     userId: req.account.id, 
+            //     productName: saved.name,
+            //     supplierId: payload.supplierId,
+            //     initialStock: 0, 
+            //     currentStock: payload.quantity
+            // });
+            // count = count + 1;
         }
     }))
 
