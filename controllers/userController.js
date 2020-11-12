@@ -126,7 +126,7 @@ router.post('/remove', [Authenticator.auth], asyncWrapper(async(req, res) => {
  * VIEW SINGLE USER  ACCOUNT
  */
 router.post('/single', [Authenticator.auth], asyncWrapper(async(req, res) => {
-    let data = await crudService.findOne('User', {id: req.body.id})
+    let data = await accountService.getUser({id: req.body.id})
     data.password = "*****"
     res.json({message: 'All users', result: data});
 }))
@@ -135,7 +135,7 @@ router.post('/single', [Authenticator.auth], asyncWrapper(async(req, res) => {
  * LIST USER ACCOUNT
  */
 router.get('/list', [Authenticator.auth], asyncWrapper(async(req, res) => {
-    let data = await crudService.findAll('User')
+    let data = await accountService.allUsers()
     data.map(item => item.password = "*****")
     res.json({message: 'All users', result: data});
 }))

@@ -142,6 +142,47 @@ module.exports = class UserService{
     )
   }
 
+  async userLogout(condition){
+    crudService.createOrUpdate('UserSession',
+        {userId: condition.id, checkout: Date.now()},
+        {
+          [Op.and]: [
+            { userId: condition.id, },
+            Sequelize.where(
+               Sequelize.fn('DATE', Sequelize.col('createdAt')),
+               Sequelize.literal('CURRENT_DATE')
+            )
+        ]
+      }
+    )
+  }
+  async allUsers(){
+    let users = await models.User.findAll({
+      include: [
+        {
+          model: models.Role,
+          as: 'userrole',
+          required: false,
+        },
+      ]
+    }) 
+    return users
+  }
+
+  async getUser(condition){
+    let users = await models.User.findOne({
+      where: condition,
+      include: [
+        {
+          model: models.Role,
+          as: 'userrole',
+          required: false,
+        },
+      ]
+    }) 
+    return users
+  }
+
   
   async getRoles(){
     let data = await models.Role.findAll({
