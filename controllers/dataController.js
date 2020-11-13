@@ -18,7 +18,8 @@ const dataExport = new DataExport;
 const ProductService = require('../services/productService')
 const productService = new ProductService;
 
-const DatabaseFunc = require('../helpers/crud')
+const DatabaseFunc = require('../helpers/crud');
+const { connect } = require("tls");
 const crudService = new DatabaseFunc;
 
 router.post("/import", [Upload.single('file'), Authenticator.auth], asyncWrapper(async(req, res) => {
@@ -44,9 +45,12 @@ router.post("/import", [Upload.single('file'), Authenticator.auth], asyncWrapper
     let categories = []
 
     let dbcategories = await crudService.listAll('Category');
-
-    categories = dbcategories
-
+    categories = dbcategories.map(item => {
+        return  {
+            id: item.id,
+            name: item.name
+        }
+    })
     await Promise.all(values.map(async (column, index) => {
 
         if(index != 0){
@@ -57,42 +61,28 @@ router.post("/import", [Upload.single('file'), Authenticator.auth], asyncWrapper
 
             payload.left = payload.quantity
             payload.timesSold = 0
+            payload.category = payload.category.toLowerCase();
 
-            let payloadCategory = payload.category;
-
+            var payloadCategory = payload.category.charAt(0).toUpperCase() + payload.category.slice(1)
             let exist = categories.filter(item => item.name == payloadCategory)
             if(exist.length > 0){
                 payload.category = exist[0].id
-            }else{
-                let createdCategory = await crudService.create('Category', {name: payloadCategory});
-                 
-                let newCategory = {
-                    id: createdCategory.id,
-                    name: createdCategory.name
-                }
-
-                categories.push(newCategory)
-                payload.category = newCategory.id
-
-                values.length = index + 1
-                console.log(categories)
             }
-
             // console.log('-------------------------------------------------------------')
             // console.log(exist)
             // console.log(payload)
     
-            // let saved = await crudService.create('Product', payload)
+            let saved = await crudService.create('Product', payload)
 
-            // productService.updateStock({
-            //     productId: saved.id, 
-            //     userId: req.account.id, 
-            //     productName: saved.name,
-            //     supplierId: payload.supplierId,
-            //     initialStock: 0, 
-            //     currentStock: payload.quantity
-            // });
-            // count = count + 1;
+            productService.updateStock({
+                productId: saved.id, 
+                userId: req.account.id, 
+                productName: saved.name,
+                supplierId: payload.supplierId,
+                initialStock: 0, 
+                currentStock: payload.quantity
+            });
+            count = count + 1;
         }
     }))
 
