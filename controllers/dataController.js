@@ -66,12 +66,9 @@ router.post("/import", [Upload.single('file'), Authenticator.auth], asyncWrapper
             var payloadCategory = payload.category.charAt(0).toUpperCase() + payload.category.slice(1)
             let exist = categories.filter(item => item.name == payloadCategory)
             if(exist.length > 0){
-                payload.category = exist[0].id
+                payload.categoryId = exist[0].id
             }
-            // console.log('-------------------------------------------------------------')
-            // console.log(exist)
-            // console.log(payload)
-    
+
             let saved = await crudService.create('Product', payload)
 
             productService.updateStock({
