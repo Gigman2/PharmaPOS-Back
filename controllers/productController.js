@@ -83,6 +83,11 @@ router.get("/list", [Authenticator.auth], asyncWrapper(async(req, res)=> {
     res.json({message: 'Result', result: data});
 }));
 
+router.get("/list-top-best", [Authenticator.auth], asyncWrapper(async(req, res)=> {
+    let data = await productService.fetchTopBestProduct()
+    res.json({message: 'Result', result: data});
+}));
+
 router.post('/remove', [Authenticator.auth], asyncWrapper(async(req, res) => {
     let data = await crudService.delete('Product', {id: req.body.id})
     res.json({message: 'Deleted', result: data});

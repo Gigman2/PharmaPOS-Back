@@ -148,6 +148,50 @@ module.exports = class UserService{
     }
   }
 
+  async fetchTopBestProduct(){
+    try {
+      let recentProducts = await models.ProductSale.findAll({
+        attributes: [
+          [Sequelize.fn('DISTINCT', Sequelize.col('productId')), 'productId'],
+        ],
+        limit: 20,
+      })
+      let recentProductsList = []
+      if(recentProducts.length > 0){
+        recentProductsList = await Promise.all(recentProducts.map(async item => {
+          let product = await models.Product.findOne({
+            where: {id: item.productId}
+          })
+
+          if(product != null){
+            return product
+          }
+
+          console.log(item)
+        }))
+      }
+
+      let products =await models.Product.findAll({
+        order: Sequelize.literal('rand()'),
+        limit: 100,
+        include: [
+          {
+            model: models.Category,
+            as: 'category',
+            required: false
+          },
+        ]
+      }) 
+
+      return {
+        recent: recentProductsList,
+        products
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   async fetchProduct(condition){
     try {
       return models.Product.findOne({

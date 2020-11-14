@@ -83,15 +83,32 @@ module.exports = class AnalyticsService{
             return 0;
         }))
 
-        //converting object to array
+        //retrieving shortage list
         let shortageList = products.filter(product => product.quantity <= product.restock)
         let shortage = shortageList.length
+
+        //retrieving shortage list
+        let expiredList = await products.filter(product => {
+            let now = moment().format('YYYY-MM-DD')
+            let expired = moment().isAfter(product.expiry)
+            if(expired){
+                return product
+            }else{
+                var exirationDifference = moment(product.expiry).diff(now, 'days');
+                if(exirationDifference <= 90){
+                    return product
+                }
+            }
+        })
+
+        // console.log(expiredList)
         
+        //return stock worth;
         let stockWorth = stockWorthArray.reduce(function (sum, value) {
             return sum + value;
         });
 
-        return { shortage: shortage, stockWorth: stockWorth, products: shortageList }
+        return { shortage: shortage, stockWorth: stockWorth, products: shortageList, expiring: expiredList }
     }
 
     async totalAccounts(){
@@ -243,13 +260,17 @@ module.exports = class AnalyticsService{
 
     async userReport(body){
         console.log(body)
-        var query = "SELECT * FROM users WHERE (role = 'admin' OR role = 'employee') ";
+        var query = "SELECT * FROM users";
         if(body.name){
             query = query+"AND (firstname LIKE '%"+body.name+"%' OR lastname LIKE '%"+body.name+"%')";
         } 
         let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
         
         await Promise.all(data.map(async item => {
+
+            let role = await crudService.findOne('Role', {id:  item.roleId});
+            item.role = role.name;
+
             let totalSales = 0;
             var query = `SELECT * FROM sales WHERE userId = "${item.id}"`;
             if(body.to && body.from){
@@ -269,6 +290,7 @@ module.exports = class AnalyticsService{
             let allTime = [0, 0];
             let averageTime = [0, 0]
             let accountSessions = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+
             accountSessions.forEach(session => {
                 let sessions = [session.c_in, session.c_out];
                 sessions.forEach((i, e) => {
