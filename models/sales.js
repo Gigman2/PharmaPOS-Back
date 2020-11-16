@@ -6,8 +6,9 @@ module.exports = (sequelize, DataTypes) => {
                 itemTotal: {type: DataTypes.STRING}, 
                 tax: {type: DataTypes.STRING},
                 discount: {type: DataTypes.STRING},
-                cashAmount: {type: DataTypes.STRING},
+                cashAmount: {type: DataTypes.STRING},  
                 momoAmount: {type: DataTypes.STRING},
+                changeGiven: {type: DataTypes.STRING},
                 state: {type: DataTypes.ENUM('holding', 'processing', 'complete', 'refunded', 'returned')},
                 stockWorth: {type: DataTypes.STRING},
 	});
