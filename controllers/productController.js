@@ -239,7 +239,7 @@ router.post('/supplier/remove', [Authenticator.auth], asyncWrapper(async(req, re
 // ------------------------------ SALES ENDPOINT -----------------------------------//
 // *********************************************************************************//
 
-
+ 
 router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, res) => {
     let body = req.body;
     body.userId = req.account.id
@@ -267,7 +267,12 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
             }
             if(body.print){
                 printData.business = await crudService.findOne('Business', {id: 1});
+                printData.business = JSON.parse(JSON.stringify(printData.business))
+
                 printData.transaction = await productService.fetchTransaction(transaction.id)
+                printData.transaction = JSON.parse(JSON.stringify(printData.transaction))
+
+                console.log(printData)
                 
                 deviceService.printReceipt(printData) 
             }
