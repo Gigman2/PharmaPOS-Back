@@ -101,7 +101,7 @@ module.exports = class DeviceService{
         printer.setTextNormal()
         printer.print('Software by Sluxify.com')
         printer.newLine();
-        printer.print('+233552375010')
+        printer.print('+233552375017')
 
         printer.alignCenter()
         printer.newLine();
@@ -111,7 +111,7 @@ module.exports = class DeviceService{
         printer.newLine();
 
 
-        // printer.cut()
+        printer.cut()
         printer.openCashDrawer()
         
         await printer.execute();  
