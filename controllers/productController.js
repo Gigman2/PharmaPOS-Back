@@ -278,6 +278,7 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
                 issuer: req.account.firstname+' '+req.account.lastname
             }
             if(body.print){
+                printData.openCash = true
                 printData.business = await crudService.findOne('Business', {id: 1});
                 printData.business = JSON.parse(JSON.stringify(printData.business))
 
@@ -333,19 +334,18 @@ router.post("/transaction/print", [Authenticator.auth], asyncWrapper(async(req, 
     let body = req.body
     let printData = {};
 
-    console.log(body)
     let business = await crudService.findOne('Business', {id: 1});
     let transaction = await productService.fetchTransaction(body.id)
-    let issuer = await crudService.findOne('User', transaction.userId)
+    let issuer = await crudService.findOne('User', {id: transaction.userId})
 
-    console.log(transaction)
     printData.business = business
     printData.transaction = transaction
     printData.issuer = issuer.firstname+' '+issuer.lastname
+    printData.openCash = false
 
     deviceService.printReceipt(printData) 
     
-    res.json({message: 'Result', result: data});
+    res.json({message: 'Result'});
 }))
 
 

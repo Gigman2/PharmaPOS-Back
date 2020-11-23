@@ -96,7 +96,9 @@ module.exports = class DeviceService{
         printer.drawLine();
 
         printer.cut()
-        printer.openCashDrawer()
+        if(data.openCash){
+            printer.openCashDrawer()
+        }
         
         await printer.execute();  
 
