@@ -86,6 +86,18 @@ module.exports = class AnalyticsService{
             }
             return 0;
         }))
+        logger.info('🚀🚀 '+stockWorthArray)
+
+        let stockWorth = await stockWorthArray.reduce(function (sum, value) {
+            if(isNaN(value)){
+                return 0;
+            }
+
+            return sum + value;
+        });
+
+
+        logger.info('🎉🎉 '+stockWorth)
 
         //retrieving shortage list
         let shortageList = products.filter(product => product.quantity <= product.restock)
@@ -108,9 +120,6 @@ module.exports = class AnalyticsService{
         // console.log(expiredList)
         
         //return stock worth;
-        let stockWorth = stockWorthArray.reduce(function (sum, value) {
-            return sum + value;
-        });
 
         return { shortage: shortage, stockWorth: stockWorth, products: shortageList, expiring: expiredList }
     }
