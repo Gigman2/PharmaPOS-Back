@@ -25,8 +25,7 @@ module.exports = class DeviceService{
     }
 
     async printReceipt(data){
-        printer.drawLine();
-        printer.newLine();
+        printer.alignCenter()
         printer.newLine();
         printer.bold(true);
         printer.setTextSize(1,1);
@@ -36,13 +35,8 @@ module.exports = class DeviceService{
         printer.newLine();
         printer.bold(false);
         printer.setTextNormal();
-        printer.print('Addr: '+data.business.address);  
+        printer.print('Addr: '+data.business.address + ' | '+'Email: '+ data.business.email+ ' | '+'Tele: '+ data.business.phone);  
         printer.newLine();
-        printer.print('Email: '+ data.business.email); 
-        printer.newLine();
-        printer.print('Tele: '+ data.business.phone); 
-        printer.newLine();
-        printer.drawLine();
 
         printer.leftRight("Date: "+ Moment().format('D MMMM YYYY'), Moment().format('h:mm a'));  
         printer.leftRight("Issuer: ", data.issuer);
