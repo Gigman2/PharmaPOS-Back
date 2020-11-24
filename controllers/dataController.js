@@ -91,6 +91,10 @@ router.post("/download",[Authenticator.auth], asyncWrapper(async(req, res)=> {
     let body = req.body;
     let data;
     let business = await crudService.findOne('Business', {id: 1});
+    if(business == null){
+        throw CustomError({statusCode: 422, message: 'Set business infomation before export'}, res)
+    }
+
     body.business = business
     data = await dataExport.excelExport(body)
     res.send( {file: data+'.xlsx'});

@@ -25,12 +25,9 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
     }
     body.userId = req.account.id
     body.timesSold = 0
-    body.hasloose = (body.hasloose == 'false') ? false : true; 
-    if(!body.hasloose){
-        body.lquantity = 1
-        body.lprice = body.price 
-    }
-    body.left = body.lquantity
+    body.left = body.quantity - 1
+    body.pack_l = body.pack_q
+
     body.active = true;
 
     if(req.file){
@@ -268,9 +265,11 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
             let printData = {
                 issuer: req.account.firstname+' '+req.account.lastname
             }
+            if(body.print){
+                deviceService.printReceipt(printData) 
+            }
             printData.business = await crudService.findOne('Business', {id: 1});
             printData.transaction = await productService.fetchTransaction(transaction.id)
-            deviceService.printReceipt(printData) 
         }
     }
     

@@ -74,11 +74,15 @@ module.exports = class AnalyticsService{
         let products = await crudService.findAll('Product');
 
         let stockWorthArray = await Promise.all(products.map(product => 
-        {
-            let looseWorth = product.left * product.lprice;
-            let packWorth = product.quantity * product.price;
-            if(looseWorth != '' && packWorth != ''){
-                return parseFloat(looseWorth) + parseFloat(packWorth)
+        {   
+            let worth = 0
+            if(product.dispensation == 'single'){
+                worth = product.left * product.price;
+            }else if(product.dispensation == 'strip'|| product.dispensation == 'tab' ){
+                worth = ((product.pack_q * product.left) + product.pack_l) * product.price;
+            }
+            if(worth != '' ){
+                return parseFloat(worth);
             }
             return 0;
         }))
@@ -153,7 +157,8 @@ module.exports = class AnalyticsService{
         .then(async () => {
             return await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
         })
-        // let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+       
+        console.log(data)
 
         await Promise.all(data.map(async item => {
             let sales = await models.Sale.findAll({

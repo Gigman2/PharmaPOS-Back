@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
                 price: {type: DataTypes.STRING},
                 cprice: {type: DataTypes.STRING},
                 quantity: {type: DataTypes.INTEGER}, 
+                pack_q: {type: DataTypes.INTEGER},
+                pack_l: {type: DataTypes.INTEGER},
                 generics: {type: DataTypes.STRING},
                 timesSold:{type: DataTypes.INTEGER},
                 restock: {type: DataTypes.INTEGER},
@@ -18,13 +20,7 @@ module.exports = (sequelize, DataTypes) => {
                 image: {type: DataTypes.STRING},
                 manufacturer: {type: DataTypes.STRING},
                 expiry: {type: DataTypes.DATE},
-                batch: {type: DataTypes.DATE},
-                hasloose: {type: DataTypes.BOOLEAN, defaultValue: false},
-                lprice: {type: DataTypes.STRING},
-                lquantity: {type: DataTypes.INTEGER},
-                hastabs: {type: DataTypes.BOOLEAN, defaultValue: false},
-                tprice: {type: DataTypes.STRING},
-                tquantity: {type: DataTypes.INTEGER},
+                dispensation: {type: DataTypes.STRING, defaultValue: 'single'}
         });
 
 	Model.associate = function(models) {

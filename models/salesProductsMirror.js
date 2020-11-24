@@ -1,9 +1,10 @@
 
 module.exports = (sequelize, DataTypes) => {
-	const Model = sequelize.define('ProductSale', {
-                quantity:  {type: DataTypes.INTEGER},
-                price: {type: DataTypes.STRING},
-                dispensation: {type: DataTypes.STRING},
+	const Model = sequelize.define('ProductSaleMirror', {
+                packBought:  {type: DataTypes.STRING},
+                looseBought:  {type: DataTypes.STRING},
+                packPrice: {type: DataTypes.STRING},
+                loosePrice: {type: DataTypes.STRING},
                 total: {type: DataTypes.STRING},
 	});
 

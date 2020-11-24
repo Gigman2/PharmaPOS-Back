@@ -159,15 +159,15 @@ module.exports = class UserService{
       let recentProductsList = []
       if(recentProducts.length > 0){
         recentProductsList = await Promise.all(recentProducts.map(async item => {
-          let product = await models.Product.findOne({
-            where: {id: item.productId}
-          })
-
-          if(product != null){
-            return product
+          if(item.productId != null){
+              let product = await models.Product.findOne({
+                where: {id: item.productId}
+              })
+    
+              if(product != null){
+                return product
+              }
           }
-
-          console.log(item)
         }))
       }
 
@@ -331,14 +331,16 @@ module.exports = class UserService{
     sales.forEach(async item => {
       let product = await crudService.findOne('Product', {id: item.productId});
       let update = {}
-      update.left = Number(product.left) - Number(item.looseBought)
-      //@TODO: Change to loop so that while its still negative it will do iterate the process
-      if(update.left < 0){
-        update.left = Number(item.lquantity) - update.left
-        update.quantity = Number(item.quantity) - 1
+      if(item.dispensation == 'single'){
+        update.left = Number(product.left) - Number(item.quantity)
+      }else if(item.dispensation == 'tab' || item.dispensation == 'strip'){
+        update.pack_l =  Number(product.pack_l) - Number(item.quantity)
+        while(update.pack_l <= 0){
+          update.pack_l = parseInt(product.pack_q) + update.pack_l
+          update.left = parseInt(product.left) - 1
+        }
       }
-
-      update.quantity = Number(product.quantity) - Number(item.packBought)
+      
       crudService.update('Product', update, {id: product.id})
     })
   }
