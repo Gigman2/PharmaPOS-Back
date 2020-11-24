@@ -76,7 +76,7 @@ router.post("/single", [Authenticator.auth], asyncWrapper(async(req, res) => {
 }))
 
 router.get("/list", [Authenticator.auth], asyncWrapper(async(req, res)=> {
-    let data = await productService.fetchProducts()
+    let data = await productService.fetchRecentProducts()
     res.json({message: 'Result', result: data});
 }));
 

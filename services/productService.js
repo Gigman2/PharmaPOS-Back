@@ -128,13 +128,31 @@ module.exports = class UserService{
     } catch (error) {
       console.log(error)
     }
-  }
+  } 
 
   async fetchProducts(condition){
     try {
       return models.Product.findAll({
         where: condition,
         order: [['name', 'ASC']],
+        include: [
+          {
+            model: models.Category,
+            as: 'category',
+            required: false
+          },
+        ]
+      }) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async fetchRecentProducts(){
+    try {
+      return models.Product.findAll({
+        order: [['createdAt', 'DESC']],
+        limit: 20,
         include: [
           {
             model: models.Category,
@@ -173,7 +191,7 @@ module.exports = class UserService{
 
       let products =await models.Product.findAll({
         order: Sequelize.literal('rand()'),
-        limit: 100,
+        limit: 20,
         include: [
           {
             model: models.Category,
@@ -306,8 +324,8 @@ module.exports = class UserService{
   async fetchStockUpdated(){
     try {
       return models.Stock.findAll({
-        where: {
-        },
+        order: [['updatedAt', 'DESC']],
+        limit: 20,
         include: [
           {
             model: models.Product,
