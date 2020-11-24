@@ -266,10 +266,11 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
                 issuer: req.account.firstname+' '+req.account.lastname
             }
             if(body.print){
+                printData.business = await crudService.findOne('Business', {id: 1});
+                printData.transaction = await productService.fetchTransaction(transaction.id)
+                
                 deviceService.printReceipt(printData) 
             }
-            printData.business = await crudService.findOne('Business', {id: 1});
-            printData.transaction = await productService.fetchTransaction(transaction.id)
         }
     }
     
