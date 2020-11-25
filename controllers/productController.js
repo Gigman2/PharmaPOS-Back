@@ -260,7 +260,7 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
     }
     let transaction = await crudService.createOrUpdate('Sale', body, {id: body.id})
     let productsSaved = await Promise.all(body.products.map(async item => {
-        item.saleId = transaction.id
+        item.saleId = transaction.id || body.id
         await crudService.createOrUpdate('ProductSale', item , {id: item.id})
     }))
 

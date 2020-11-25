@@ -48,7 +48,6 @@ module.exports = class DeviceService{
         
         printer.bold(false); 
         if(data.transaction){
-            let table = [];
             data.transaction.products.forEach(item => {
                 let row = [
                     {text: item.packBought+'.'+item.packBought+' x '+item.product.name, align: "LEFT", width:0.8},
@@ -60,11 +59,6 @@ module.exports = class DeviceService{
             })
         }
 
-        // printer.drawLine();
-        // printer.tableCustom([
-        //     {text: 'Tax (1.5%)', align: "LEFT", width:0.5},
-        //     {text: data.transaction.tax, align: "RIGHT", width:0.5}
-        // ])
         
         printer.drawLine();
         printer.tableCustom([

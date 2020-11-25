@@ -86,7 +86,6 @@ module.exports = class AnalyticsService{
             }
             return 0;
         }))
-        logger.info('🚀🚀 '+stockWorthArray)
 
         let stockWorth = await stockWorthArray.reduce(function (sum, value) {
             if(isNaN(value)){
@@ -95,9 +94,6 @@ module.exports = class AnalyticsService{
 
             return sum + value;
         });
-
-
-        logger.info('🎉🎉 '+stockWorth)
 
         //retrieving shortage list
         let shortageList = products.filter(product => product.quantity <= product.restock)
