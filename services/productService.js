@@ -289,7 +289,7 @@ module.exports = class UserService{
             as: 'boughtBy',
             required: false,
           },
-        ]
+        ] 
       }) 
     } catch (error) {
       console.log(error)
