@@ -157,7 +157,8 @@ module.exports = class UserService{
           {
             model: models.Category,
             as: 'category',
-            required: false
+            required: false,
+            seperate: true
           },
         ]
       }) 
@@ -299,7 +300,7 @@ module.exports = class UserService{
     try {
       return models.Sale.findOne({
         where: {
-          id
+          id: id
         },
         include: [
           {

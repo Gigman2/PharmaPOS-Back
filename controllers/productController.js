@@ -76,7 +76,12 @@ router.post("/single", [Authenticator.auth], asyncWrapper(async(req, res) => {
 }))
 
 router.get("/list", [Authenticator.auth], asyncWrapper(async(req, res)=> {
-    let data = await productService.fetchRecentProducts()
+    let data
+    if(req.query.size == 'all'){
+        data = await crudService.findAll('Product') 
+    }else{
+        data = await productService.fetchRecentProducts() 
+    }
     res.json({message: 'Result', result: data});
 }));
 
@@ -133,16 +138,23 @@ router.post("/report", [Authenticator.auth], asyncWrapper(async(req, res) => {
 router.post('/stock/add', [Authenticator.auth], asyncWrapper(async(req, res) => {
     let body = req.body;
     let data = await crudService.create('Stock', body)
-        crudService.update('Product', req.body, {id: body.productId})
+    
+    let product = await crudService.findOne('Product', {id: body.productId})
+    let updateData = body;
+
+    updateData.quantity = parseInt(product.left) + parseInt(updateData.quantity)
+    updateData.left = updateData.quantity
+
+    crudService.update('Product', req.body, {id: body.productId})
     res.json({message: 'Result', result: data});
 }))
+
 
 router.get('/stock/list', [Authenticator.auth], asyncWrapper(async(req, res) => {
     let body = req.body;
     let data = await productService.fetchStockUpdated()
     res.json({message: 'Result', result: data});
 }))
-
 
 // *********************************************************************************//
 // -------------------------- CATEGORY ENDPOINT -----------------------------------//
@@ -268,7 +280,7 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
             if(body.print){
                 printData.business = await crudService.findOne('Business', {id: 1});
                 printData.transaction = await productService.fetchTransaction(transaction.id)
-                
+
                 deviceService.printReceipt(printData) 
             }
         }
@@ -310,6 +322,25 @@ router.get("/transaction/search", [Authenticator.auth], asyncWrapper(async(req, 
         ]
     }
     let data = await productService.fetchTransactions(query);
+    
+    res.json({message: 'Result', result: data});
+}))
+
+router.post("/transaction/print", [Authenticator.auth], asyncWrapper(async(req, res) => {
+    let body = req.body
+    let printData = {};
+
+    console.log(body)
+    let business = await crudService.findOne('Business', {id: 1});
+    let transaction = await productService.fetchTransaction(body.id)
+    let issuer = await crudService.findOne('User', transaction.userId)
+
+    console.log(transaction)
+    printData.business = business
+    printData.transaction = transaction
+    printData.issuer = issuer.firstname+' '+issuer.lastname
+
+    deviceService.printReceipt(printData) 
     
     res.json({message: 'Result', result: data});
 }))
