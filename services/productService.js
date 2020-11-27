@@ -130,6 +130,24 @@ module.exports = class UserService{
     }
   } 
 
+  async fetchAllProducts(){
+    try {
+      return models.Product.findAll({
+        where: {},
+        order: [['name', 'ASC']],
+        include: [
+          {
+            model: models.Category,
+            as: 'category',
+            required: false
+          },
+        ]
+      }) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   async fetchProducts(condition){
     try {
       return models.Product.findAll({

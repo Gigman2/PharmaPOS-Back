@@ -78,7 +78,7 @@ router.post("/single", [Authenticator.auth], asyncWrapper(async(req, res) => {
 router.get("/list", [Authenticator.auth], asyncWrapper(async(req, res)=> {
     let data
     if(req.query.size == 'all'){
-        data = await crudService.findAll('Product') 
+        data = await productService.fetchAllProducts() 
     }else{
         data = await productService.fetchRecentProducts() 
     }

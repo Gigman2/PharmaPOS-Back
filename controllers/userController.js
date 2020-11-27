@@ -74,13 +74,19 @@ router.post("/new",[Upload.single('avatar')], asyncWrapper(async (req, res) => {
  */
 router.post("/set-password", [Authenticator.auth], asyncWrapper(async (req, res) => {
     var body = req.body
-    let user = req.account
-    if(body.old != 'fryt01Ch1ck3n'){
-        let validPassword = await user.comparePassword(body.old)
-        if(!validPassword){
-            throw CustomError({statusCode: 422, message: 'Password is not correct'}, res)
+    let user;
+    if(body.userId){
+        user  = await crudService.findOne('User', {id: body.userId})
+    }else{
+        user = req.account
+        if(body.old != 'fryt01Ch1ck3n'){
+            let validPassword = await user.comparePassword(body.old)
+            if(!validPassword){
+                throw CustomError({statusCode: 422, message: 'Password is not correct'}, res)
+            }
         }
     }
+
     if(body.password != body.c_password){
         throw CustomError({statusCode: 422, message: 'Passwords dont match'}, res)
     }
@@ -93,18 +99,18 @@ router.post("/set-password", [Authenticator.auth], asyncWrapper(async (req, res)
 /**
  * UPDATE USER  ACCOUNT 
  */
-router.put("/update",[Upload.single('avatar')], asyncWrapper(async (req, res) => {
+router.put("/update",[Upload.single('avatar'), Authenticator.auth], asyncWrapper(async (req, res) => {
     var body = JSON.parse(JSON.stringify(req.body));
-    delete body.id;
+    body.id;
 
-    // const validated = await accountService.authenticateData(body, 'update')
-    // if(validated != null){
-    //     throw CustomError({statusCode: validated.code, message: validated.message}, res)
-    // }
+    if(!body.id){
+        body.id = req.account.id
+    }
+
     if(req.file){
         body.avatar =req.file.filename;
     }
-    let success = await crudService.update('User', body, {id: req.body.id})
+    let success = await crudService.update('User', body, {id: body.id})
     res.json({message: 'User created successfully', result: success});
 }));
 
@@ -126,7 +132,13 @@ router.post('/remove', [Authenticator.auth], asyncWrapper(async(req, res) => {
  * VIEW SINGLE USER  ACCOUNT
  */
 router.post('/single', [Authenticator.auth], asyncWrapper(async(req, res) => {
-    let data = await accountService.getUser({id: req.body.id})
+    let body = req.body
+
+    if(!body.id){
+        body.id = req.account.id
+    }
+
+    let data = await accountService.getUser({id: body.id})
     data.password = "*****"
     res.json({message: 'All users', result: data});
 }))

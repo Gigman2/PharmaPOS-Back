@@ -16,6 +16,7 @@
     "dotenv": "^8.2.0",
     "excel4node": "^1.7.2",
     "express": "^4.17.1",
+    "fuse.js": "^6.4.3",
     "generate-password": "^1.5.1",
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
