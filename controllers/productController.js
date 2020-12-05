@@ -33,6 +33,10 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
     if(req.file){
         body.image = req.file.filename;
     }
+
+    if(!body.restock){
+        body.restock = 1
+    }
     let data = await crudService.create('Product', body)
 
     productService.updateStock({
@@ -144,6 +148,9 @@ router.post('/stock/add', [Authenticator.auth], asyncWrapper(async(req, res) => 
 
     updateData.quantity = parseInt(product.left) + parseInt(updateData.quantity)
     updateData.left = updateData.quantity
+    if(product.restock == null){
+        updateData.restock = 1
+    }
 
     crudService.update('Product', req.body, {id: body.productId})
     res.json({message: 'Result', result: data});
