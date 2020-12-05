@@ -69,6 +69,8 @@ module.exports = class UserService{
               data: null
             }
           }
+        }else{
+          result = user
         }
     }else{
       return {
