@@ -85,7 +85,13 @@ module.exports = class DeviceService{
         printer.setTextNormal();
 
         printer.drawLine();
-        printer.print('Thank You. Please call again');
+        printer.print('Thank You ')
+        if(data.transaction.boughtBy){
+            printer.print(data.transaction.boughtBy.firstname)
+            printer.print(' ')
+            printer.print(data.transaction.boughtBy.lastname)
+        }
+        printer.print('. Please call again');
         printer.newLine();
         printer.print('Dask your health our priority'); 
         printer.newLine();

@@ -333,6 +333,11 @@ module.exports = class UserService{
               }
             ]
           },
+          {
+            model: models.Customer,
+            as: 'boughtBy',
+            required: false,
+          }
         ]
       }) 
     } catch (error) {
