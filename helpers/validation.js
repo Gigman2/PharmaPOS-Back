@@ -27,6 +27,7 @@ module.exports = {
         pack_q: Joi.optional(),
         shelf: Joi.optional(),
         variant: Joi.optional(),
+        left: Joi.optional(),
         expiry: Joi.optional(),
         dispensation: Joi.optional(),
         restock: Joi.number().optional()
