@@ -29,7 +29,7 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
     body.pack_l = body.pack_q
 
     body.active = true;
-
+ 
     if(req.file){
         body.image = req.file.filename;
     }
