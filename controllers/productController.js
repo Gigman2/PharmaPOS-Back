@@ -146,8 +146,6 @@ router.post('/stock/add', [Authenticator.auth], asyncWrapper(async(req, res) => 
     let product = await crudService.findOne('Product', {id: body.productId})
     let updateData = body;
 
-    updateData.quantity = parseInt(product.left) + parseInt(updateData.quantity)
-    updateData.left = updateData.quantity
     if(product.restock == null){
         updateData.restock = 1
     }
