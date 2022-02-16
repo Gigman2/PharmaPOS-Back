@@ -4,11 +4,14 @@ const DatabaseFunc = require('../helpers/crud')
 const Upload = require('../helpers/upload')
 const Authenticator = require('../middlewares/auth-middleware')
 const crudService = new DatabaseFunc;
+const auth = require('../helpers/auth')
 
 const DeviceService = require('../services/deviceService')
 const deviceService = new DeviceService;
-const ProductService = require('../services/productService')
+const ProductService = require('../services/productService') 
 const productService = new ProductService;
+const AccountService = require('../services/accountService')
+const accountService = new AccountService;
 
 router.post("/business-save", [Upload.single('image'), Authenticator.auth], asyncWrapper(async(req, res)=> {
     let body = req.body;
@@ -52,8 +55,9 @@ router.get("/barcode", asyncWrapper(async(req, res) => {
     res.json({message: 'Result', result: data});
 }));
 
+router.get('/setup-account', asyncWrapper(async(req, res) => {
 
-router.get("/set-resources", asyncWrapper(async(req, res) => {
+    logger.info('✌ Setting Up Resources')
     let resources = [
         {"id":"1","name":"Can view dashboard","group":"analytics"},
         {"id":"2","name":"Access to Sell page", "group":"sales"},
@@ -85,14 +89,82 @@ router.get("/set-resources", asyncWrapper(async(req, res) => {
         {"id":"38","name":"Has full office access","group":"Office"}
     ]
     let success = 0
-    resources.forEach(async item => {
+    resources.map(async item => {
         let created = await crudService.create('Resource', item)
         if(created){
             success++
         }
     })
 
-    res.json({message: 'Successfully created '+success+' resources'});
-}));
+    logger.info('✌ Creating Admin role With Permissions')
+    let roleAndPermissions = { "name":"Admin",
+        "resource":{
+            "Analytics":[
+                {"name":"Can view dashboard","resourceId":1,"state":true,"group":"analytics"}
+            ],
+            "Sales":[
+                {"name":"Access to Sell page","resourceId":2,"state":true,"group":"sales"},
+                {"name":"Access to sale records","resourceId":3,"state":false,"group":"sales"},
+                {"name":"Can modify a sales record","resourceId":4,"state":false,"group":"sales"},
+                {"name":"Can delete a sales record","resourceId":5,"state":false,"group":"sales"},
+                {"name":"Can refund a transaction","resourceId":6,"state":false,"group":"sales"},
+                {"name":"Can return a transaction","resourceId":7,"state":false,"group":"sales"}
+            ],
+            "Customer":[
+                {"name":"can add customer","resourceId":14,"state":false,"group":"customer"},
+                {"name":"can modify customer details","resourceId":15,"state":false,"group":"customer"},
+                {"name":"can delete a customer","resourceId":16,"state":false,"group":"customer"}
+            ],
+            "Discount":[
+                {"name":"can add new discount ","resourceId":21,"state":false,"group":"discount"},
+                {"name":"can modify a discount","resourceId":22,"state":false,"group":"discount"},
+                {"name":"can delete a discount","resourceId":23,"state":false,"group":"discount"},
+                {"name":"can apply discount to a transaction","resourceId":24,"state":false,"group":"discount"}
+            ],
+            "Inventory":[
+                {"name":"can add product","resourceId":25,"state":false,"group":"inventory"},
+                {"name":"can modify added product's details","resourceId":26,"state":false,"group":"inventory"},
+                {"name":"can remove product","resourceId":27,"state":false,"group":"inventory"},
+                {"name":"can add stock to product","resourceId":28,"state":false,"group":"inventory"},
+                {"name":"can export inventory data","resourceId":36,"state":false,"group":"inventory"},
+                {"name":"can add new inventory by import","resourceId":37,"state":false,"group":"inventory"}
+            ],
+            "Category":[
+                {"name":"can add a category","resourceId":29,"state":false,"group":"category"},
+                {"name":"can modify a category","resourceId":30,"state":false,"group":"category"},
+                {"name":"can delete a category","resourceId":31,"state":false,"group":"category"}
+            ],
+            "Supplier":[
+                {"name":"can add a supplier","resourceId":32,"state":false,"group":"supplier"},
+                {"name":"can modify a supplier","resourceId":33,"state":false,"group":"supplier"},
+                {"name":"can delete a supplier","resourceId":34,"state":false,"group":"supplier"}
+            ],
+            "Report":[
+                {"name":"can access all reports","resourceId":35,"state":true,"group":"report"}
+            ],
+            "Office":[
+                {"name":"Has full office access","resourceId":38,"state":true,"group":"Office"}
+            ]
+        }
+    }
+
+   let newRole =  await accountService.saveRolePermissions(roleAndPermissions, req.account)
+
+    logger.info('✌ Creating Account with assigned role')
+    let userBody = {
+        "username": 'Tech',
+        "firstname": 'Sluxify',
+        "lastname": 'Tech',
+        "email": 'kojoaeric@gmail.com',
+        "roleId": newRole.id,
+        "phone": '0245268415',
+        "active": true,
+        "password": "Cisco_980"
+      }
+    userBody = await auth.hash(userBody)
+    let user = await crudService.create('User', userBody)
+    res.json({message: `Account setup successful, ${success} resources added`, result: user});
+}))
+
 
 module.exports = router;

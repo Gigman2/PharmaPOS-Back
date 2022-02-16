@@ -25,7 +25,7 @@ module.exports = class DeviceService{
     }
 
     async printReceipt(data){
-        let imagePath = path.resolve(__dirname, '..', 'uploads', 'logo.png');
+        let imagePath = path.resolve(__dirname, '..', 'uploads', data.business.logo);
 
         printer.alignCenter()
         printer.bold(true);
@@ -84,6 +84,16 @@ module.exports = class DeviceService{
         printer.bold(false)
         printer.setTextNormal();
 
+        printer.tableCustom([
+            {text: 'cash', align: "LEFT", width:0.6},
+            {text: data.transaction.cashAmount, align: "RIGHT", width:0.4}
+        ])
+
+        printer.tableCustom([
+            {text: 'mobile money', align: "LEFT", width:0.6},
+            {text: data.transaction.momoAmount, align: "RIGHT", width:0.4}
+        ])
+
         printer.drawLine();
         printer.print('Thank You ')
         if(data.transaction.boughtBy){
@@ -92,8 +102,6 @@ module.exports = class DeviceService{
             printer.print(data.transaction.boughtBy.lastname)
         }
         printer.print('. Please call again');
-        printer.newLine();
-        printer.print('Dask your health our priority'); 
         printer.newLine();
 
         printer.setTextNormal()

@@ -243,19 +243,15 @@ module.exports = class AnalyticsService{
 
             var query = `SELECT * FROM productSales WHERE productId = "${item.id}"`;
             let salesproducts = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
-            let looseCount = 0;
-            let packCount = 0;
+            let quantity = 0;
             salesproducts.forEach(product => {
-                looseCount = looseCount + parseInt(product.looseBought);
-                packCount = packCount + parseInt(product.packBought)
+                quantity = quantity + parseInt(product.quantity);
             })
             let quantitysold = ''
-            if(packCount != 0){
-                quantitysold = packCount+' Pcks '
+            if(quantity != 0){
+                quantitysold = quantity
             }
-            if(looseCount != 0){
-                quantitysold = quantitysold + looseCount+' pcs'
-            }
+
             if(quantitysold == ''){
                 quantitysold = '--'
             }

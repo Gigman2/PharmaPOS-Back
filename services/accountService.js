@@ -287,7 +287,7 @@ module.exports = class UserService{
     permissionsArr = [].concat.apply([], permissionsArr)
     permissionsArr.forEach(item => {
         let resource = item
-        resource.userId = user.id
+        resource.userId = user?.id 
 
         if(typeof createdRole == 'object'){
           if(createdRole[0] == 1){
@@ -299,5 +299,7 @@ module.exports = class UserService{
           }
         }
     })
+
+    return createdRole
   }
 }

@@ -157,7 +157,7 @@ router.get('/list', [Authenticator.auth], asyncWrapper(async(req, res) => {
  */
 router.get('/logout', [Authenticator.auth], asyncWrapper(async(req, res) => {
     accountService.userLogout({id: req.account.id})
-    res.json({message: 'Loggout'});
+    res.json({message: 'Logout'});
 }))
 
 /**
