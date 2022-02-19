@@ -22,7 +22,7 @@ sequelize.authenticate()
   .then(() => {
     console.log('Database connected ...')
     // logger.info('✌ ================ Database connected =====================')
-});
+}).catch(err => {console.log(err)});
 
 
 fs
