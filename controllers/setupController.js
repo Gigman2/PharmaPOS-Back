@@ -6,10 +6,6 @@ const Authenticator = require('../middlewares/auth-middleware')
 const crudService = new DatabaseFunc;
 const auth = require('../helpers/auth')
 
-const DeviceService = require('../services/deviceService')
-const deviceService = new DeviceService;
-const ProductService = require('../services/productService') 
-const productService = new ProductService;
 const AccountService = require('../services/accountService')
 const accountService = new AccountService;
 
@@ -32,28 +28,6 @@ router.get("/business-info", [Authenticator.auth], asyncWrapper(async(req, res)=
     res.json({message: 'Result', result: data});
 }));
 
-router.get("/printer", asyncWrapper(async(req, res)=> {
-    let data = await deviceService.printerInfo()
-    res.json({message: 'Result', result: data});
-}));
-
-router.get("/print", asyncWrapper(async(req, res)=> {
-    let data = {};
-    let business = await crudService.listAll('Business');
-    data.business = business[0]
-
-    let transaction = await productService.fetchTransactions();
-    data.transaction = transaction[0]
-
-    await deviceService.printReceipt(data)
-    res.json({message: 'Result', result: data});
-}));
-
-
-router.get("/barcode", asyncWrapper(async(req, res) => {
-    let data = await deviceService.scannersInfo()
-    res.json({message: 'Result', result: data});
-}));
 
 router.get('/setup-account', asyncWrapper(async(req, res) => {
 

@@ -1,7 +1,9 @@
 'use strict'
 
 const chalk      = require("chalk");
+const socketIO   = require("socket.io")
 const express    = require('express')
+const Http       = require('http') 
 const Middleware = require('../middlewares')
 const models     = require("../models/index"); 
 const CustomError = require('../middlewares/error-handling')
@@ -33,7 +35,7 @@ module.exports = function() {
 		routes.init(server); 
 		logger.info('✌ ================ Route Loaded =====================')
 
-		//Set up global winston logger
+
 
 		//Error handling
 		// ErrorHandlingMiddleware(server)
@@ -48,10 +50,22 @@ module.exports = function() {
 	start = function() {
 		let hostname = server.get('hostname'),
 			port = server.get('port');
+		
+		const http = Http.createServer(server);
+		
 
-		server.listen(port, function () {
+		http.listen(port, function () {
 			logger.info('✌ Server Started on - http://' + hostname + ':' + port)
 		});
+
+		global.io = socketIO(http, {
+			cors: {
+			  origin: "http://localhost:8080",
+			  methods: ["GET", "POST"],
+			  credentials: true,
+			  allowEIO3: true 
+			}
+		  })
 	};
 
 	return {

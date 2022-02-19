@@ -8,8 +8,6 @@ const crudService = new DatabaseFunc;
 
 const ProductService = require('../services/productService')
 const productService = new ProductService;
-const DeviceService = require('../services/deviceService')
-const deviceService = new DeviceService;
 const AnalyticsService = require('../services/analyticsService');
 const analyticsService = new AnalyticsService;
 
@@ -282,16 +280,16 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
             let printData = {
                 issuer: req.account.firstname+' '+req.account.lastname
             }
-            if(body.print){
-                printData.openCash = true
-                printData.business = await crudService.findOne('Business', {id: 1});
-                printData.business = JSON.parse(JSON.stringify(printData.business))
 
-                printData.transaction = await productService.fetchTransaction(transaction.id)
-                printData.transaction = JSON.parse(JSON.stringify(printData.transaction))
+            printData.openCash = true
+            printData.business = await crudService.findOne('Business', {id: 1});
+            printData.business = JSON.parse(JSON.stringify(printData.business))
 
-                deviceService.printReceipt(printData) 
-            }
+            printData.transaction = await productService.fetchTransaction(transaction.id)
+            printData.transaction = JSON.parse(JSON.stringify(printData.transaction))
+
+            if(printData?.business?.logo) printData.business.logo = path.resolve(__dirname, '..', 'uploads', printData.business.logo);
+            return printData
         }
     }
     
@@ -347,10 +345,8 @@ router.post("/transaction/print", [Authenticator.auth], asyncWrapper(async(req, 
     printData.transaction = transaction
     printData.issuer = issuer.firstname+' '+issuer.lastname
     printData.openCash = false
-
-    deviceService.printReceipt(printData) 
     
-    res.json({message: 'Result'});
+    res.json({data: printData});
 }))
 
 
