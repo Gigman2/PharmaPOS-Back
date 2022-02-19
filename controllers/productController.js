@@ -288,7 +288,7 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
             printData.transaction = await productService.fetchTransaction(transaction.id)
             printData.transaction = JSON.parse(JSON.stringify(printData.transaction))
 
-            if(printData?.business?.logo) printData.business.logo = path.resolve(__dirname, '..', 'uploads', printData.business.logo);
+            if(printData && printData.business && printData.business.logo) printData.business.logo = path.resolve(__dirname, '..', 'uploads', printData.business.logo);
             return printData
         }
     }
