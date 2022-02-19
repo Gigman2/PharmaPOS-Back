@@ -14,6 +14,7 @@ const db_config = config.database
 if(config.database.url != ''){
   sequelize = new Sequelize(config.database.url, config.database)
 }else{
+  console.log(config.database.name, config.database.username, config.database.password, config.database)
   sequelize = new Sequelize(config.database.name, config.database.username, config.database.password, config.database);
 }
 
