@@ -5,15 +5,16 @@ const Upload = require('../helpers/upload')
 const Authenticator = require('../middlewares/auth-middleware')
 const crudService = new DatabaseFunc;
 const auth = require('../helpers/auth')
+const imagestorage = require('../helpers/upload').image
 
 const AccountService = require('../services/accountService')
 const accountService = new AccountService;
 
-router.post("/business-save", [Upload.single('image'), Authenticator.auth], asyncWrapper(async(req, res)=> {
+router.post("/business-save", [imagestorage.single('logo'), Authenticator.auth], asyncWrapper(async(req, res)=> {
     let body = req.body;
     body.userId = req.account.id
     if(req.file){
-        body.logo = req.file.filename;
+        body.logo = req.file.url
     }
     let data = await crudService.createOrUpdate('Business', body, {id: body.id})
 

@@ -1,14 +1,38 @@
-const multer = require('multer');
-const path = require("path");
+const cloudinary = require('cloudinary').v2;
+const {CloudinaryStorage} = require('multer-storage-cloudinary');
+const multer = require('multer')
+const path = require('path')
 
-var localStorage = multer.diskStorage({
+cloudinary.config({ 
+    cloud_name:  process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+var imageStorage = new CloudinaryStorage({
+    cloudinary: cloudinary,  
+    params: async (req, file) => {
+        return {
+          folder: 'nagiland',
+          format: 'jpeg',
+        };
+      },
+});
+
+var docStorage = multer.diskStorage({
     destination: function(req, file, callback){
-        callback(null, './uploads');
+        callback(null, file.extname);
     },
     filename: function(req, file, callback){
-        var filename = 'file-upload' + '-' + Date.now() + path.extname(file.originalname);
+        var originalname = file.originalname.substr(0, file.originalname.lastIndexOf("."))
+        console.log(originalname)
+        var filename = originalname + '-' + Date.now() + path.extname(file.originalname);
         callback(null, filename);
     }
 });
 
-module.exports = multer({storage: localStorage})
+
+module.exports = {
+    image: multer({ storage: imageStorage }),
+    doc:  multer({ storage: docStorage })
+}

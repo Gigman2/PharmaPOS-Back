@@ -4,6 +4,7 @@ const router = require("express").Router();
 const asyncWrapper = require("../helpers/async").AsyncWrapper;
 const DatabaseFunc = require('../helpers/crud')
 const Upload = require('../helpers/upload')
+const imagestorage = require('../helpers/upload').image
 const crudService = new DatabaseFunc;
 
 const ProductService = require('../services/productService')
@@ -15,7 +16,7 @@ const analyticsService = new AnalyticsService;
 const Authenticator = require('../middlewares/auth-middleware')
 const CustomError = require('../middlewares/error-handling');
 
-router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(async (req, res) => {
+router.post("/new",[imagestorage.single('image'), Authenticator.auth], asyncWrapper(async (req, res) => {
     var body = req.body
     const validated = await productService.authenticateData(body, 'create')
     if(validated != null){
@@ -29,7 +30,7 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
     body.active = true;
  
     if(req.file){
-        body.image = req.file.filename;
+        body.image = req.file.url
     }
 
     if(!body.restock){
@@ -49,7 +50,7 @@ router.post("/new",[Upload.single('image'), Authenticator.auth], asyncWrapper(as
     res.json({message: 'New Product added successfully', result: data});
 }));
 
-router.post("/update",[Upload.single('image'), Authenticator.auth], asyncWrapper(async (req, res) => {
+router.post("/update",[imagestorage.single('image'), Authenticator.auth], asyncWrapper(async (req, res) => {
     var body = JSON.parse(JSON.stringify(req.body));
     delete body.id;
 

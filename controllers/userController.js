@@ -4,6 +4,7 @@ const asyncWrapper = require("../helpers/async").AsyncWrapper;
 const DatabaseFunc = require('../helpers/crud')
 const Upload = require('../helpers/upload')
 const auth = require('../helpers/auth')
+const imagestorage = require('../helpers/upload').image
 const crudService = new DatabaseFunc;
 
 const AccountService = require('../services/accountService')
@@ -46,7 +47,7 @@ router.post('/auth',asyncWrapper(async(req, res) => {
 /**
  * REGISTER USER ROUTE
  */
-router.post("/new",[Upload.single('avatar')], asyncWrapper(async (req, res) => {
+router.post("/new", asyncWrapper(async (req, res) => {
     var body = req.body
     if(body.password == ''){
         body.password = pwdGenerator.generate({length: 10, numbers: true, uppercase: false});
@@ -56,9 +57,6 @@ router.post("/new",[Upload.single('avatar')], asyncWrapper(async (req, res) => {
         throw CustomError({statusCode: validated.code, message: validated.message}, res)
     }
     body.active = true
-    if(req.file){
-        body.avatar = req.file.filename;
-    }
     body = await auth.hash(body)
     let user = await crudService.create('User', body)
     let serialized = user.toWeb()
@@ -99,7 +97,7 @@ router.post("/set-password", [Authenticator.auth], asyncWrapper(async (req, res)
 /**
  * UPDATE USER  ACCOUNT 
  */
-router.put("/update",[Upload.single('avatar'), Authenticator.auth], asyncWrapper(async (req, res) => {
+router.put("/update",[Authenticator.auth], asyncWrapper(async (req, res) => {
     var body = JSON.parse(JSON.stringify(req.body));
     body.id;
 
