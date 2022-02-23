@@ -208,8 +208,8 @@ module.exports = class UserService{
         }))
       }
 
-      let products =await models.Product.findAll({
-        order: Sequelize.literal('rand()'),
+      let products = await models.Product.findAll({
+        order: Sequelize.literal(' random()'),
         limit: 20,
         include: [
           {
@@ -219,6 +219,7 @@ module.exports = class UserService{
           },
         ]
       }) 
+      console.log('Products are ', products)
 
       return {
         recent: recentProductsList,
