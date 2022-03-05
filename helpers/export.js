@@ -67,7 +67,6 @@ module.exports = class DataExport {
 
 
         keys.forEach(async (key, i) => {
-            console.log((key.length+7)*1.5)
             await ws.cell(5, i+1)
             .string(data.title[key])
             .style(headerStyle);

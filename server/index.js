@@ -57,15 +57,6 @@ module.exports = function() {
 		http.listen(port, function () {
 			logger.info('✌ Server Started on - http://' + hostname + ':' + port)
 		});
-
-		global.io = socketIO(http, {
-			cors: {
-			  origin: "http://localhost:8080",
-			  methods: ["GET", "POST"],
-			  credentials: true,
-			  allowEIO3: true 
-			}
-		  })
 	};
 
 	return {
