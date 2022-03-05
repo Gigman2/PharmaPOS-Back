@@ -239,8 +239,9 @@ module.exports = class UserService{
           resourceId: _id
         }})
 
+
         if(permissionsObj != null){
-          if(permissionsObj !== null && permissionsObj.state == true){
+          if(permissionsObj !== null && (permissionsObj.state == true || permissionsObj.state == 'true' || permissionsObj.state == 1)){
             permissions.state = true
           }
           
