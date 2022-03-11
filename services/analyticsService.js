@@ -148,7 +148,7 @@ module.exports = class AnalyticsService{
 
         var sales_query = `SELECT DAY(createdAt) as day, MONTH(createdAt) AS month, YEAR(createdAt) AS year, SUM(grossTotal) as total FROM sales WHERE state = 'complete'  GROUP BY DAY(createdAt)`
        
-        let sales = await sequelize.query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))")
+        // let sales = await sequelize.query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))")
         .then(async () => {
             return await sequelize.query(sales_query, { type: Sequelize.QueryTypes.SELECT })
         })
@@ -158,7 +158,7 @@ module.exports = class AnalyticsService{
 
     async salesReport(body){
         var query = `SELECT SUM(grossTotal) as closing_cash, SUM(cashAmount) as cash, SUM(momoAmount) as momo,MIN(id) as firstID, MAX(id) as lastID  FROM sales WHERE (createdAT BETWEEN '${body.from}' AND '${body.to}') GROUP BY DAY(createdAt)`
-        let data = await sequelize.query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))")
+        // let data = await sequelize.query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))")
         .then(async () => {
             return await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
         })
