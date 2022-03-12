@@ -24,10 +24,11 @@ router.post("/new",[imagestorage.single('image'), Authenticator.auth], asyncWrap
     }
     body.userId = req.account.id
     body.timesSold = 0
-    if(body.pack_q){
-        body.left = body.quantity - 1
-        body.pack_l = body.pack_q
+    if(!body.pack_q){
+        body.pack_q = 1
     }
+    body.left = body.quantity - 1
+    body.pack_l = body.pack_q
 
     body.active = true;
  
