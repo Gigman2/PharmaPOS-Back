@@ -29,7 +29,7 @@ router.post("/new",[imagestorage.single('image'), Authenticator.auth], asyncWrap
     }
     body.left = body.quantity - 1
     body.pack_l = body.pack_q
-
+    body.dispensation = 'tab'
     body.active = true;
  
     if(req.file){
