@@ -50,8 +50,9 @@ module.exports = class CrudService {
     }
 
     async createOrUpdate(Model, data, condition){
+
         let exists = await this.exists(Model, condition)
-        if(!exists){
+        if(!exists || data.id === null){
             delete data.id
             return this.create(Model, data)
         }else{
