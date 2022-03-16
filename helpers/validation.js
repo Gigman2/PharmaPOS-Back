@@ -23,6 +23,7 @@ module.exports = {
         manufacturer: Joi.optional(),
         price: Joi.number().required(),
         cprice: Joi.number().optional(),
+        wprice: Joi.number().optional(),
         quantity: Joi.number().required(),
         pack_q: Joi.optional(),
         shelf: Joi.optional(),
