@@ -3,7 +3,6 @@ const Op = Sequelize.Op
 const router = require("express").Router();
 const asyncWrapper = require("../helpers/async").AsyncWrapper;
 const DatabaseFunc = require('../helpers/crud')
-const Upload = require('../helpers/upload')
 const imagestorage = require('../helpers/upload').image
 const crudService = new DatabaseFunc;
 

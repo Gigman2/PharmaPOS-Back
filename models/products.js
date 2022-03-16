@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
                 shelf: {type: DataTypes.STRING},
                 price: {type: DataTypes.STRING},
                 cprice: {type: DataTypes.STRING},
+                wprice: {type: DataTypes.STRING},
                 quantity: {type: DataTypes.INTEGER}, 
                 pack_q: {type: DataTypes.INTEGER},
                 pack_l: {type: DataTypes.INTEGER},
