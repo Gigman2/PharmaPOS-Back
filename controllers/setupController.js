@@ -16,7 +16,6 @@ router.post("/business-save", [imagestorage.single('logo'), Authenticator.auth],
     if(req.file){
         body.logo = req.file.url
     }
-    console.log('Here now ')
     let data = await crudService.createOrUpdate('Business', body, {id: body.id})
 
     res.json({message: 'Result', result: data});

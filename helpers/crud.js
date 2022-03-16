@@ -39,8 +39,6 @@ module.exports = class CrudService {
     async exists(Model, condition){
         // Clear null properties
         Object.keys(condition).forEach((k) => (condition[k] == null || condition[k] == 'null') && delete condition[k]);
-        
-        console.log('Now here', condition)
         var user = await models[Model].findOne({where: condition });
         if(user){
             return true
@@ -52,6 +50,9 @@ module.exports = class CrudService {
     async createOrUpdate(Model, data, condition){
 
         let exists = await this.exists(Model, condition)
+        console.log('Values exits ==> ',exists)
+        console.log('Data values ==> ',data)
+
         if(!exists || data.id === null){
             delete data.id
             return this.create(Model, data)
