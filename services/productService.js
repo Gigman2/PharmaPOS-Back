@@ -219,7 +219,6 @@ module.exports = class UserService{
           },
         ]
       }) 
-      console.log('Products are ', products)
 
       return {
         recent: recentProductsList,

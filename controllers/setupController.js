@@ -24,7 +24,8 @@ router.post("/business-save", [imagestorage.single('logo'), Authenticator.auth],
 router.get("/business-info", [Authenticator.auth], asyncWrapper(async(req, res)=> {
     let body = req.body;
     body.userId = req.account.id
-    let data = await crudService.findOne('Business', {id: 1})
+    let data = await crudService.findAll('Business')
+    if(data.length) data[0]
     
     res.json({message: 'Result', result: data});
 }));
