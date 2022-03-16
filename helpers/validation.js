@@ -26,6 +26,7 @@ module.exports = {
         wprice: Joi.number().optional(),
         quantity: Joi.number().required(),
         pack_q: Joi.optional(),
+        pack_l: Joi.optional(),
         shelf: Joi.optional(),
         variant: Joi.optional(),
         left: Joi.optional(),
