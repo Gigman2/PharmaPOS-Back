@@ -99,14 +99,14 @@ module.exports = class UserService{
     )
 
     if(!session){
-        crudService.create('UserSession',  {userId: requestBody.id, checkout: Date.now()},)
+        crudService.create('UserSession',  {userId: result.id, checkout: Date.now()},)
     }else{
       if(session.checkin == null){
         crudService.update('UserSession',
-            {userId: requestBody.id, checkin: Date.now()},
+            {userId: result.id, checkin: Date.now()},
             {
               [Op.and]: [
-                { userId: requestBody.id, },
+                { userId: result.id, },
                 Sequelize.where(
                   Sequelize.fn('DATE', Sequelize.col('createdAt')),
                   Sequelize.literal('CURRENT_DATE')
