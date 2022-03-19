@@ -13,9 +13,8 @@ const accountService = new AccountService;
 router.post("/business-save", [imagestorage.single('logo'), Authenticator.auth], asyncWrapper(async(req, res)=> {
     let body = req.body;
     body.userId = req.account.id
-    console.log(req.file)
     if(req.file){
-        body.logo = req.file.url
+        body.logo = req.file.path
     }
     let data = await crudService.createOrUpdate('Business', body, {id: body.id})
 
