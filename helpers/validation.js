@@ -8,7 +8,7 @@ module.exports = {
         username: Joi.string().optional(), 
         phone: Joi.number().min(6).integer().optional(),
         password: Joi.string().min(6).optional(),
-        roleId: Joi.string().optional(),
+        roleId: Joi.number().optional(),
         avatar: Joi.string().optional()
     }),
     loginUser: Joi.object({
