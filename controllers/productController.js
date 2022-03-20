@@ -302,7 +302,7 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
 
             // if(printData && printData.business && printData.business.logo) printData.business.logo;
             res.json({message: 'Result', result: printData});
-        } {
+        } else{
             res.json({message: 'Result', result: printData});
         }
     }
