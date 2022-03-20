@@ -294,7 +294,7 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
             printData.issuePrint = true
             printData.openCash = true
             let business = await crudService.findAll('Business')
-            if(data.length)  printData.business = business[0]
+            if(printData.business.length)  printData.business = business[0]
             printData.business = JSON.parse(JSON.stringify(printData.business))
 
             printData.transaction = await productService.fetchTransaction(transaction.id)
