@@ -269,18 +269,26 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
         body.state = 'complete'; 
     }
     let transaction = await crudService.createOrUpdate('Sale', body, {id: body.id})
+    console.log("Sales recorded .... ")
+
     let productsSaved = await Promise.all(body.products.map(async item => {
         item.saleId = transaction.id || body.id
         await crudService.createOrUpdate('ProductSale', item , {id: item.id})
     }))
 
+    console.log("ProductSale saved .... ")
+
     if(transaction.customerId){
         crudService.update('Customer', {lastPurchase: Date.now()}, {id: transaction.customerId});
     }
+    console.log("Customer attached ")
+
 
     if(productsSaved){
+        console.log("Update stock .... ")
         productService.updateStockAfterPurchase(transaction.id)
         let stock = await analyticsService.stockWorth()
+        console.log('New stock worth ', stock)
         crudService.update('Sale', {stockWorth: stock.stockWorth}, {id: transaction.id})
 
         if(body.state == 'complete'){
