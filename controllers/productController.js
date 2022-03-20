@@ -301,9 +301,11 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
             printData.transaction = JSON.parse(JSON.stringify(printData.transaction))
 
             // if(printData && printData.business && printData.business.logo) printData.business.logo;
-        } 
+            return printData
+        } {
+            return printData
+        }
 
-        return printData
     }
     
 
