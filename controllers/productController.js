@@ -269,44 +269,41 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
         body.state = 'complete'; 
     }
     let transaction = await crudService.createOrUpdate('Sale', body, {id: body.id})
-    console.log("Sales recorded .... ", transaction)
 
     let productsSaved = await Promise.all(body.products.map(async item => {
         item.saleId = transaction.id || body.id
-        console.log(item)
         const productSales = await crudService.createOrUpdate('ProductSale', item , {id: item.id})
-        console.log("ProductSale saved .... ", productSales)
     }))
 
 
     if(transaction.customerId){
         crudService.update('Customer', {lastPurchase: Date.now()}, {id: transaction.customerId});
     }
-    console.log("Customer attached ")
-
 
     if(productsSaved){
-        console.log("Update stock .... ")
         productService.updateStockAfterPurchase(transaction.id)
         let stock = await analyticsService.stockWorth()
-        console.log('New stock worth ', stock)
         crudService.update('Sale', {stockWorth: stock.stockWorth}, {id: transaction.id})
 
-        if(body.state == 'complete'){
-            let printData = {
-                issuer: req.account.firstname+' '+req.account.lastname
-            }
+        let printData = {
+            issuer: req.account.firstname+' '+req.account.lastname,
+            issuePrint: false
+        }
 
+        if(body.state == 'complete'){
+            printData.issuePrint = true
             printData.openCash = true
-            printData.business = await crudService.findOne('Business', {id: 1});
+            let business = await crudService.findAll('Business')
+            if(data.length)  printData.business = business[0]
             printData.business = JSON.parse(JSON.stringify(printData.business))
 
             printData.transaction = await productService.fetchTransaction(transaction.id)
             printData.transaction = JSON.parse(JSON.stringify(printData.transaction))
 
             if(printData && printData.business && printData.business.logo) printData.business.logo = path.resolve(__dirname, '..', 'uploads', printData.business.logo);
-            return printData
-        }
+        } 
+
+        return printData
     }
     
 
