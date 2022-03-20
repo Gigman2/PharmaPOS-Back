@@ -273,11 +273,11 @@ router.post("/transaction/save", [Authenticator.auth], asyncWrapper(async(req, r
 
     let productsSaved = await Promise.all(body.products.map(async item => {
         item.saleId = transaction.id || body.id
+        console.log(item)
         const productSales = await crudService.createOrUpdate('ProductSale', item , {id: item.id})
         console.log("ProductSale saved .... ", productSales)
     }))
 
-    console.log("ProductSale saved .... ")
 
     if(transaction.customerId){
         crudService.update('Customer', {lastPurchase: Date.now()}, {id: transaction.customerId});
