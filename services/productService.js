@@ -373,16 +373,14 @@ module.exports = class UserService{
     sales.forEach(async item => {
       let product = await crudService.findOne('Product', {id: item.productId});
       let update = {}
-      if(item.dispensation == 'single'){
-        update.left = Number(product.left) - Number(item.quantity)
-      }else if(item.dispensation == 'tab' || item.dispensation == 'strip'){
-        update.pack_l =  Number(product.pack_l) - Number(item.quantity)
+      update.left = Number(product.left) - Number(item.quantity)
+     if(item.retail){
+        update.pack_l =  Number(product.pack_l) - Number(item.retail)
         while(update.pack_l <= 0){
           update.pack_l = parseInt(product.pack_q) + update.pack_l
           update.left = parseInt(product.left) - 1
         }
       }
-      
       crudService.update('Product', update, {id: product.id})
     })
   }
