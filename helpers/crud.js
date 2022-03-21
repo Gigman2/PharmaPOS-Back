@@ -50,6 +50,8 @@ module.exports = class CrudService {
     async createOrUpdate(Model, data, condition){
 
         let exists = await this.exists(Model, condition)
+        console.log('Exists ',exists)
+        console.log('*****************')
         if(!exists || data.id === null){
             console.log('Inserting ', Model)
             console.log('=== === === === === === === === === === === === === === === === === === === === ===')
