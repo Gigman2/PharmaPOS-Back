@@ -39,8 +39,9 @@ module.exports = class CrudService {
     async exists(Model, condition){
         // Clear null properties
         Object.keys(condition).forEach((k) => (condition[k] == null || condition[k] == 'null') && delete condition[k]);
-        var user = await models[Model].findOne({where: condition });
-        if(user){
+        console.log('Exist condition ', condition)
+        var row = await models[Model].findOne({where: condition });
+        if(row){
             return true
         }else{
             return false
