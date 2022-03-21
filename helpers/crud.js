@@ -51,9 +51,13 @@ module.exports = class CrudService {
 
         let exists = await this.exists(Model, condition)
         if(!exists || data.id === null){
+            console.log('Inserting ', Model)
+            console.log('=== === === === === === === === === === === === === === === === === === === === ===')
             delete data.id
             return this.create(Model, data)
         }else{
+            console.log('Updating ', Model, condition)
+            console.log('=== === === === === === === === === === === === === === === === === === === === ===')
             return this.update(Model,data, condition)
         }
     }

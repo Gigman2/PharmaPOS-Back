@@ -372,13 +372,17 @@ module.exports = class UserService{
     let sales = await crudService.findAll('ProductSale', {saleId: transactionId})
     sales.forEach(async item => {
       let product = await crudService.findOne('Product', {id: item.productId});
-      let update = {}
-      update.left = Number(product.left) - Number(item.quantity)
-     if(item.retail){
+      let update = {
+        left : Number(product.left)
+      }
+      if(item.quantity){
+        update.left = Number(update.left) - Number(item.quantity)
+      }
+      if(item.retail){
         update.pack_l =  Number(product.pack_l) - Number(item.retail)
         while(update.pack_l <= 0){
           update.pack_l = parseInt(product.pack_q) + update.pack_l
-          update.left = parseInt(product.left) - 1
+          update.left = parseInt(update.left) - 1
         }
       }
       crudService.update('Product', update, {id: product.id})
