@@ -216,7 +216,7 @@ module.exports = class AnalyticsService{
     }
 
     async inventoryReport(body){
-        var query = "SELECT * FROM products WHERE ";
+        var query = "SELECT * FROM Products WHERE ";
         if(body.to && body.from){
             query = query+`createdAT BETWEEN '${body.from}' AND '${body.to}'`;
         }
@@ -230,7 +230,7 @@ module.exports = class AnalyticsService{
         let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
 
         await Promise.all(data.map(async item => {
-            var query = `SELECT * FROM stocks WHERE productId = "${item.id}"`;
+            var query = `SELECT * FROM Stocks WHERE productId = "${item.id}"`;
             if(body.to && body.from){
                 query = query+` AND (createdAT BETWEEN '${body.from}' AND '${body.to}')`;
             }
@@ -241,7 +241,7 @@ module.exports = class AnalyticsService{
             item.firstStock = stock[0]
             item.lastStock = stock[stock.length-1]
 
-            var query = `SELECT * FROM productSales WHERE productId = "${item.id}"`;
+            var query = `SELECT * FROM ProductSales WHERE productId = "${item.id}"`;
             let salesproducts = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
             let quantity = 0;
             salesproducts.forEach(product => {
@@ -257,7 +257,7 @@ module.exports = class AnalyticsService{
             }
             item.quantitysold = quantitysold
 
-            var query = `SELECT * FROM suppliers WHERE id = "${item.supplierId}"`;
+            var query = `SELECT * FROM Suppliers WHERE id = "${item.supplierId}"`;
             let suppliers = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
             item.supplier = suppliers
         }))
