@@ -158,7 +158,7 @@ module.exports = class AnalyticsService{
 
     async salesReport(body){
         var query = `
-        SELECT SUM(CAST("grossTotal" AS decimal)) as closing_cash, SUM(CAST("cashAmount" AS decimal)) as cash, SUM(CAST("momoAmount" AS decimal)) as momo, MIN(id) as firstID, MAX(id) as lastID, "createdAt" FROM  "public"."Sales" WHERE ("createdAt" BETWEEN '${body.from}' AND '${body.to}') GROUP BY DATE_TRUNC('day',"createdAt")`
+        SELECT SUM(CAST("grossTotal" AS decimal)) as closing_cash, SUM(CAST("cashAmount" AS decimal)) as cash, SUM(CAST("momoAmount" AS decimal)) as momo, MIN(id) as firstID, MAX(id) as lastID, "createdAt" FROM  "public"."Sales" WHERE ("createdAt" BETWEEN '${body.from}' AND '${body.to}') GROUP BY "createdAt"::date`
        let data = await sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
 
         await Promise.all(data.map(async item => {
