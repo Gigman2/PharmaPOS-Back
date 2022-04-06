@@ -153,7 +153,7 @@ module.exports = class AnalyticsService{
             return await sequelize.query(sales_query, { type: Sequelize.QueryTypes.SELECT })
         })
         
-        return sales
+        return sales  
     }
 
     async salesReport(body){
