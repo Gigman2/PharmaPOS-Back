@@ -44,11 +44,14 @@ router.post("/import", [], asyncWrapper(async(req, res) => {
                         _value = Number(_value)
                     }
                     if(_value === undefined && ['wprice', 'cprice', 'restock'].includes(keys[key])) _value = 0
-                    
+                    payload.pack_q = 1
+        
                     if(payload.left > 0){
                         payload.left = payload.quantity - 1
-                        payload.pack_q = 1
                         payload.pack_l = 1
+                    }
+                    else {
+                        payload.left = 0
                     }
                     payload[keys[key]] = _value
                 })
