@@ -22,78 +22,64 @@ const DatabaseFunc = require('../helpers/crud');
 const { connect } = require("tls");
 const crudService = new DatabaseFunc;
 
-// router.post("/import", [Upload.single('file'), Authenticator.auth], asyncWrapper(async(req, res) => {
-//     let body = req.body
-//     let result = excelToJson({
-//         sourceFile:  path.resolve(__dirname, '..', 'uploads',req.file.filename),
-//         header:{
-//             rows: body.row,
-//             sheets: [body.sheet]
-//         }
-//     });
-    
-//     if(!body.sheet){
-//         result = result[Object.keys(result)[0]];
-//     }else{
-//         result = result[body.sheet]
-//     }
-    
-
-//     let keys = Object.keys(result[0]);
-//     let values = result;
-//     let count = 0;
-//     let categories = []
-
-//     let dbcategories = await crudService.listAll('Category');
-//     categories = dbcategories.map(item => {
-//         return  {
-//             id: item.id,
-//             name: item.name
-//         }
-//     })
-//     await Promise.all(values.map(async (column, index) => {
-
-//         if(index != 0){
-//             let payload = {}
-//             keys.forEach((row, i) => {
-//                 payload[result[0][row].toLowerCase()] = column[row]
-//             })
-
-//             payload.left = payload.quantity
-//             payload.timesSold = 0
-//             payload.category = payload.category.toLowerCase();
-
-//             var payloadCategory = payload.category.charAt(0).toUpperCase() + payload.category.slice(1)
-//             let exist = categories.filter(item => item.name == payloadCategory)
-//             if(exist.length > 0){
-//                 payload.categoryId = exist[0].id
-//             }
-
-//             let saved = await crudService.create('Product', payload)
-
-//             productService.updateStock({
-//                 productId: saved.id, 
-//                 userId: req.account.id, 
-//                 productName: saved.name,
-//                 supplierId: payload.supplierId,
-//                 initialStock: 0, 
-//                 currentStock: payload.quantity
-//             });
-//             count = count + 1;
-//         }
-//     }))
-
-//     if(count >= result.length - 1){
-//         res.send({message: 'Result'});
-//     }
-// }))
+router.post("/import", [], asyncWrapper(async(req, res) => {
+    try {
+        let result = excelToJson({
+            sourceFile:  path.resolve(__dirname, '..', 'uploads', 'Products.xlsx'),
+        });
+        
+        result = result['Sheet 1'];
+        
+        let keys = result[0];
+        result.shift()
+        let values = result;
+  
+        await Promise.all(values.map(async (column, index) => {
+            console.log(column)
+            let payload = {}
+  
+                Object.keys(keys).map((key) => {
+                    let _value = column[key]
+                    if(['quantity', 'pack_q', 'pack_l', 'timesSold', 'restock','left', 'categoryId', 'supplierId'].includes(keys[key])){
+                        _value = Number(_value)
+                    }
+                    if(_value === undefined && ['wprice', 'cprice', 'restock'].includes(keys[key])) _value = 0
+                    
+                    if(payload.left > 0){
+                        payload.left = payload.quantity - 1
+                        payload.pack_q = 1
+                        payload.pack_l = 1
+                    }
+                    payload[keys[key]] = _value
+                })
+        
+            let saved = await crudService.create('Product', payload)
+            console.log('Saved ', saved)
+        
+            try {
+                productService.updateStock({
+                    productId: saved.id, 
+                    productName: saved.name,
+                    supplierId: saved.supplierId,
+                    initialStock: 0, 
+                    currentStock: saved.quantity
+                });
+            } catch (err) {
+                console.log(err)
+            }
+        }))   
+        res.send({message: 'done'})
+      } catch (error) {
+        console.log(error)
+      }
+}))
 
 router.post("/download",[Authenticator.auth], asyncWrapper(async(req, res)=> {
     let body = req.body;
     let data;
     let business = await crudService.findOne('Business', {id: 1});
     if(business == null){
-        throw CustomError({statusCode: 422, message: 'Set business infomation before export'}, res)
+        throw CustomError({statusCode: 422, message: 'Set business information before export'}, res)
     }
 
     body.business = business

@@ -4,6 +4,8 @@ const Op  = Sequelize.Op
 const DatabaseFunctions = require('../helpers/crud')
 const Validation = require('../helpers/validation')
 const models = require('../models');
+const excelToJson = require('convert-excel-to-json');
+
 
 const crudService = new DatabaseFunctions()
 
