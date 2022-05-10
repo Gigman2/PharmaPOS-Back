@@ -65,7 +65,7 @@ module.exports = class UserService{
             return {
               error:{
                 code: 422,
-                message: 'Account does not exist'
+                message: 'Username or password incorrect'
               }, 
               data: null
             }
