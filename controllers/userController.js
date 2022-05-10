@@ -89,7 +89,8 @@ router.post("/set-password", [Authenticator.auth], asyncWrapper(async (req, res)
         throw CustomError({statusCode: 422, message: 'Passwords dont match'}, res)
     }
     body = await auth.hash(body)
-    await crudService.update('User', body, {id: req.account.id})
+    let condition = body.userId ? {userId: body.userId} : {id: req.account.id}
+    await crudService.update('User', body, condition)
     res.json({message: 'User created successfully'});
 }));
 
