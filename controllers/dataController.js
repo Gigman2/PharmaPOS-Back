@@ -35,31 +35,30 @@ router.post("/import", [], asyncWrapper(async(req, res) => {
         let values = result;
   
         await Promise.all(values.map(async (column, index) => {
-            console.log(column)
             let payload = {}
   
-                Object.keys(keys).map((key) => {
-                    let _value = column[key]
-                    if(['quantity', 'pack_q', 'pack_l', 'timesSold', 'restock','left', 'categoryId', 'supplierId'].includes(keys[key])){
-                        _value = Number(_value)
-                    }
-                    if(_value === undefined && ['wprice', 'cprice', 'restock'].includes(keys[key])) _value = 0
-                    payload.pack_q = 1
-        
-                    if(payload.left > 0){
-                        payload.left = payload.quantity - 1
-                        payload.pack_l = 1
-                    }
-                    else {
-                        payload.left = 0
-                    }
-                    payload[keys[key]] = _value
-                })
-        
-            let saved = await crudService.create('Product', payload)
-            console.log('Saved ', saved)
+            Object.keys(keys).map((key) => {
+                let _value = column[key]
+                if(['quantity', 'pack_q', 'pack_l', 'timesSold', 'restock','left', 'categoryId', 'supplierId'].includes(keys[key])){
+                    _value = Number(_value)
+                }
+                if(_value === undefined && ['wprice', 'cprice', 'restock'].includes(keys[key])) _value = 0
+                payload[keys[key]] = _value
+            })
+
+            payload.pack_q = 1
+            if(payload.left > 0){
+                payload.quantity = payload.left
+                payload.left = payload.quantity - 1
+                payload.pack_l = 1
+            } else {
+                payload.left = 0
+                payload.quantity = 0
+            }
         
             try {
+                let saved = await crudService.create('Product', payload)
+ 
                 productService.updateStock({
                     productId: saved.id, 
                     productName: saved.name,
@@ -69,9 +68,10 @@ router.post("/import", [], asyncWrapper(async(req, res) => {
                 });
             } catch (err) {
                 console.log(err)
+                return 
             }
         }))   
-        res.send({message: 'done'})
+        res.send({message: 'done'})  
       } catch (error) {
         console.log(error)
       }

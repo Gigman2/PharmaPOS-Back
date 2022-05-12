@@ -76,11 +76,7 @@ module.exports = class AnalyticsService{
         let stockWorthArray = await Promise.all(products.map(product => 
         {   
             let worth = 0
-            if(product.dispensation == 'single'){
-                worth = product.left * product.price;
-            }else if(product.dispensation == 'strip'|| product.dispensation == 'tab' ){
-                worth = ((product.pack_q * product.left) + product.pack_l) * product.price;
-            }
+            worth = ((product.pack_q * product.left) + product.pack_l) * product.price;
             if(worth != '' ){
                 return parseFloat(worth);
             }

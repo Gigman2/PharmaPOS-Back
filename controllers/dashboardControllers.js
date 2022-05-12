@@ -53,7 +53,7 @@ router.get("/sales", [Authenticator.auth], asyncWrapper(async (req, res) => {
 
 
 //stock worth 
-router.get("/stock-worth", [Authenticator.auth], asyncWrapper(async (req, res) => {
+router.get("/stock-worth", [], asyncWrapper(async (req, res) => {
 
     //obtain the number of products left
     //left is property in the products model(double)
