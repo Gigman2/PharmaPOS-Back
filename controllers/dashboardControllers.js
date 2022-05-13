@@ -49,7 +49,7 @@ router.get("/sales", [Authenticator.auth], asyncWrapper(async (req, res) => {
         res.json({ message: 'Error', result: err });
     }
 
-}));
+})); 
 
 
 //stock worth 
